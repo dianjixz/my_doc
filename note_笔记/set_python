@@ -1,0 +1,23 @@
+将 python 各版本添加到 update-alternatives
+$ which python3.8
+/usr/bin/python3.8
+
+$ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
+
+$ which python3.5
+/usr/bin/python3.5
+
+$ sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 2
+配置 python3 默认指向 python3.8
+$ sudo update-alternatives --config python3
+
+There are 2 choices for the alternative python3 (providing /usr/bin/python3).
+
+ Selection Path  Priority Status
+------------------------------------------------------------
+* 0  /usr/bin/python3.5 2  auto mode
+ 1  /usr/bin/python3.5 2  manual mode
+ 2  /usr/bin/python3.8 1  manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 2
+
