@@ -1,0 +1,17 @@
+#licheepi zero体验报告
+主要主要体验的过程
+1.按照官网手册进行linux系统的编译：
+http://zero.lichee.pro/%E5%85%A5%E9%97%A8/intro_cn.html
+发现为文档的整体做法是对的，但是一些细节出现错误。
+第一，目前的licheepi zero使用的flash型号是xt25f128b但官网手册上用的是MX25L25645G
+错误可能导致的问题，小白在这里无法运行系统。
+
+第二，添加flash支持时，两张图片上的型号为对应。 
+
+第三，根文件系统rootfs-brmin.tar.gz链接失效，无法链接
+
+第四，在以太网的适配过程中适配好的linux内核缺少部分usb驱动。我在使用适配好的linux内核时无法使用usb。
+    同时在适配时只是说要打上sun8i-emac补丁，但是却没有给出补丁链接。
+    以太网的网卡启动命令ifup eth0错误，应该是ifconfig eth0 up
+这个板子只是体验到这里。
+

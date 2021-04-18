@@ -1,0 +1,162 @@
+s3芯片测试报告
+
+测试环境：
+CPU :arm Cortex-A7，最高1.2GHz 
+linux kernel:5.3.0-rc2-205918-gd0e93157718b
+	构建于：s3-5.3-rc2分支
+	
+rootfs:构建于buildroot主分支，使用busybox
+
+memory:128Mbyte DDR3内存
+
+
+CoreMark测试数据：
+|  2934.057067  |  2932.981376  |  2933.626696  |  2933.841866  |  2933.411558  |
+最大值：2934.057067
+最小值：2932.981376
+平均值：2933.5837126
+
+满载运行时温度：
+49.5度 48.1度
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+coremark测试原始数据
+# coremark
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 13633
+Total time (secs): 13.633000
+Iterations/Sec   : 2934.057067
+Iterations       : 40000
+Compiler version : GCC6.3.1 20170404
+Compiler flags   : -O2   -lrt
+Memory location  : Please put data memory location here
+			(e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x25b5
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 2934.057067 / GCC6.3.1 20170404 -O2   -lrt / Heap
+# coremark
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 13638
+Total time (secs): 13.638000
+Iterations/Sec   : 2932.981376
+Iterations       : 40000
+Compiler version : GCC6.3.1 20170404
+Compiler flags   : -O2   -lrt
+Memory location  : Please put data memory location here
+			(e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x25b5
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 2932.981376 / GCC6.3.1 20170404 -O2   -lrt / Heap
+# coremark
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 13635
+Total time (secs): 13.635000
+Iterations/Sec   : 2933.626696
+Iterations       : 40000
+Compiler version : GCC6.3.1 20170404
+Compiler flags   : -O2   -lrt
+Memory location  : Please put data memory location here
+			(e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x25b5
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 2933.626696 / GCC6.3.1 20170404 -O2   -lrt / Heap
+# coremark
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 13634
+Total time (secs): 13.634000
+Iterations/Sec   : 2933.841866
+Iterations       : 40000
+Compiler version : GCC6.3.1 20170404
+Compiler flags   : -O2   -lrt
+Memory location  : Please put data memory location here
+			(e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x25b5
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 2933.841866 / GCC6.3.1 20170404 -O2   -lrt / Heap
+# coremark
+2K performance run parameters for coremark.
+CoreMark Size    : 666
+Total ticks      : 13636
+Total time (secs): 13.636000
+Iterations/Sec   : 2933.411558
+Iterations       : 40000
+Compiler version : GCC6.3.1 20170404
+Compiler flags   : -O2   -lrt
+Memory location  : Please put data memory location here
+			(e.g. code in flash, data on heap etc)
+seedcrc          : 0xe9f5
+[0]crclist       : 0xe714
+[0]crcmatrix     : 0x1fd7
+[0]crcstate      : 0x8e3a
+[0]crcfinal      : 0x25b5
+Correct operation validated. See readme.txt for run and reporting rules.
+CoreMark 1.0 : 2933.411558 / GCC6.3.1 20170404 -O2   -lrt / Heap
+
+
+
+
+
+
+
+
+
+
