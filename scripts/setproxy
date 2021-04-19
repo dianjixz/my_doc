@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# for terminal
+export proxyserveraddr=127.0.0.1
+export proxyserverport=8889
+export prxsock=1089
+export HTTP_PROXY="http://$proxyserveraddr:$proxyserverport/"
+export HTTPS_PROXY="http://$proxyserveraddr:$proxyserverport/"
+export FTP_PROXY="ftp://$proxyserveraddr:$proxyserverport/"
+export SOCKS_PROXY="socks://$proxyserveraddr:$prxsock/"
+export NO_PROXY="localhost,127.0.0.1,localaddress,.localdomain.com,可以新增你想过滤的ip段;"
+export http_proxy="http://$proxyserveraddr:$proxyserverport/"
+export https_proxy="http://$proxyserveraddr:$proxyserverport/"
+export ftp_proxy="ftp://$proxyserveraddr:$proxyserverport/"
+export socks_proxy="socks://$proxyserveraddr:$prxsock/"
+export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com,可以新增你想过滤的ip段;"
+
+# for apt-get
+cat <<-EOF| sudo tee /etc/apt/apt.conf
+Acquire::http::proxy "http://$proxyserveraddr:$proxyserverport/";
+Acquire::https::proxy "http://$proxyserveraddr:$proxyserverport/";
+Acquire::ftp::proxy "ftp://$proxyserveraddr:$proxyserverport/";
+Acquire::socks::proxy "socks://$proxyserveraddr:$prxsock/";
+EOF
+
