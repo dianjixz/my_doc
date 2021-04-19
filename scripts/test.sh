@@ -10,12 +10,5 @@ expect "nihao*"
 interact
 
 
-#expect "$"
-#send "service scm-agent status\r"
-#send "echo \"nihao\" >> 1.log \r"
-#expect "$"
-#send "ls\r"
-#expect "$"
-#send "exit\r"
 exit
 
