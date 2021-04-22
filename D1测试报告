@@ -7,17 +7,44 @@ rootfs:构建于全志sdk
 
 memory:512Mbyte DDR3内存
 
+摄像头正常
+hdmi屏幕输出正常
+wifi连接正常
 
 
-
-
+测试cpu频率：1008Mhz
 CoreMark测试数据：
 |  2905.551419  |  2905.498656  |  2906.659884  |  2905.920814  |  2906.026372  |
 最大值：2906.659884
 最小值：2905.498656
 平均值：2905.931429
 
-满载运行时温度：
+
+运行待机温度：46.9摄氏度
+
+
+
+
+
+cpu执行大量计算任务时的平均温度：58摄氏度
+	-运行SuperPI任务。
+		pi_css5 10				0.00sec
+		pi_css5 100				0.00sec
+		pi_css5 1000			0.01sec
+		pi_css5 10000			0.14sec
+		pi_css5 100000			2.27sec
+		pi_css5 1000000			27.01sec	
+
+
+
+D1板待机功耗：
+	平均电流：0.209A
+	平均功耗：1.015w
+
+
+D1板执行大量计算任务功耗：
+	平均电流：0.301A
+	平均功耗：1.435W
 
 
 
@@ -54,10 +81,7 @@ CoreMark测试数据：
 
 
 
-
-
-
-
+测试数据：
 
 
 
@@ -221,3 +245,134 @@ seedcrc          : 0xe9f5
 Correct operation validated. See readme.txt for run and reporting rules.
 CoreMark 1.0 : 2906.026372 / GCC8.1.0 -O2 -DMULTITHREAD=4 -DUSE_PTHREAD  -lpthread  -lrt / Heap / 4:PThreads
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+root@TinaLinux:~# ./pi_css5 10
+Calculation of PI using FFT and AGM, ver. LG1.1.2-MP1.5.2a.memsave
+initializing...
+nfft= 2
+radix= 10000
+error_margin= 1.0747e-07
+calculating 8 digits of PI...
+AGM iteration
+precision= 48: 0.00 sec
+writing pi8.txt...
+0.00 sec. (real time)
+
+root@TinaLinux:~# ./pi_css5 100
+Calculation of PI using FFT and AGM, ver. LG1.1.2-MP1.5.2a.memsave
+initializing...
+nfft= 32
+radix= 10000
+error_margin= 5.15588e-07
+calculating 128 digits of PI...
+AGM iteration
+precision= 48: 0.00 sec
+precision= 80: 0.00 sec
+precision= 176: 0.00 sec
+writing pi128.txt...
+0.00 sec. (real time)
+
+root@TinaLinux:~# ./pi_css5 1000
+Calculation of PI using FFT and AGM, ver. LG1.1.2-MP1.5.2a.memsave
+initializing...
+nfft= 256
+radix= 10000
+error_margin= 5.12701e-06
+calculating 1024 digits of PI...
+AGM iteration
+precision= 48: 0.00 sec
+precision= 80: 0.00 sec
+precision= 176: 0.00 sec
+precision= 352: 0.00 sec
+precision= 688: 0.00 sec
+precision= 1392: 0.00 sec
+writing pi1024.txt...
+0.01 sec. (real time)
+
+root@TinaLinux:~# ./pi_css5 10000
+Calculation of PI using FFT and AGM, ver. LG1.1.2-MP1.5.2a.memsave
+initializing...
+nfft= 4096
+radix= 10000
+error_margin= 7.41633e-05
+calculating 16384 digits of PI...
+AGM iteration
+precision= 48: 0.01 sec
+precision= 80: 0.01 sec
+precision= 176: 0.01 sec
+precision= 352: 0.01 sec
+precision= 688: 0.01 sec
+precision= 1392: 0.01 sec
+precision= 2784: 0.01 sec
+precision= 5584: 0.01 sec
+precision= 11168: 0.01 sec
+precision= 22336: 0.01 sec
+writing pi16384.txt...
+0.14 sec. (real time)
+
+root@TinaLinux:~# ./pi_css5 100000
+Calculation of PI using FFT and AGM, ver. LG1.1.2-MP1.5.2a.memsave
+initializing...
+nfft= 32768
+radix= 10000
+error_margin= 0.000620286
+calculating 131072 digits of PI...
+AGM iteration
+precision= 48: 0.14 sec
+precision= 80: 0.14 sec
+precision= 176: 0.14 sec
+precision= 352: 0.15 sec
+precision= 688: 0.14 sec
+precision= 1392: 0.15 sec
+precision= 2784: 0.14 sec
+precision= 5584: 0.14 sec
+precision= 11168: 0.15 sec
+precision= 22336: 0.14 sec
+precision= 44688: 0.14 sec
+precision= 89408: 0.14 sec
+precision= 178816: 0.14 sec
+writing pi131072.txt...
+2.27 sec. (real time)
+
+root@TinaLinux:~# ./pi_css5 1000000
+Calculation of PI using FFT and AGM, ver. LG1.1.2-MP1.5.2a.memsave
+initializing...
+nfft= 262144
+radix= 10000
+error_margin= 0.00611182
+calculating 1048576 digits of PI...
+AGM iteration
+precision= 48: 1.46 sec
+precision= 80: 1.44 sec
+precision= 176: 1.45 sec
+precision= 352: 1.44 sec
+precision= 688: 1.44 sec
+precision= 1392: 1.44 sec
+precision= 2784: 1.44 sec
+precision= 5584: 1.44 sec
+precision= 11168: 1.45 sec
+precision= 22336: 1.44 sec
+precision= 44688: 1.44 sec
+precision= 89408: 1.45 sec
+precision= 178816: 1.44 sec
+precision= 357648: 1.45 sec
+precision= 715312: 1.44 sec
+precision= 1430640: 1.44 sec
+writing pi1048576.txt...
+27.01 sec. (real time)
