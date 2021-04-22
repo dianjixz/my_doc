@@ -1,0 +1,17 @@
+
+linux mount一个目录到另外一个目录
+ 
+
+从linux内核2.4.0以后mount支持mount --bind 一个目录到另外一个目录
+
+比如：
+
+[root@localhost wind]# mkdir test1 test2 dir3
+
+mount --bind test1 test2
+
+把test1挂载到test2，如果test2目录有内容将被遮住（dir2目录的内容一样存在。就好像窗帘把窗户遮住一样。窗户始终存在，只是被遮住而已，等umount了，原来dir2目录的内容就显示出来了）
+
+要取消挂载使用umount即可
+
+并不是使用mount --move dir1 dir2  
