@@ -1,0 +1,72 @@
+resize2fs:调整ext文件系统的空间大小
+
+ 搭配逻辑卷lv使用方法：resize2fs /PATH/TO/LV_NAME 3G  调整LV的逻辑边界大小为3G
+ resize2fs -p /PATH/TO/LV :-p表示扩展逻辑边界跟物理边界一样大。
+
+
+ 对img进行校验
+
+e2fsck -p -f linuxroot.img
+
+对img大小进行重新设定
+
+resize2fs  -M linuxroot.img
+
+resize2fs  -p linuxroot.img
+
+
+
+
+
+运行dd命令刻录完镜像后可以用：sync命令来结束dd占用。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#!/bin/sh
+
+
+
+
+lase_tis=$(date +%s)
+tik=9000
+while [ 1 ]
+do
+tis=$(date +%s)
+
+tim=$(($tis - $lase_tis))
+
+if [ $tim -gt $tik ] ;then
+udhcpc
+lase_tis=$tis
+else
+sleep 60
+
+fi
+
+
+done

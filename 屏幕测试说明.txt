@@ -1,0 +1,38 @@
+终端输入getevent：显示当前有那些输入设备，数量与 /dev/input 目录下相同
+注意程序不会自动返回，当看到设备时可以使用ctrl + c 组合建结束程序。
+
+root@MaixLinux:/# getevent 
+add device 1: /dev/input/event2
+  name:     "gt9xxnew_ts"
+add device 2: /dev/input/event1
+  name:     "audiocodec sunxi Audio Jack"
+add device 3: /dev/input/event0
+  name:     "sunxi-keyboard"
+^C
+
+
+
+看到gt9xxnew_ts设备后证明设备在工作，输入如下命令查看设备输入信息：
+
+getevent -t /dev/input/event2
+
+之后触摸屏目有如下信息出来，说明触摸设备工作正常。
+root@MaixLinux:/# getevent -t /dev/input/event2
+poll 2, returned 1
+[     183.872498] 0001 014a 00000001
+poll 2, returned 1
+[     183.872498] 0003 0035 000001e3
+poll 2, returned 1
+[     183.872498] 0003 0036 0000024c
+poll 2, returned 1
+[     183.872498] 0003 0030 0000001a
+poll 2, returned 1
+[     183.872498] 0003 0032 0000001a
+poll 2, returned 1
+[     183.872498] 0003 0039 00000000
+poll 2, returned 1
+[     183.872498] 0000 0002 00000000
+poll 2, returned 1
+[     183.872498] 0000 0000 00000000
+poll 2, returned 1
+[     183.882655] 0003 0035 000001e3
