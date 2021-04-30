@@ -1,0 +1,287 @@
+2021.4.8-15.48
+树梅派ip地址：192.168.0.9
+笔架本电脑地址：192.168.0.52
+
+
+交换分区17
+内存61
+gstoraster
+2021.4.9.10.17a
+VmRSS:	    2520 kB
+VmRSS:	    5116 kB
+
+nano 记录
+boot启动成功，但是好像并没有启动命令
+
+setenv bootm_boot_mode sec;load mmc 0:1 0x80C00000 suniv-f1c100s-licheepi-nano.dtb;load mmc 0:1 0x80008000 zImage;bootz 0x80008000 - 0x80C00000
+
+
+console=ttyS0,115200 panic=5 rootwait root=/dev/mmcblk0p2 earlyprintk rw rootfstype=ext4 vt.global_cursor_default=0 
+
+boot flash order:
+sf probe 0 50000000;sf read 0x80C00000 0x100000 0x4000;sf read 0x80008000 0x110000 0x400000;bootz 0x80008000 - 0x80C00000;
+
+
+
+Bus 003 Device 055: ID 1a86:7523 QinHeng Electronics HL-340 USB-Serial adapter
+
+
+
+公司的两个github库
+licheepi
+https://github.com/Lichee-Pi
+
+sipeed 
+https://github.com/sipeed
+
+docker命令
+在一个容器内运行一个程序：
+docker run -t -i ubuntu:15.10 /bin/bash 
+-i 交互式操作
+-t 终端
+
+time make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j16 V=s 2>&1 | tee build.log
+
+make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- -j32
+ make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- dtbs
+
+0x41800000       dtb
+0x41000000	zimage
+
+setenv bootm_boot_mode sec; 
+                            "load mmc 0:1 0x41000000 zImage; 
+                            "load mmc 0:1 0x41800000 sun8i-s3-lichee-zero-plus.dtb; 
+                            "bootz 0x41000000 - 0x41800000;
+setenv bootargs 'root=/dev/nfs rw nfsroot=10.103.4.216:/nfsroot/rootfs ip=10.103.4.211 console=ttySAC0'
+
+制作根文件系统debian
+https://www.cnblogs.com/qiaoqiao2003/p/3738552.html
+
+多种方法制作debian文件系统
+http://www.voidcn.com/article/p-sklrqrqd-bps.html
+
+
+
+ARMv7-A
+
+
+licheepi zero plus 
+cpu:s3
+CoreMark 1.0 : 2934.057067 / GCC6.3.1 20170404 -O2   -lrt / Heap
+
+D1：
+CoreMark 1.0 : 2905.551419 / GCC8.1.0 -O2 -DMULTITHREAD=4 -DUSE_PTHREAD  -lpthread  -lrt / Heap / 4:PThreads
+
+
+
+
+
+uboot环境变量设置网址：https://blog.csdn.net/zjy900507/article/details/82151440
+
+
+D1测试项
+		D1(C906)与S3(A7), R329(A53)进行同频测试对比
+			CPU跑分：	CoreMark	
+			内存延迟：	 lmbench3
+			linux空载电流，温度（需要刨掉板载外设的电流）
+			linux满载电流，温度
+
+
+d1
+		测试CPU主频范围，不同主频下测试 CoreMark
+		测试V扩展指令集效率
+		测试tengine-lite模型运行效率
+		开机启动速度
+		视频播放帧率
+
+
+
+
+setenv bootm_boot_mode sec;load mmc 0:1 0x80008000 zImage;load mmc 0:1 0x80C00000 suniv-f1c100s-licheepi-nano.dtb; bootz 0x80008000 - 0x80C00000;
+
+s3
+待机
+4.78v
+0.04a
+0.19w
+
+
+
+
+
+
+高负荷
+4.74v
+0.05a
+0.23w
+
+
+
+
+
+
+
+
+
+
+
+
+
+v3s高负荷
+4.76v
+0.04a
+0.19w
+
+
+
+dl网站
+https://github.com/lindenis-org/lindenis-v536-dl0
+
+
+
+
+apt-get installgit-core build-essential gcc  g++ binutils patch bzip2 flex bison make autoconf gettext texinfo unzip sharutils subversion libncurses5-dev ncurses-term zlib1g-dev  gawk asciidoc libz-dev libssl-dev
+
+
+
+ssh蜜馆：https://github.com/skeeto/endlessh.git
+
+
+cat /proc/cpuinfo   #查看cpu信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+cd tengine-lite;
+mkdir build-rv64 && cd build-rv64;
+cmake -DCMAKE_TOOLCHAIN_FILE=../toolchains/rv64-linux-gnu.toolchain.cmake ..;
+make -j4;
+
+D1手册：https://d1.docs.allwinnertech.com/zh_CN/latest/study/study_5connect/
+
+cd /sys/kernel/debug/dispdbg ;
+echo disp0 > name; 
+echo switch1 > command; 
+echo 4 10 0 0 0x4 0x101 0 0 0 8 > param; 
+echo 1 > start;
+echo 1 > /sys/class/disp/disp/attr/colorbar 
+
+
+
+cd /sys/kernel/debug/dispdbg ;
+echo disp0 > name; 
+echo switch1 > command; 
+echo 1 10 0 0 0x4 0x101 0 0 0 8 > param; 
+echo 1 > start;
+
+
+
+
+
+
+
+
+riscv64-unknown-linux-gnu-gcc nihao.c -I ~/work/derivs-v/tina-d1/out/d1-nezha/staging_dir/target/include/ -L ~/work/derivs-v/tina-d1/out/d1-nezha/staging_dir/target/lib
+
+riscv64-unknown-linux-gnu-gcc -I ~/work/derivs-v/tina-d1/out/d1-nezha/staging_dir/target/include/ -L ~/work/derivs-v/tina-d1/out/d1-nezha/staging_dir/target/lib
+
+
+../configure --prefix=
+
+向屏幕输出图片：fbviewer
+
+
+
+-I ~/work/derivs-v/tina-d1/out/d1-nezha/staging_dir/target/include/
+-L ~/work/derivs-v/tina-d1/out/d1-nezha/staging_dir/target/lib/
+
+
+Cannot satisfy the following dependencies for tc解决 在安装命令后添加： --force-depends
+
+单包编译
+make package/utils/uvcdisplay/compile
+
+
+mjpg_streamer
+
+
+
+
+
+
+out/d1-nezha/compile_dir/target/mjpg-streamer-r182/utils.c需要注释linux/start.h
+
+
+cmd/bootmenu.c
+
+
+
+D1的sdk在自动化编译uboot的时候总是使用默认的设置，这样的话会使自己生成的配置选项每次都会被覆盖。
+
+
+
+
+回退commit
+
+    git reset --soft // 回退到指定commit，该commit之后的提交内容，保留工作目录，并把重置 HEAD 所带来的新的差异放进暂存区
+    git reset --hard // 回退到指定commit，该commit之后的提交内容，工作区和暂存区的内容都被抹掉
+    git reset 或 git reset --mixed // 不带参数,或带参数–mixed(默认参数)，与git reset --soft 不同，它将会把差异放到工作区
+
+#riscv的根文件镜像
+https://rcn-ee.com/rootfs/
+
+
+
+/***********************************************************/
+软件：debootstrap相关信息
+位置：/usr/share/debootstrap/scripts    存放了发行版的信息脚本
+位置：/usr/share/keyrings			存放了debootstrap相关的密钥信息，主要是一些*.gpg文件
+
+软件：apt-key相关信息
+位置：/etc/apt/trusted.gpg.d/			存放*.gpg相关密钥信心
+apt-key add -			可以从输入中建立*gpg密钥信息
+
+
+
+apt工作原理:https://blog.csdn.net/buguyiqie/article/details/4948213
+/************************************************************************/
+sudo debootstrap --arch=riscv64 --foreign sid linux-rootfs http://ftp.ports.debian.org/debian-ports/
+
+
+
+
+
+
+/home/nihao/work/derivs-v/tina-d1/out/d1-nezha/compile_dir/host/u-boot-2018.03/common/autoboot.c
+/home/nihao/work/derivs-v/tina-d1/lichee/brandy-2.0/u-boot-2018/cmd/bootmenu.c
+
+
+
+
+对img进行校验
+
+e2fsck -p -f linuxroot.img
+
+对img大小进行重新设定
+
+resize2fs  -M linuxroot.img
+
+
+D1板固定mac地址：
+在package/testtools/tinatest/testcase/base/ethnet/ethdhcp/ethdhcp.sh中添加
+ifconfig eth0 hw ether xx:xx:xx:xx:xx
+
+dd if=/dev/zero of=/dev/sda bs=512 seek=$(( $(blockdev --getsz /dev/sdb) - 63 )) count=63
+
+
+
+
