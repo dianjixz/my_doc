@@ -1,0 +1,31 @@
+编译D1的官方sdk时出现一些问题的解决办法!
+首先需要安装一些依赖
+gawk
+
+
+编译glibc的时候gcc版本过高，会导致glibc的编译报错，我们可以通过降级gcc来解决这个问题。
+降级网址：https://blog.csdn.net/u013862444/article/details/98629581
+
+配置底版本gcc源deb http://dk.archive.ubuntu.com/ubuntu/ xenial main universe
+安装gcc-5，g++-5
+配置版本管理器。
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 100
+最后的数字为优先级(越大越高),因为只有一个4.8版本作为alternatives,可以不要纠结数字,这样设就行了
+然后可以输入以下命令查看设置结果(非必须)
+sudo update-alternatives --config gcc
+
+同样的g++也一样。
+
+当以上设置不需要的时候输入以下命令删除:
+
+sudo update-alternatives --remove gcc /usr/bin/gcc-4.8
+
+
+
+#!/bin/bash
+sudo echo "deb http://dk.archive.ubuntu.com/ubuntu/ xenial main universe" >> /etc/apt/sources.list
+sudo apt update
+sudo apt-get install -y gcc-5
+sudo apt-get install -y g++-5
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
