@@ -1,0 +1,31 @@
+setenv bootargs ubi.mtd=sys ubi.block=0,rootfs earlyprintk=sunxi-uart,0x02500000 clk_ignore_unused initcall_debug=0 console=ttyS0,115200 loglevel=8 root=/dev/mmcblk0p2 rootfstype=ext4 rw init=/sbin/init partitions=mbr@ubi0_0:boot-resource@ubi0_1:env@ubi0_2:env-redund@ubi0_3:boot@ubi0_4:rootfs@ubi0_5:dsp0@ubi0_6:recovery@ubi0_7:UDISK@ubi0_8: cma=8M snum= mac_addr= wifi_mac= bt_mac= specialstr= gpt=1 androidboot.hardware=sun20iw1p1 boot_type=5 androidboot.boot_type=5 gpt=1;sunxi_flash read 45000000 ${boot_partition};bootm 45000000
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ipt_REJECT              2647  0 
+iptable_filter          2439  0 
+uvcvideo              128532  0 
+videobuf2_memops        1796  1 videobuf2_vmalloc
+videobuf2_vmalloc       7423  1 uvcvideo
+xr829                 844582  0 
+xt_LOG                  1639  0 
+xt_TCPMSS               4060  0 
+xt_comment              1156  0 
+xt_limit                2725  0 
+xt_mac                  1338  0 
+xt_mark                 1472  0 
+xt_multiport            2489  0 
+xt_time                 3573  0 
+

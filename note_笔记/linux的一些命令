@@ -20,8 +20,8 @@ resize2fs  -p linuxroot.img
 
 运行dd命令刻录完镜像后可以用：sync命令来结束dd占用。
 
-
-
+查看dd进度
+sudo watch -n 5 pkill -USR1 ^dd$
 
 
 
