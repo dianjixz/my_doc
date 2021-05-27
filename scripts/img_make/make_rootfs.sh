@@ -28,7 +28,6 @@ while getopts ":d:h" OPT;do
 done
 
 
-echo "$devices"
 
 
 
@@ -47,9 +46,11 @@ exit -1
 else
 dev_nu=`sudo parted $devices p | grep $devices | awk '{print $3}' `
 
-
+echo "正在格式化..."
 sudo parted -s $devices mklabel gpt
+echo "创建boot分区...."
 sudo parted -s $devices unit MB mkpart boot 1 17
+echo "创建根文件分区...."
 sudo parted -s $devices mkpart rootfs 17MB $dev_nu
 
 sudo mkfs.fat $devices"1"
