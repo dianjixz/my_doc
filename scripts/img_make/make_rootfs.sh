@@ -2,6 +2,7 @@
 
 
 echo "Welcome to use sd to make scripts ！"
+echo "使用本脚本会有失败的情况发生，如果失败，请多次运行或手动分区！"
 function help()
 {
     echo "sudo ./make_rootfs.sh -d [device]"
