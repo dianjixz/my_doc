@@ -24,7 +24,108 @@ resize2fs  -p linuxroot.img
 sudo watch -n 5 pkill -USR1 ^dd$
 
 
+动态调整分区大小的命令：
+tunefs - 调整现有的UFS文件系统
+growfs - 扩展现有的UFS文件系统
 
+ 
+
+查看已经连接的设备
+root@lsgxbsd:~ # camcontrol devlist
+
+1. 删除ad0上所有分区
+# gpart destroy -F /dev/da1
+注: 没有数据情况才可以这样
+
+2. 创建gpt分区信息表
+# gpart create -s GPT /dev/da1 创建新的GPT分区表
+# gpart create -s MBR /dev/da1 创建新的MBR分区表
+# gpart create -s BSD /dev/da1 创建新的BSD分区表
+
+3. 创建分区
+# gpart add -b 34 -s 512k -t freebsd-boot /dev/da1
+# gpart add -s 10g -t freebsd-ufs -l sys /dev/da1
+# gpart add -s 4g -t freebsd-swap -l swap /dev/da1
+# gpart add -s 20g -t freebsd /dev/da1
+
+# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 /dev/da1 （建议所有盘有freebsd-boot分区的盘都做）
+# newfs -i 4096 /dev/da1p2 (启动分区和swa分区无需格式化)
+# mount /dev/da1p2 /mnt/image/
+# df -th
+# umount /mnt/image/
+
+
+-b 开始扇区,可省略
+-s 分区大小,单位可用扇区,K,M等
+-t 分区类型, 还有freebsd-ufs
+-l 给分区打标签
+
+4. 显示信息
+# gpart show -l /dev/da1
+# gpart show -r /dev/da1
+# gpart show -p /dev/da1
+
+5. 删除分区
+# gpart delete -i 2 /dev/da1
+
+
+# sysctl kern.geom.debugflags=16
+# camcontrol devlist
+# dd if=FreeBSD-10.1-RELEASE-i386-memstick.img of=/dev/da0 bs=64k
+
+# mdconfig -a -t vnode -f /tmp/bootable.iso -u 3
+# gnop create /dev/md3
+# gnop list
+# gpart show -p /dev/md3
+# mount /dev/md3p3 /mnt/image
+# mdconfig -d -u 3
+
+查看磁盘信息
+fdisk /dev/ad0
+fdisk -s /dev/ad0
+修改磁盘信息(问答式的交互)
+fdisk -u /dev/ad0
+
+# fsck -y /
+# mount -u /
+# mount -a
+# mount -o remount, rw /
+
+ 
+
+设置临时IP地址和默认路由
+ifconfig em0 inet 192.168.195.99 netmask 255.255.255.0
+ifconfig em0 inet6 accept_rtadv
+route delete default
+route add default 192.168.195.2
+route add 192.168.195.0/24 192.168.195.2
+route add 192.168.1.0/24 192.168.1.1
+route add 192.168.2.0/24 192.168.2.1
+route add 192.168.185.0/24 192.168.185.201
+route flush
+netstat -nr
+netstat -nat
+
+ 
+
+重启sshd服务
+
+FreeBSD默认是不让root通过ssh登陆，遂修改相关的配置文件：
+FreeBSD#vi /etc/sshd/sshd_config
+#PermitRootLogin no
+将这句修改成：
+PermitRootLogin yes
+保存退出，重启sshd服务却报错了：sshd re-exec requires execution with an absolute path
+直接进入/etc/rc.d目录，输入sshd start，一样错误提示，
+FreeBSD的命令执行方法或许变了，必须这样来：
+FreeBSD#cd /etc/rc.d
+FreeBSD#./sshd start|stop|restart
+或直接输入完整的路径并带上命令操作：
+FreeBSD#/etc/rc.d/sshd start|stop|restart
+
+ 
+
+================ End
 
 
 
