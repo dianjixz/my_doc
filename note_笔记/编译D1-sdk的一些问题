@@ -29,3 +29,7 @@ sudo apt-get install -y gcc-5
 sudo apt-get install -y g++-5
 sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 100
 sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-5 100
+
+
+然后是安装一些依赖包
+sudo apt-get install build-essential subversion git-core libncurses5-dev zlib1g-dev flex quilt libssl-dev xsltproc libxml-parser-perl mercurial bzr ecj cvs unzip lib32z1 lib32z1-dev lib32stdc++6 libstdc++6 -y
