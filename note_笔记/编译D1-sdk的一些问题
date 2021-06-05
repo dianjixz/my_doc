@@ -1,6 +1,18 @@
 编译D1的官方sdk时出现一些问题的解决办法!
 首先需要安装一些依赖
-gawk
+gawk <= 4.1.3
+wget https://mirrors.ustc.edu.cn/ubuntu/pool/main/g/gawk/gawk_4.1.3%2Bdfsg.orig.tar.xz
+cd gawk_4.1.3+dfsg.orig/gawk-4.1.3
+mkdir build
+../configure
+make
+sudo make install
+
+
+
+
+
+
 
 
 编译glibc的时候gcc版本过高，会导致glibc的编译报错，我们可以通过降级gcc来解决这个问题。
