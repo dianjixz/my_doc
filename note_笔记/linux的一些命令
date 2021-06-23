@@ -136,6 +136,129 @@ FreeBSD#/etc/rc.d/sshd start|stop|restart
 
 
 
+https://blog.csdn.net/qq_39753097/article/details/83349718?utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.nonecase
+Linux网络基本配置/IP/网关
+一般是临时的修改，重启后失效，如：ifconfig、route、ip addr等。
+
+
+
+eth0：网络接口
+link encap : 网络类型
+HWaddr : 网卡物理地址
+Inet addr ：（internet address） IP地址
+Bcast：广播地址
+Mask：子网掩码
+UP：正在使用的网络接口
+RX packets,TX packets : 接收和传输的数据包个数
+RX byte，TX byte : 表示接收和传输的具体数目
+Interrupt：终端信息
+Base address：内存地址
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ifconfig eth0 192.168.120.56 netmask 255.255.255.0
+#临时配置网卡ip子网码
+
+route
+#查看网关
+添加路由条目
+即时生效 ：route add default gw 192.168.1.1（自己设定）//添加默认网关
+
+重启生效： vim  /etc/sysconfig/network
+         --增加或修改下面一行
+           NETWORKING=yes  
+
+　　    GATEWAY=192.168.1.1
+route命令
+
+设置和查看路由表都可以用 route 命令，设置内核路由表的命令格式是：
+Linux下用ifconfig命令设置IP、掩码、网关:https://blog.csdn.net/qq_28090573/article/details/82714028
+# route  [add|del] [-net|-host] target [netmask Nm] [gw Gw] [[dev] If]
+
+其中：
+
+    add : 添加一条路由规则
+    del : 删除一条路由规则
+    -net : 目的地址是一个网络
+    -host : 目的地址是一个主机
+    target : 目的网络或主机
+    netmask : 目的地址的网络掩码
+    gw : 路由数据包通过的网关
+    dev : 为路由指定的网络接口
+https://www.cnblogs.com/zhaojingyu/p/9110961.html
+使用 route 命令添加    
+
+　　使用route 命令添加的路由，机器重启或者网卡重启后路由就失效了，方法：    
+
+　　//添加到主机的路由    
+
+　　# route add –host 192.168.168.110 (自己设置)  dev eth0    
+
+　　# route add –host 192.168.168.119 (自己设置)  gw 192.168.168.1 (已存在的)    
+
+　　//添加到网络的路由 
+
+　　# route add –net IP (主机 ）netmask MASK eth0    
+
+　　# route add –net IP netmask MASK gw IP (自己设置)    
+
+　　# route add –net IP /24 eth1    
+
+　　//添加默认网关    
+
+　　# route add default gw IP (自己设置)   
+
+　　//删除路由    
+
+　　# route del –host 192.168.168.110 dev eth0 
+3.配置网卡的硬件地址（MAC）
+
+ifconfig eth0 hw ether xx：xx：xx：xx：xx：xx就将网卡的硬件地址更改了，此时你就可以骗过局域网内的IP地址绑定了。
+原文链接：https://blog.csdn.net/qq_39753097/article/details/83349718
+
+
+
+vim /etc/resolv.conf #设置你所要使用的DNS当自己不知道ip时，优先级最高,最多可写四个
+在真机切换到超级用户 --> 去网关 --> systemctl restart network 重启网络 -->连接wifi --> 查看网关
+/etc/resolv.conf是DNS客户机配置文件，用于设置DNS服务器的IP地址及DNS域名，还包含了主机的域名搜索顺序。
+https://www.cnblogs.com/zhoading/p/9602423.html
+
+
+
+linux interfaces配置文件详解
+https://blog.csdn.net/mountzf/article/details/52035499
+
+
+　　 auto lo
+　　 iface lo inet loopback
+　　
+　　 # The primary network interface
+　　 auto eth0
+　　 iface eth0 inet static
+　　      address 192.168.0.42
+　　      network 192.168.0.0
+　　      netmask 255.255.255.0
+　　      broadcast 192.168.0.255
+　　      gateway 192.168.0.1
+
+
+
+
+在系统的终端处修改打印级别，例如，屏蔽所有的内核printk打印，那么只需要将第一个数值调到最小值1或0即可
+# echo 1 4 1 7 > /proc/sys/kernel/printk
+or
+# echo0 4 0 7 > /proc/sys/kernel/printk
 
 
 
@@ -152,26 +275,9 @@ FreeBSD#/etc/rc.d/sshd start|stop|restart
 
 
 
-#!/bin/sh
 
 
 
 
-lase_tis=$(date +%s)
-tik=9000
-while [ 1 ]
-do
-tis=$(date +%s)
-
-tim=$(($tis - $lase_tis))
-
-if [ $tim -gt $tik ] ;then
-udhcpc
-lase_tis=$tis
-else
-sleep 60
-
-fi
 
 
-done
