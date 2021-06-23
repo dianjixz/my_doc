@@ -1,1 +1,3 @@
 一般是临时的修改，重启后失效，如：ifconfig、route、ip addr等。
+向屏幕输出图片：fbviewer
+		fbv-tset
