@@ -1,0 +1,30 @@
+用gcc编译时序代码时需要给指定函数指定优化等级，不然容易被gcc优化掉时序
+// 首先用__attribute__声明函数
+int add(int a, int b) __attribute__((optimize("O0")));
+// 然后再定义函数，声明和定义必须分开，否则编译错误
+int add(int a, int b)
+{
+}
+int sub(int a, int b) __attribute__((optimize("O2")));
+int sub(int a, int b)
+{
+}
+————————————————
+版权声明：本文为CSDN博主「半斗米」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/zoomdy/article/details/79251021
+、gcc中指定优化级别的参数有：-O0、-O1、-O2、-O3、-Og、-Os、-Ofast。
+
+
+https://zhuanlan.zhihu.com/p/151219726
+gcc编译指南
+
+
+假设main.cpp,hello.h,hello.cpp,其中main.cpp调用了hello类中的方法
+
+1 生成hello.so
+
+  g++ -shared hello.cpp -o libhello.so
+
+2 编译main.cpp,并链接,并指定运行时libhello.so的位置
+
+　　g++ main.cpp -lhello -L./ -Wl,-rpath=./ -o main
