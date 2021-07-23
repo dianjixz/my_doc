@@ -8,7 +8,7 @@ title : Licheepi zero plus sd启动指南
 第四步：配置编译buildroot  
 第五步：制作sd启动盘
 
-安装交叉编译器
+安装交叉编译器和依赖包
 ============
 
 网盘地址：http://pan.baidu.com/s/1hsf22fq
@@ -19,7 +19,7 @@ wget https://releases.linaro.org/components/toolchain/binaries/6.3-2017.05/arm-l
 
 tar xvf gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf.tar.xz
 
-mv gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf /opt/
+sudo mv gcc-linaro-6.3.1-2017.05-x86_64_arm-linux-gnueabihf /opt/
 
 vim /etc/bash.bashrc
 
@@ -30,13 +30,15 @@ source /etc/bash.bashrc
 arm-linux-gnueabihf-gcc -v
 
 sudo apt-get install device-tree-compiler
+
+sudo apt install flex python2 swig python2-dev bison libncurses5-dev libncursesw5-dev
+sudo apt-get install libssl-dev bc gawk
+#安装依赖包
 ~~~~
 
 下载编译Uboot
 ============
 ~~~~ {.sourceCode .sh}
-sudo apt install flex python2 swig python2-dev bison libncurses5-dev libncursesw5-dev
-#安装依赖包
 git clone https://github.com/Lichee-Pi/u-boot.git
 #拉取git仓库
 #git clone https://github.com/Lichee-Pi/u-boot.git -b s3-l0p-exp
@@ -130,7 +132,7 @@ buildroot中可以方便地加入第三方软件包（其实已经内置了很�
 -------
 首先安装一些依赖，比如linux头文件：
 
->apt-get install linux-headers-$(uname -r)
+>sudo apt-get install linux-headers-$(uname -r)
 
 然后下载安装：
 ~~~~ {.sourceCode .sh}
