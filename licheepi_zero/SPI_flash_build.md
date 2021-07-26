@@ -160,7 +160,8 @@ time make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- 2>&1 | tee build.log
 linux内核编译配置
 =================
 
-linux内核基于github上的版本[](https://github.com/Lichee-Pi/linux.git)，分支为最新的zero-4.13.y  
+linux内核基于github上的版本,[分支为最新的zero-4.13.y](https://github.com/Lichee-Pi/linux.git)  
+https://github.com/Lichee-Pi/linux.git
 国内用户拉取这个仓库可能会比较慢，也可以指拉取但个分支：
 
 内核选项配置
