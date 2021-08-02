@@ -1,1 +1,26 @@
 typora		md文档编辑文件
+
+
+--   Media I/O: 
+--     ZLib:                        /lib64/libz.so (ver 1.2.11)
+--     JPEG:                        /lib64/libjpeg.so (ver 62)
+--     WEBP:                        /lib64/libwebp.so (ver encoder: 0x020f)
+--     PNG:                         /lib64/libpng.so (ver 1.6.37)
+--     TIFF:                        /lib64/libtiff.so (ver 42 / 4.3.0)
+--     JPEG 2000:                   build (ver 2.4.0)
+--     OpenEXR:                     build (ver 2.3.0)
+--     HDR:                         YES
+--     SUNRASTER:                   YES
+--     PXM:                         YES
+--     PFM:                         YES
+-- 
+--   Video I/O:
+--     DC1394:                      NO
+--     FFMPEG:                      YES
+--       avcodec:                   YES (58.134.100)
+--       avformat:                  YES (58.76.100)
+--       avutil:                    YES (56.70.100)
+--       swscale:                   YES (5.9.100)
+--       avresample:                YES (4.0.0)
+--     GStreamer:                   NO
+--     v4l/v4l2:                    YES (linux/videodev2.h)
