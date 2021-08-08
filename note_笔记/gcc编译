@@ -1,0 +1,89 @@
+用gcc编译时序代码时需要给指定函数指定优化等级，不然容易被gcc优化掉时序
+// 首先用__attribute__声明函数
+int add(int a, int b) __attribute__((optimize("O0")));
+// 然后再定义函数，声明和定义必须分开，否则编译错误
+int add(int a, int b)
+{
+}
+int sub(int a, int b) __attribute__((optimize("O2")));
+int sub(int a, int b)
+{
+}
+————————————————
+版权声明：本文为CSDN博主「半斗米」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/zoomdy/article/details/79251021
+、gcc中指定优化级别的参数有：-O0、-O1、-O2、-O3、-Og、-Os、-Ofast。
+
+
+https://zhuanlan.zhihu.com/p/151219726
+gcc编译指南
+
+
+假设main.cpp,hello.h,hello.cpp,其中main.cpp调用了hello类中的方法
+
+1 生成hello.so
+
+  g++ -shared hello.cpp -o libhello.so
+
+2 编译main.cpp,并链接,并指定运行时libhello.so的位置
+
+　　g++ main.cpp -lhello -L./ -Wl,-rpath=./ -o main
+　　
+makefile标准写法　　
+https://blog.csdn.net/xy010902100449/article/details/50328975
+
+下面我们要介绍的函数主要是处理文件名的。每个函数的参数字符串都会被当做一个或是一系列的文件名来对待。
+$(dir ) 名称： 取目录函数——dir。功能：从文件名序列中取出目录部分。目录部分是指最后一个反斜杠（“/”）之前的部分。如果没有反斜杠，那么返回“./”。返回：返回文件名序列的目录部分。示例： $(dir src/foo.c hacks)返回值是“src/ ./”。
+$(notdir ) 名称： 取文件函数——notdir。功能：从文件名序列中取出非目录部分。非目录部分是指最后一个反斜杠（“/”）之后的部分。返回：返回文件名序列的非目录部分。示例： $(notdir src/foo.c hacks)返回值是“foo.c hacks”。
+$(suffix ) 名称： 取后缀函数——suffix。功能：从文件名序列中取出各个文件名的后缀。返回：返回文件名序列的后缀序列，如果文件没有后缀，则返回空字串。示例：$(suffix src/foo.c src-1.0/bar.c hacks)返回值是“.c .c”。
+$(basename )名称： 取前缀函数——basename。功能：从文件名序列中取出各个文件名的前缀部分。返回：返回文件名序列的前缀序列，如果文件没有前缀，则返回空字串。示例：$(basename src/foo.c src-1.0/bar.c hacks)返回值是“src/foo src-1.0/bar hacks”。
+$(addsuffix , ) 名称： 加后缀函数——addsuffix。功能：把后缀加到中的每个单词后面。返回：返回加过后缀的文件名序列。示例：$(addsuffix .c,foo bar)返回值是“foo.c bar.c”。
+$(addprefix , ) 名称： 加前缀函数——addprefix。功能：把前缀加到中的每个单词后面。返回：返回加过前缀的文件名序列。示例：$(addprefix src/,foo bar)返回值是“src/foo src/bar”。
+$(join , )名称： 连接函数——join。功能：把中的单词对应地加到的单词后面。如果的单词个数要比的多，那么，中的多出来的单词将保持原样。如果的单词个数要比多，那么，多出来的单词将被复制到中。返回：返回连接过后的字符串。示例：$(join aaa bbb , 111 222 333)返回值是“aaa111 bbb222 333”。 
+————————————————
+版权声明：本文为CSDN博主「狂奔的乌龟」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/xy010902100449/article/details/50328975
+
+
+一般我们可以使用“$(wildcard *.c)”来获取工作目录下的所有的.c文件列表。复杂一些用法；可以使用“$(patsubst %.c,%.o,$(wildcard *.c))”，首先使用“wildcard”函数获取工作目录下的.c文件列表；之后将列表中所有文件名的后缀.c替换为.o。这样我们就可以得到在当前目录可生成的.o文件列表。因此在一个目录下可以使用如下内容的Makefile来将工作目录下的所有的.c文件进行编译并最后连接成为一个可执行文件：
+————————————————
+版权声明：本文为CSDN博主「狂奔的乌龟」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/xy010902100449/article/details/50328975
+
+
+ $* 　　不包含扩展名的目标文件名称。
+
+$+ 　　所有的依赖文件，以空格分开，并以出现的先后为序，可能包含重复的依赖文件。
+
+$< 　　第一个依赖文件的名称。
+
+$? 　　所有的依赖文件，以空格分开，这些依赖文件的修改日期比目标的创建日期晚。
+
+$@ 　 目标的完整名称。
+
+$^ 　　所有的依赖文件，以空格分开，不包含重复的依赖文件。
+
+$% 如果目标是归档成员，则该变量表示目标的归档成员名称。
+
+
+1. 安装 python工具 gdbgui
+    $pip install gdbgui
+
+2. 命令行启动调试命令
+
+   $gdbgui --host 0.0.0.0 你的可执行程序命令
+ 这个事情，浏览器会被自动启动，自动链接：127.0.0.1:5000, 后面的就在图形界面下工作吧，如：
+    set args
+    n
+    s
+ 这些都在浏览器窗口输入，可以看变量的值，设置值，设置端点，等等。
+ 总之，很爽！
+
+
+
+
+
+
+
+
+
