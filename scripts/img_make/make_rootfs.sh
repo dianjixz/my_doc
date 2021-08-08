@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-<<<<<<< HEAD
+
 
 
 
@@ -26,7 +26,7 @@
 # 				;;
 # 	esac
 # done
-=======
+
 echo "Welcome to use sd to make scripts ！"
 echo "使用本脚本会有失败的情况发生，如果失败，请多次运行或手动分区！"
 function help()
@@ -74,15 +74,26 @@ else
 dev_nu=`sudo parted $devices p | grep $devices | awk '{print $3}' `
 
 echo "正在格式化..."
-sudo parted -s $devices mklabel gpt
+sudo parted -s $devices mklabel msdos
+
+
+
+
 echo "创建boot分区...."
-sudo parted -s $devices unit MB mkpart boot 1 17
+sudo parted -s $devices mkpart primary fat16 1MB 16MB
 echo "创建根文件分区...."
-sudo parted -s $devices mkpart rootfs 17MB $dev_nu
+sudo parted -s $devices mkpart primary ext4 16MB %100
+#sudo parted -s /dev/sdb mkpart primary ext4 16MB 100%
+#sudo mkfs.fat $devices"1"
 
-sudo mkfs.fat $devices"1"
+#sudo mkfs.ext4 $devices"2"
 
-sudo mkfs.ext4 $devices"2"
+sudo parted -s $devices name 1 boot
+sudo parted -s $devices name 2 rootfs
+
+
+
+
 
 sudo parted -s $devices p
 
@@ -102,4 +113,4 @@ fi
 
 fi
 
->>>>>>> ede77b29b79a95ecea232cd479c0c5567c520fff
+

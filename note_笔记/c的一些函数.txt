@@ -1,0 +1,105 @@
+ getopt函数用法
+getopt被用来解析命令行选项参数。
+
+#include <unistd.h>
+      extern char *optarg;  //选项的参数指针
+      extern int optind,   //下一次调用getopt的时，从optind存储的位置处重新开始检查选项。 
+      extern int opterr,  //当opterr=0时，getopt不向stderr输出错误信息。
+      extern int optopt;  //当命令行选项字符不包括在optstring中或者选项缺少必要的参数时，该选项存储在optopt 中，getopt返回'？’、
+      int getopt(int argc, char * const argv[], const char *optstring);
+ 调用一次，返回一个选项。在命令行选项参数再也检查不到optstring中包含的选项时，返回－1，同时optind储存第一个不包含选项的命令行参数。
+ 
+ 首先说一下什么是选项，什么是参数。
+
+1.单个字符，表示选项，
+
+2.单个字符后接一个冒号：表示该选项后必须跟一个参数。参数紧跟在选项后或者以空格隔开。该参数的指针赋给optarg。
+3 单个字符后跟两个冒号，表示该选项后必须跟一个参数。参数必须紧跟在选项后不能以空格隔开。该参数的指针赋给optarg。（这个特性是GNU的扩张）。
+
+例如gcc -g -o test test.c ，其中g和o表示选项，test为选项o的参数。
+
+上面是getopt()函数的基本含义，大家懂得了这些之后，我们一个例子加深一下理解。
+
+例如我们这样调用getopt(argc, argv, "ab:c:de::");
+从上面我们可以知道，选项a，d没有参数，选项b,c有一个参数，选项e有有一个参数且必须紧跟在选项后不能以空格隔开。getopt首先扫描argv[1]到argv[argc-1]，并将选项及参数依次放到argv数组的最左边，非选项参数依次放到argv的最后边。
+
+执行程序为:
+     0     1   2   3 4  5    6  7   8  9 
+$ ./test file1 -a -b -c code -d file2 -e file3
+ 扫描过程中，optind是下一个选项的索引, 非选项参数将跳过，同时optind增1。optind初始值为1。当扫描argv[1]时，为非选项参数，跳过，optind=2;扫描到-a选项时，下一个将要扫描的选项是-b,则optind更改为3；扫描到-b选项时，后面有参数（会认为-c为选项b的参数），optind=5，扫描到code非选项跳过optind=6；扫描到-d选项，后面没有参数，optind=7；扫描到file2非选项跳过optind=8；扫描到-e后面本来应该有参数，optind=9但是有空格所以e的参数为空。
+ 
+扫描结束后，getopt会将argv数组修改成下面的形式
+      0    1  2  3  4   5  6       7     8     9
+$ ./test -a -b -c -d -e file1 code file2 file3
+ 
+同时，optind会指向非选项的第一个参数，如上面，optind将指向file1
+代码如下：
+[cpp] view plain copy
+ 
+#include <unistd.h>  
+#include <stdio.h>  
+int main(int argc, char * argv[])  
+{  
+   int aflag=0, bflag=0, cflag=0;  
+   int ch;  
+printf("optind:%d，opterr：%d\n",optind,opterr);  
+printf("--------------------------\n");  
+   while ((ch = getopt(argc, argv, "ab:c:de::")) != -1)  
+   {  
+       printf("optind: %d,argc:%d,argv[%d]:%s\n", optind,argc,optind,argv[optind]);  
+       switch (ch) {  
+       case 'a':  
+           printf("HAVE option: -a\n\n");  
+      
+           break;  
+       case 'b':  
+           printf("HAVE option: -b\n");  
+           
+           printf("The argument of -b is %s\n\n", optarg);  
+           break;  
+       case 'c':  
+           printf("HAVE option: -c\n");  
+           printf("The argument of -c is %s\n\n", optarg);  
+  
+           break;  
+   case 'd':  
+      printf("HAVE option: -d\n");  
+      break;  
+   case 'e':  
+      printf("HAVE option: -e\n");  
+      printf("The argument of -e is %s\n\n", optarg);  
+      break;  
+  
+       case '?':  
+           printf("Unknown option: %c\n",(char)optopt);  
+           break;  
+       }  
+   }  
+   printf("----------------------------\n");  
+   printf("optind=%d,argv[%d]=%s\n",optind,optind,argv[optind]);  
+}  
+
+
+执行结果：
+shiqi@wjl-desktop:~/code$ vim getopt.c
+shiqi@wjl-desktop:~/code$ gcc getopt.c -o g
+shiqi@wjl-desktop:~/code$ ./g file1 -a -b -c code -d file2 -e file3
+optind:1，opterr：1
+--------------------------
+optind: 3,argc:10,argv[3]:-b
+HAVE option: -a
+
+optind: 5,argc:10,argv[5]:code
+HAVE option: -b
+The argument of -b is -c
+
+optind: 7,argc:10,argv[7]:file2
+HAVE option: -d
+
+optind: 9,argc:10,argv[9]:file3
+HAVE option: -e
+The argument of -e is (null)   
+
+----------------------------
+optind=6,argv[6]=file1        //while循环执行完后，optind=6
+
