@@ -15,18 +15,18 @@
 https://github.com/sipeed/maix_train/tree/master/pytorch/classifier
 
 ~~~ python
-classes = ('chair', 'people')
-dataset_path = "data/datasets"
-val_split_from_data = 0.1 # 10%
-batch_size = 4
-learn_rate = 0.001
-total_epoch = 100
-eval_every_epoch = 5
-save_every_epoch = 20
-dataload_num_workers = 2
-input_shape = (3, 224, 224)
-cards_id = [1, 2]
-param_save_path = './out/classifier_{}.pth'
+classes = ('chair', 'people')		#分类的标签名字，注意要和数据集中的文件夹相对应
+dataset_path = "data/datasets"		#训练集的路径
+val_split_from_data = 0.1 # 10%		#
+batch_size = 4						#
+learn_rate = 0.001	
+total_epoch = 100					#训练循环，总共需要训练100个循环
+eval_every_epoch = 5				#每个循环训练次数
+save_every_epoch = 20				#多少个循环保存一次
+dataload_num_workers = 2			#
+input_shape = (3, 224, 224)			#输出尺寸
+cards_id = [1, 2]					#使用的训练卡
+param_save_path = './out/classifier_{}.pth'	#参数保存路径
 ~~~
 
 cards_id 用 nvidia-smi 查看， 哪个显卡显存没有被占用就用哪个， 服务器4张显卡编号从0 到 4
@@ -58,6 +58,20 @@ cards_id 用 nvidia-smi 查看， 哪个显卡显存没有被占用就用哪个�
 
 ~~~
 
+~~~ c
+数据集文件夹结构
+── car
+│   ├── 20026.jpg
+...
+├── chizi
+│   ├── 19418.jpg
+...
+└── dog
+    ├── 19734.jpg
+...
+...
+~~~
+
 训练： 
 
 数据集：一个分类一个文件夹， 文件夹名字就是分类的名字
@@ -68,7 +82,28 @@ python classifier_resnet_train.py
 
 看 train loss 和 val loss， 当val loss不再下降， 就可以认为达到了最优， 每隔 save_every_epoch 个 epoch 就会保存一个模型参数到 out 文件夹
 
+训练结束后会在out目录下生成保存的网络参数模型参数，和onnx模型文件。
+
+~~~ bash
+out:
+	classifier_final.pth		#模型参数文件
+	classifier.onnx			   #模型
+~~~
+
 训练结束后， 可以测试图片， 执行 python classifier_resnet_test.py images_folder_path model_param_path
+
+~~~ bash
+#运行之前请确认classifier_resnet_train.py和classifier_resnet_test.py相关参数相同
+python classifier_resnet_test.py images_folder_path ./out/classifier_final.pth
+~~~
+
+```note: 训练和测试所用的设备需要相同。如果在gpu上训练，希望在gpu上部署，可以通过转换设备。```
+
+~~~ python
+< net.load_state_dict(torch.load(param_save_path))
+---
+> net.load_state_dict(torch.load(param_save_path,map_location='cpu'))
+~~~
 
 这会导出 onnx 模型文件， 以及ncnn模型， 这里需要编译[ncnn](https://github.com/Tencent/ncnn) ， 在build/tools/onnx 目录下得到 onnx2ncnn 工具
 
