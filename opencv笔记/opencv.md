@@ -216,6 +216,20 @@ int main()
 	return 0;
 }
 ~~~
+
+~~~ c++
+void rectangle(InputOutputArray img, Point pt1, Point pt2,
+                          const Scalar& color, int thickness = 1,
+                          int lineType = LINE_8, int shift = 0);
+void rectangle(CV_IN_OUT Mat& img, Rect rec,
+                          const Scalar& color, int thickness = 1,
+                          int lineType = LINE_8, int shift = 0);
+
+rectangle(matImage,Point(20,200),Point(200,300),Scalar(255,0,0),1,1,0);  
+//Rect(int a,int b,int c,int d)a,b为矩形的左上角坐标,c,d为矩形的长和宽  
+rectangle(matImage,Rect(100,300,20,200),Scalar(0,0,255),1,1,0);  
+~~~
+
  * 绘制直线
 
 
@@ -383,6 +397,42 @@ int main()
 
 points：输入信息，可以为包含点的容器(vector)或是Mat。
  返回包覆输入信息的最小正矩形。
+~~~ c++
+#include<opencv.hpp>
+#include<iostream>
+using namespace cv;
+using namespace std;
+int main(){
+    Mat src = imread("C:/Users/齐明洋/Desktop/7.jpg");
+    imshow("src", src);
+
+    Mat gray, bin_img;
+    cvtColor(src, gray, COLOR_BGR2GRAY);   //将原图转换为灰度图
+    imshow("gray", gray);
+
+    //二值化
+    threshold(gray, bin_img, 150, 255, THRESH_BINARY_INV);
+    imshow("bin_img", bin_img);
+    
+    //寻找最外围轮廓
+    vector<vector<Point> >contours;
+    findContours(bin_img, contours, RETR_EXTERNAL, CHAIN_APPROX_NONE);
+
+    //绘制边界矩阵
+    RNG rngs = { 12345 };
+    Mat dst = Mat::zeros(src.size(), src.type());
+    for (int i = 0; i < contours.size(); i++) {
+        Scalar colors = Scalar(rngs.uniform(0, 255), rngs.uniform(0, 255), rngs.uniform(0, 255));
+        drawContours(dst, contours, i, colors, 1);
+        Rect rects = boundingRect(contours[i]);
+        rectangle(dst, rects, colors, 2);
+    }
+    imshow("dst", dst);
+
+    waitKey(0);
+}
+
+~~~
 
 
 
@@ -392,3 +442,156 @@ points：输入信息，可以为包含点的容器(vector)或是Mat。
 
   返回包覆输入信息的最小斜矩形。
 
+  
+  ~~~ c++
+  #include<opencv.hpp>
+  #include<iostream>
+  #include<vector>
+  using namespace cv;
+  using namespace std;
+  int main() {
+    Mat src = imread("C:/Users/齐明洋/Desktop/7.jpg");
+    imshow("src", src);
+  
+    Mat gray, bin_img;
+    cvtColor(src, gray, COLOR_BGR2GRAY);   //将原图转换为灰度图
+    imshow("gray", gray);
+  
+    //二值化
+    threshold(gray, bin_img, 150, 255, THRESH_BINARY_INV);
+    imshow("bin_img", bin_img);
+  
+    //寻找最外围轮廓
+    vector<vector<Point> >contours;
+    findContours(bin_img, contours, RETR_EXTERNAL, CHAIN_APPROX_NONE);
+  
+    //绘制最小边界矩阵
+    RNG rngs = { 12345 };
+    Mat dst = Mat::zeros(src.size(), src.type());
+    Point2f pts[4];
+    for (int i = 0; i < contours.size(); i++) {
+        Scalar colors = Scalar(rngs.uniform(0, 255), rngs.uniform(0, 255), rngs.uniform(0, 255));
+        drawContours(dst, contours, i, colors, 1);
+  
+        RotatedRect rects = minAreaRect(contours[i]);
+        rects.points(pts);//确定旋转矩阵的四个顶点
+        for (int i = 0; i < 4; i++) {
+            line(dst, pts[i], pts[(i + 1) % 4], colors, 2);
+        }
+    }
+    imshow("dst", dst);
+  
+    waitKey(0);
+  }
+  ~~~
+  
+  C++: void calcHist(const Mat* images, int nimages, const int* channels, InputArray mask, OutputArray hist, int dims, const int* histSize, const float** ranges, bool uniform=true, bool accumulate=false )
+
+参数详解：
+
+onst Mat* images：输入图像
+
+ int nimages：输入图像的个数
+
+const int* channels：需要统计直方图的第几通道
+
+InputArray mask：掩膜，，计算掩膜内的直方图  ...Mat()
+
+OutputArray hist:输出的直方图数组
+
+int dims：需要统计直方图通道的个数
+
+const int* histSize：指的是直方图分成多少个区间，就是 bin的个数
+
+const float** ranges： 统计像素值得区间
+
+bool uniform=true::是否对得到的直方图数组进行归一化处理
+
+bool accumulate=false：在多个图像时，是否累计计算像素值得个数
+————————————————
+版权声明：本文为CSDN博主「水亦心」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/shuiyixin/article/details/80032167
+
+
+    我们需要把下面这个图像的直方图计算并画在画布上。一共有如下几个步骤：
+
+        1.创建一些矩阵；
+
+        2.加载原图像；
+
+        3.使用OpenCV函数 split() 将图像分割成3个单通道图像；
+
+        4.设定像素取值范围，我们知道像素值的范围是 [0,255]；
+
+        5.使用OpenCV函数calcHist() 分别计算三个通道的直方图；
+
+        6.创建显示直方图的画布并使用 normalize() 函数归一化直方图；
+
+        7.最后显示直方图并等待用户退出程序；
+~~~ c++
+#define INPUT_TITLE "input image"
+#define OUTPUT_TITLE "直方图计算"
+ 
+#include<iostream>
+#include<opencv2\opencv.hpp>
+ 
+using namespace std;
+using namespace cv;
+ 
+int main() {
+	Mat src, dst;
+        //加载图像
+        src = imread("D:/equalizeHist.jpg");
+	if (!src.data)
+	{
+		cout << "ERROR : could not load image.";
+		return -1;
+	}
+	namedWindow(INPUT_TITLE, CV_WINDOW_AUTOSIZE);
+	namedWindow(OUTPUT_TITLE, CV_WINDOW_AUTOSIZE);
+ 
+	imshow(INPUT_TITLE, src);
+ 
+	//分通道显示
+	vector<Mat> bgr_planes;
+	split(src, bgr_planes);
+ 
+	//设定像素取值范围
+	int histSize = 256;
+	float range[] = { 0,256 };
+	const float *histRanges = { range };
+ 
+        //三个通道分别计算直方图
+	Mat b_hist, g_hist, r_hist;
+	calcHist(&bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRanges, true, false);
+	calcHist(&bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRanges, true, false);
+	calcHist(&bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRanges, true, false);
+ 
+	//创建直方图画布并归一化处理
+        int hist_h = 400;
+	int hist_w = 512;
+	int bin_w = hist_w / histSize;
+	Mat histImage(hist_w, hist_h, CV_8UC3, Scalar(0, 0, 0));
+	normalize(b_hist, b_hist, 0, hist_h, NORM_MINMAX, -1, Mat());
+	normalize(g_hist, g_hist, 0, hist_h, NORM_MINMAX, -1, Mat());
+	normalize(r_hist, r_hist, 0, hist_h, NORM_MINMAX, -1, Mat());
+ 
+	//render histogram chart  在直方图画布上画出直方图
+	for (int i = 0; i < histSize; i++)
+	{
+		line(histImage, Point((i - 1)*bin_w, hist_h - cvRound(b_hist.at<float>(i - 1))), 
+			Point((i)*bin_w, hist_h - cvRound(b_hist.at<float>(i))), Scalar(255, 0, 0), 2, LINE_AA);
+		line(histImage, Point((i - 1)*bin_w, hist_h - cvRound(g_hist.at<float>(i - 1))),
+			Point((i)*bin_w, hist_h - cvRound(g_hist.at<float>(i))), Scalar(0, 255, 0), 2, LINE_AA);
+		line(histImage, Point((i - 1)*bin_w, hist_h - cvRound(r_hist.at<float>(i - 1))),
+			Point((i)*bin_w, hist_h - cvRound(r_hist.at<float>(i))), Scalar(0, 0, 255), 2, LINE_AA);
+	}
+ 
+        
+        imshow(OUTPUT_TITLE, histImage);
+ 
+	waitKey(0);
+	return 0;
+}
+
+~~~

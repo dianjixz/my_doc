@@ -90,3 +90,8 @@ eigen: 也是线性代数运算库，但完全用C++写，依赖库只有C++标�
 
 SP++ (Signal Processing in C++) 是一个关于信号处理与数值计算的开源C++程序库，该库提供了信号处理与数值计算中常用算法的C++实现。SP++中所有算法都以C++类模板方法实现，以头文件形式组织而成，所以不需要用户进行本地编译，只要将相关的头文件包含在项目中即可使用。”XXX.h”表示声明文件，”XXX-impl.h”表示对应的实现文件。所有的函数和类均位于名字空间”splab”中，因此使用SP++时要进行命名空间声明：”using namespace splab”。
 SP++项目地址：http://code.google.com/p/tspl/，所有算法以代码的形式发表在了“开源中国社区”，博客地址为：http://my.oschina.net/zmjerry/blog，若有找不到的文件，可以通过博客主页提供的“搜索博客”功能进行查找。
+<<<<<<< HEAD
+=======
+
+使用libjpeg库在LCD上显示图片 https://latelee.blog.csdn.net/article/details/6918543?utm_medium=distribute.pc_relevant_download.none-task-blog-baidujs-1.nonecase&depth_1-utm_source=distribute.pc_relevant_download.none-task-blog-baidujs-1.nonecase
+>>>>>>> 97ff2b4d515db0a10c8fafe8c9de7632c8e06ae2
