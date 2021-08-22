@@ -160,7 +160,8 @@ time make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- 2>&1 | tee build.log
 linux内核编译配置
 =================
 
-linux内核基于github上的版本https://github.com/Lichee-Pi/linux.git，分支为最新的zero-4.13.y  
+linux内核基于github上的版本,[分支为最新的zero-4.13.y](https://github.com/Lichee-Pi/linux.git)  
+https://github.com/Lichee-Pi/linux.git
 国内用户拉取这个仓库可能会比较慢，也可以指拉取但个分支：
 
 内核选项配置
@@ -305,7 +306,7 @@ static const struct spi_device_id m25p_ids[] = {
 
         { },
 };
-~~~~  
+~~~~
 然后我们添加xt25f128b flash的相关信息。  
 编辑drivers/mtd/spi-nor/spi-nor.c文件  
 添加信息如下：  
@@ -352,7 +353,7 @@ wget https://buildroot.org/downloads/buildroot-2017.08.tar.gz
 tar xvf buildroot-2017.08.tar.gz
 cd buildroot-2017.08/
 make menuconfig
-~~~  
+~~~
 配置
 ----
 首先配置工具链，因为之前开发uboot和内核都用到了自己下载的工具链，所以这里也配置成外部工具链。配置工具链的目的是不用在重复下载工具链了，如果你使用buildroot自带的工具链，那么buildroot在编译的过程中会下载工具链，对于国内用户来说，这个过程可能比较漫长，所以我们直接配置好本地的工具链。  
@@ -382,12 +383,12 @@ Flash分区规划
 =============
 
 这里 使用 xt25f128b, **16M SPI flash** 作为启动介质，规划分区如下：  
-| 分区序号 | 分区大小 | 分区作用 | 地址空间及分区名 |    
-|   ----  |  ----  |  ----   |  -----------  |  
-|mtd0     | 1MB    |spl+uboot|0x0000000-0x0100000 : “uboot”|  
-|mtd1     |64KB    |dtb文件  |0x0100000-0x0110000: “dtb”|  
-|mtd2     |4MB     |linux内核|0x0110000-0x0510000 : “kernel”|  
-|mtd3     |剩余     |根文件系统|0x0510000-0x2000000 : “rootfs”|  
+| 分区序号 | 分区大小 | 分区作用 | 地址空间及分区名 |
+|   ----  |  ----  |  ----   |  -----------  |
+|mtd0     | 1MB    |spl+uboot|0x0000000-0x0100000 : “uboot”|
+|mtd1     |64KB    |dtb文件  |0x0100000-0x0110000: “dtb”|
+|mtd2     |4MB     |linux内核|0x0110000-0x0510000 : “kernel”|
+|mtd3     |剩余     |根文件系统|0x0510000-0x2000000 : “rootfs”|
 
 根据上面的这个表，我门在下面的镜像制作时要用。如果使用到了其它的SPI flash也可以参考这个分区表。
 
@@ -527,30 +528,30 @@ flash下载速度约50KB/s，等待5分钟（16MB）或者10分钟（32MB），�
     U-Boot SPL 2017.01-rc2-00073-gdd6e8740dc-dirty (Mar 28 2021 - 01:54:30)
     DRAM: 64 MiB
     Trying to boot from sunxi SPI
-
+    
     U-Boot 2017.01-rc2-00073-gdd6e8740dc-dirty (Mar 28 2021 - 01:54:30 +0800) Allwinner Technology
-
+    
     CPU:   Allwinner V3s (SUN8I 1681)
     Model: Lichee Pi Zero
     DRAM:  64 MiB
     MMC:   SUNXI SD/MMC: 0
     SF: Detected xt25f128b with page size 256 Bytes, erase size 4 KiB, total 16 MiB
     *** Warning - bad CRC, using default environment
-
+    
     In:    serial@01c28000
     Out:   serial@01c28000
     Err:   serial@01c28000
 
 
     U-Boot 2017.01-rc2-00073-gdd6e8740dc-dirty (Mar 28 2021 - 01:54:30 +0800) Allwinner Technology
-
+    
     CPU:   Allwinner V3s (SUN8I 1681)
     Model: Lichee Pi Zero
     DRAM:  64 MiB
     MMC:   SUNXI SD/MMC: 0
     SF: Detected xt25f128b with page size 256 Bytes, erase size 4 KiB, total 16 MiB
     *** Warning - bad CRC, using default environment
-
+    
     In:    serial@01c28000
     Out:   serial@01c28000
     Err:   serial@01c28000
@@ -566,9 +567,9 @@ flash下载速度约50KB/s，等待5分钟（16MB）或者10分钟（32MB），�
     ## Flattened Device Tree blob at 41800000
        Booting using the fdt blob at 0x41800000
        Loading Device Tree to 42dfa000, end 42dff206 ... OK
-
+    
     Starting kernel ...
-
+    
     [    0.000000] Booting Linux on physical CPU 0x0
     [    0.000000] Linux version 4.10.15-licheepi-zero+ (nihao@nihao-XiaoXin) (gcc version 6.3.1 20170404 (Linaro GCC 6.3-2017.05) ) #6 SMP Sun Mar 28 08:51:06 CST     2021
     [    0.000000] CPU: ARMv7 Processor [410fc075] revision 5 (ARMv7), cr=10c5387d
@@ -734,7 +735,7 @@ flash下载速度约50KB/s，等待5分钟（16MB）或者10分钟（32MB），�
     [    5.845234] ---[ end trace d947ef19d0d7cd8d ]---
     Initializing random number generator... done.
     Starting network: OK
-
+    
     Welcome to Lichee Pi
     Lichee login: 
 
