@@ -1,0 +1,6 @@
+安装
+sudo apt-get install libncurses5-dev
+
+安装swig
+sudo apt install swig
+如果不安装以上的东西，则程序容易报错
