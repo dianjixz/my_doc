@@ -84,4 +84,29 @@ git config --global http.sslVerify false
     connect -H 192.168.1.100:8080 "$@"
 
     其他保持不变即可。而 http.proxy 设置同本文设置即可.
+    
+    
+    
+groupadd git
+useradd git -g git
+
+
+cd /home/git/
+mkdir .ssh
+chmod 755 .ssh
+touch .ssh/authorized_keys
+chmod 644 .ssh/authorized_keys
+
+
+cd /home
+mkdir gitrepo
+chown git:git gitrepo/
+cd gitrepo
+
+git init --bare runoob.git
+
+chown -R git:git runoob.git
+
+git clone ssh://git@127.0.0.1:xx/yy.git
+
 
