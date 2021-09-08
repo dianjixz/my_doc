@@ -52,7 +52,7 @@ time make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- 2>&1 | tee build.log
         -   load mmc 0:1 0x41800000 sun8i-v3s-licheepi-zero-dock.dtb;
             //从SD卡的boot分区内拉取sun8i-v3s-licheepi-zero-dock.dtb到内存0x41000000处
         -   bootz 0x41000000 （内核地址）- 0x41800000（dtb地址） 启动内核
-
+    
     启动参数解析
     :   -   console=ttyS0,115200 earlyprintk panic=5 rootwait
             //在串口0上输出信息
