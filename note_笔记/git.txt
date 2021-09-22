@@ -109,4 +109,6 @@ chown -R git:git runoob.git
 
 git clone ssh://git@127.0.0.1:xx/yy.git
 
+git config --local credential.helper store  #记录仓库帐号密码
+
 

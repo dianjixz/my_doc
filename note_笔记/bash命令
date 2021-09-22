@@ -102,3 +102,12 @@ Counting objects: 2437, done.
 注: 绿色字部分是命令执行后的结果.
 
 https://www.cnblogs.com/shines77/p/3460274.html
+
+
+
+pandoc --pdf-engine=xelatex README.md -o example13.pdf    转换md到pdf命令
+
+fc-cache -fv   刷新字体缓存
+/usr/share/fonts/truetype   字体目录
+
+
