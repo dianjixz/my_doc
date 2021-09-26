@@ -514,19 +514,19 @@ bool accumulate=false：在多个图像时，是否累计计算像素值得个�
 
 
     我们需要把下面这个图像的直方图计算并画在画布上。一共有如下几个步骤：
-
+    
         1.创建一些矩阵；
-
+    
         2.加载原图像；
-
+    
         3.使用OpenCV函数 split() 将图像分割成3个单通道图像；
-
+    
         4.设定像素取值范围，我们知道像素值的范围是 [0,255]；
-
+    
         5.使用OpenCV函数calcHist() 分别计算三个通道的直方图；
-
+    
         6.创建显示直方图的画布并使用 normalize() 函数归一化直方图；
-
+    
         7.最后显示直方图并等待用户退出程序；
 ~~~ c++
 #define INPUT_TITLE "input image"
@@ -595,3 +595,112 @@ int main() {
 }
 
 ~~~
+- opencv对二值图像进行颜色反色操作
+> bitwise_not(singleROI,singleROI);//颜色反转
+
+- opencv形态学运算
+开运算（Opening Operation），其实就是先腐蚀后膨胀的操作。
+作用：
+去除噪声，消除小物体
+在纤细点处分离物体
+平滑较大物体的边界的同时并不明显改变其面积
+闭运算：操作为先膨胀后腐蚀
+![](https://img-blog.csdnimg.cn/2018110717234546.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RpZWp1ODMzMA==,size_16,color_FFFFFF,t_70)
+
+
+作用：
+
+排除小型空洞（指黑色区域）
+平滑物体轮廓
+弥合（连接）窄的间断点，沟壑
+填补轮廓线断裂
+![](https://img-blog.csdnimg.cn/20181107173450544.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2RpZWp1ODMzMA==,size_16,color_FFFFFF,t_70)
+
+
+~~~ C++
+void morphologyEx( InputArray src, OutputArray dst,
+                                int op, InputArray kernel,
+                                Point anchor=Point(-1,-1), int iterations=1,
+                                int borderType=BORDER_CONSTANT,
+                                const Scalar& borderValue=morphologyDefaultBorderValue() );
+~~~
+一般来说，看前四个参数就行了，后面的就用默认值
+
+第一个参数 输入
+第二个参数 输出
+第三个参数 操作类型
+MORTH_OPEN                函数做开运算
+MORTH_CLOSE              函数做闭运算
+MORTH_GRADIENT       函数做形态学梯度运算
+MORTH_TOPHAT            函数做顶帽运算
+MORTH_BLACKHAT       函数做黑帽运算
+MORTH_DILATE              函数做膨胀运算
+MORTH_ERODE             函数做腐蚀运算
+
+第四个参数  内核类型    用getStructuringElement函数得到
+~~~ c++
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<iostream>
+using namespace std;
+using namespace cv;
+void main()
+{
+	Mat srcImg = imread("F:\\opencv_re_learn\\test.jpg");
+	if (!srcImg.data){
+		cout << "failed to read" << endl;
+		system("pause");
+		return;
+	}
+	imshow("src", srcImg);
+	Mat srcGray;
+	cvtColor(srcImg, srcGray, CV_BGR2GRAY);
+	Mat thresh;
+	threshold(srcGray, thresh, 230, 255, CV_THRESH_BINARY_INV);
+	imshow("thresh", thresh);
+	//自定义核
+	Mat element = getStructuringElement(MORPH_RECT,
+		Size(5, 5));
+	//开运算
+	Mat open_result;
+	morphologyEx(thresh, open_result, MORPH_OPEN,element);
+	imshow("开运算", open_result);
+	waitKey(0);
+}
+~~~
+~~~ c++
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+#include<iostream>
+using namespace std;
+using namespace cv;
+void main()
+{
+	Mat srcImg = imread("F:\\opencv_re_learn\\hand.jpg");
+	if (!srcImg.data){
+		cout << "failed to read" << endl;
+		system("pause");
+		return;
+	}
+	imshow("src", srcImg);
+	Mat srcGray;
+	cvtColor(srcImg, srcGray, CV_BGR2GRAY);
+	Mat thresh;
+	threshold(srcGray, thresh, 200, 255, CV_THRESH_BINARY_INV|
+		CV_THRESH_OTSU);
+	imshow("thresh", thresh);
+	//自定义核
+	Mat element = getStructuringElement(MORPH_RECT,
+		Size(5, 5));
+	//闭运算
+	Mat close_result;
+	morphologyEx(thresh, close_result, MORPH_CLOSE,element);
+	imshow("闭运算", close_result);
+	waitKey(0);
+}
+~~~
+
+- python3 opencv 图像二值化笔记（cv2.adaptiveThreshold）
+https://blog.csdn.net/laoyezha/article/details/106445437
