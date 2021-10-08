@@ -63,3 +63,66 @@ package_data = {
 'test':['data/*.dat'],
 }
 )
+
+
+
+https://docs.python.org/2/distutils/apiref.html
+
+
+
+The basic do-everything function that does most everything you could ever ask for from a Distutils method.
+
+The setup function takes a large number of arguments. These are laid out in the following table.
+
+|   argument name    |                            value                             |                             type                             |
+| :----------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+|       *name*       |                   The name of the package                    |                           a string                           |
+|     *version*      | The version number of the package; see [`distutils.version`](https://docs.python.org/2/distutils/apiref.html#module-distutils.version) |                           a string                           |
+|   *description*    |             A single line describing the package             |                           a string                           |
+| *long_description* |              Longer description of the package               |                           a string                           |
+|      *author*      |                The name of the package author                |                           a string                           |
+|   *author_email*   |           The email address of the package author            |                           a string                           |
+|    *maintainer*    | The name of the current maintainer, if different from the author. Note that if the maintainer is provided, distutils will use it as the author in `PKG-INFO` |                           a string                           |
+| *maintainer_email* | The email address of the current maintainer, if different from the author |                           a string                           |
+|       *url*        |               A URL for the package (homepage)               |                           a string                           |
+|   *download_url*   |                A URL to download the package                 |                           a string                           |
+|     *packages*     |   A list of Python packages that distutils will manipulate   |                      a list of strings                       |
+|    *py_modules*    |   A list of Python modules that distutils will manipulate    |                      a list of strings                       |
+|     *scripts*      | A list of standalone script files to be built and installed  |                      a list of strings                       |
+|   *ext_modules*    |           A list of Python extensions to be built            | a list of instances of [`distutils.core.Extension`](https://docs.python.org/2/distutils/apiref.html#distutils.core.Extension) |
+|   *classifiers*    |             A list of categories for the package             | a list of strings; valid classifiers are listed on [PyPI](https://pypi.org/classifiers). |
+|    *distclass*     | the [`Distribution`](https://docs.python.org/2/distutils/apiref.html#distutils.core.Distribution) class to use | a subclass of [`distutils.core.Distribution`](https://docs.python.org/2/distutils/apiref.html#distutils.core.Distribution) |
+|   *script_name*    | The name of the setup.py script - defaults to `sys.argv[0]`  |                           a string                           |
+|   *script_args*    |           Arguments to supply to the setup script            |                      a list of strings                       |
+|     *options*      |             default options for the setup script             |                         a dictionary                         |
+|     *license*      |                 The license for the package                  |                           a string                           |
+|     *keywords*     | Descriptive meta-data, see [**PEP 314**](https://www.python.org/dev/peps/pep-0314) |        a list of strings or a comma-separated string         |
+|    *platforms*     |                                                              |        a list of strings or a comma-separated string         |
+|     *cmdclass*     | A mapping of command names to [`Command`](https://docs.python.org/2/distutils/apiref.html#distutils.core.Command) subclasses |                         a dictionary                         |
+|    *data_files*    |               A list of data files to install                |                            a list                            |
+|   *package_dir*    |           A mapping of package to directory names            |                         a dictionary                         |
+
+
+
+
+
+*class* `distutils.core.``Extension`
+
+The Extension class describes a single C or C++ extension module in a setup script. It accepts the following keyword arguments in its constructor
+
+|     argument name      |                            value                             |       type        |
+| :--------------------: | :----------------------------------------------------------: | :---------------: |
+|         *name*         | the full name of the extension, including any packages — ie. *not* a filename or pathname, but Python dotted name |     a string      |
+|       *sources*        | list of source filenames, relative to the distribution root (where the setup script lives), in Unix form (slash- separated) for portability. Source files may be C, C++, SWIG (.i), platform-specific resource files, or whatever else is recognized by the **build_ext** command as source for a Python extension. | a list of strings |
+|     *include_dirs*     | list of directories to search for C/C++ header files (in Unix form for portability) | a list of strings |
+|    *define_macros*     | list of macros to define; each macro is defined using a 2-tuple `(name, value)`, where *value* is either the string to define it to or `None` to define it without a particular value (equivalent of `#define FOO` in source or `-DFOO` on Unix C compiler command line) | a list of tuples  |
+|     *undef_macros*     |            list of macros to undefine explicitly             | a list of strings |
+|     *library_dirs*     | list of directories to search for C/C++ libraries at link time | a list of strings |
+|      *libraries*       | list of library names (not filenames or paths) to link against | a list of strings |
+| *runtime_library_dirs* | list of directories to search for C/C++ libraries at run time (for shared extensions, this is when the extension is loaded) | a list of strings |
+|    *extra_objects*     | list of extra files to link with (eg. object files not implied by ‘sources’, static library that must be explicitly specified, binary resource files, etc.) | a list of strings |
+|  *extra_compile_args*  | any extra platform- and compiler-specific information to use when compiling the source files in ‘sources’. For platforms and compilers where a command line makes sense, this is typically a list of command-line arguments, but for other platforms it could be anything. | a list of strings |
+|   *extra_link_args*    | any extra platform- and compiler-specific information to use when linking obje*class* `distutils.core.``Extension`ct files together to create the extension (or to create a new static Python interpreter). Similar interpretation as for ‘extra_compile_args’. | a list of strings |
+|    *export_symbols*    | list of symbols to be exported from a shared extension. Not used on all platforms, and not generally necessary for Python extensions, which typically export exactly one symbol: `init` + extension_name. | a list of strings |
+|       *depends*        |         list of files that the extension depends on          | a list of strings |
+|       *language*       | extension language (i.e. `'c'`, `'c++'`, `'objc'`). Will be detected from the source extensions if not provided. |     a string      |

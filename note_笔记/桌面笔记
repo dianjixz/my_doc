@@ -175,7 +175,7 @@ echo 4 10 0 0 0x4 0x101 0 0 0 8 > param;
 echo 1 > start;
 echo 1 > /sys/class/disp/disp/attr/colorbar 
 
-
+echo 0 > /sys/class/disp/disp/attr/colorbar 
 
 cd /sys/kernel/debug/dispdbg ;
 echo disp0 > name; 

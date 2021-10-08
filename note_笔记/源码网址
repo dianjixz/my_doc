@@ -7,3 +7,20 @@ http://mirrors.nju.edu.cn/gnu/    gnu的全部软件包网址
 大老鼠 博客：https://www.cnblogs.com/juwan/p/14650733.html
 
 https://www.zhihu.com/question/27540025 机器学习算法库推荐？
+
+
+https://blog.csdn.net/ceasar11/article/details/19480351			arm ARM处理器NEON编程及优化技巧—左移右移等移位操作
+/*
+从RGB888转换成RGB565，假设RGB888的输入是用上面代码表示的形式，单独通道的分量保存在从寄存器d0到d2，结果保存到16-bit的RGB565格式到q2寄存器。 
+r   g   b    888
+d0  d1  d2
+rgb 565
+q2
+    vshll.u8     q2, d0, #8         @ 左移红色分量到16bit结果中的最重要的5bit 
+    vshll.u8     q3, d1, #8         @ 左移绿色分量数据到16bit最重要的8比特 
+    vsri.16      q2, q3, #5    @ 移位绿色分量，并插入到红色元素寄存器里。 
+    vshll.u8     q3, d2, #8         @ 左移红色分量到16bit结果中的最重要的8-bit 
+    vsri.16      q2, q3, #11   @ 把蓝色分量插入到红色和绿色分量后面 
+uint16x8_t vshll_n_u8 (uint8x8_t __a, const int __b);  
+uint16x4_t vsri_n_u16 (uint16x4_t __a, uint16x4_t __b, const int __c);
+*/
