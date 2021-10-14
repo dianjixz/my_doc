@@ -112,3 +112,20 @@ git clone ssh://git@127.0.0.1:xx/yy.git
 git config --local credential.helper store  #记录仓库帐号密码
 
 
+
+
+- git添加远程仓库
+> git remote add origin ssh://git@this.is.your.ip/~/test.git
+
+- 修改远程仓库 .git/config 配置,可以被提交
+> git config receive.denyCurrentBranch ignore
+
+- 更新文件
+> git reset --hard 
+
+
+
+
+
+
+

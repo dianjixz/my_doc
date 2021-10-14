@@ -61,3 +61,6 @@ echo -e "\033[?25l" > /dev/tty1
     \33[u 恢复光标位置
     \33[?25l 隐藏光标
     \33[?25h 显示光标
+
+> echo 0 > /sys/class/graphics/fbcon/cursor_blink
+> #关光标

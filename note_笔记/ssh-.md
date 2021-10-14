@@ -66,9 +66,19 @@ AllowUsers *                                                    设定允许的�
 
 
 
+### 开启密登陆
 
+使用命令（vim sshd_config），这个就是ssh的配置文件，也是我们需要改的文件，主要改下面这几个地方（前面四个都是有的，只需要将前面的注释去掉即可，最后一个自己添加下就行）
 
+RSAAuthentication yes 开启RSA验证
 
+PubkeyAuthentication yes 是否使用公钥验证
+
+AuthorizedKeysFile .ssh/authorized_keys 公钥的保存位置
+
+HostKey /etc/ssh/ssh_host_rsa_key
+
+PasswordAuthentication no 禁止使用密码验证登录（自己添加）
 
 
 
