@@ -114,3 +114,91 @@ fi
 fi
 
 
+
+
+
+
+
+
+
+
+#!/bin/sh
+#
+# Load mpp modules....
+#
+
+MODULES_DIR="/lib/modules/`uname -r`"
+
+start() {
+    printf "Load mpp modules\n"
+    insmod $MODULES_DIR/videobuf2-core.ko
+    insmod $MODULES_DIR/videobuf2-memops.ko
+    insmod $MODULES_DIR/videobuf2-dma-contig.ko
+    insmod $MODULES_DIR/videobuf2-v4l2.ko
+    insmod $MODULES_DIR/vin_io.ko
+
+    insmod $MODULES_DIR/sensor_power.ko
+    insmod $MODULES_DIR/sp2305_mipi.ko
+    insmod $MODULES_DIR/ov9732_mipi.ko
+    insmod $MODULES_DIR/vin_v4l2.ko
+    swapon /swap.swap
+    mmcp=`fdisk -l | grep /dev/mmcblk0p | wc -l`
+    if [ $mmcp == "3" ] ; then
+        echo -e "n\np\n635392\n\nw\n" | fdisk /dev/mmcblk0
+        mkfs.vfat /dev/mmcblk0p4
+        reboot
+    else
+        sleep 1 && sed -i "21,28d" /etc/init.d/S00mpp &
+    fi
+}
+
+stop() {
+    printf "Unload mpp modules\n"
+
+    rmmod $MODULES_DIR/sensor_power.ko
+
+    rmmod $MODULES_DIR/vin_v4l2.ko
+    rmmod $MODULES_DIR/sp2305_mipi.ko
+    rmmod $MODULES_DIR/ov9732_mipi.ko
+
+    rmmod $MODULES_DIR/vin_io.ko
+    rmmod $MODULES_DIR/videobuf2-v4l2.ko
+    rmmod $MODULES_DIR/videobuf2-dma-contig.ko
+    rmmod $MODULES_DIR/videobuf2-memops.ko
+    rmmod $MODULES_DIR/videobuf2-core.ko
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart|reload)
+        stop
+        start
+        ;;
+  *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
