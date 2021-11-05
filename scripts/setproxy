@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # for terminal
-export proxyserveraddr=127.0.0.1
+export proxyserveraddr=172.17.0.1
 export proxyserverport=8889
 export prxsock=1089
 export HTTP_PROXY="http://$proxyserveraddr:$proxyserverport/"

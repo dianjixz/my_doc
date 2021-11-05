@@ -18,7 +18,7 @@ mkfs.ext4 -b 4096 rootfs.img
 
 然后把 rootfs.img mount 到 刚刚新建的文件夹下
 
-mount rootfs.img /debian9 -o loop
+mount rootfs.img ./debian9 -o loop
 
 cd /debian9
 
@@ -66,7 +66,7 @@ umount 一下img
 
 cd
 
-umount /debian9
+umount ./debian9
 
 对img进行校验
 
@@ -108,3 +108,8 @@ e2fsck [-pacnydfvFV] [-b superblock] [-B blocksize] [-l|-L bad_blocks_file] [-C 
 - -V : 显示出目前 e2fsck 的版本
 - -y : 预先设定所有检查时的问题均回答[是]
 
+
+
+# riscv64系统rootfs制作说明
+
+https://wiki.debian.org/RISC-V#OS_.2F_filesystem_images

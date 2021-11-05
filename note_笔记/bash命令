@@ -110,4 +110,6 @@ pandoc --pdf-engine=xelatex README.md -o example13.pdf    转换md到pdf命令
 fc-cache -fv   刷新字体缓存
 /usr/share/fonts/truetype   字体目录
 
+bash-completion		tab补全插件
+
 

@@ -3,7 +3,7 @@
 ## 安装编译依赖包
 
 ~~~bash
-sudo apt-get install build-essential subversion git-core libncurses5-dev zlib1g-dev flex quilt libssl-dev xsltproc libxml-parser-perl mercurial bzr ecj cvs unzip lib32z1 lib32z1-dev lib32stdc++6 libstdc++6 -y
+sudo apt-get install build-essential subversion git-core libncurses5-dev zlib1g-dev flex quilt libssl-dev xsltproc libxml-parser-perl mercurial bzr ecj cvs unzip lib32z1 lib32z1-dev lib32stdc++6 libstdc++6 rsync busybox -y
 ~~~
 
 ## 降级gawk
