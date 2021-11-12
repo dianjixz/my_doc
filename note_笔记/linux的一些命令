@@ -238,7 +238,7 @@ https://www.cnblogs.com/zhoading/p/9602423.html
 
 linux interfaces配置文件详解
 https://blog.csdn.net/mountzf/article/details/52035499
-
+/etc/network/interfaces
 
 　　 auto lo
 　　 iface lo inet loopback
@@ -258,23 +258,37 @@ https://blog.csdn.net/mountzf/article/details/52035499
 在系统的终端处修改打印级别，例如，屏蔽所有的内核printk打印，那么只需要将第一个数值调到最小值1或0即可
 # echo 1 4 1 7 > /proc/sys/kernel/printk
 or
-# echo0 4 0 7 > /proc/sys/kernel/printk
+# echo 0 4 0 7 > /proc/sys/kernel/printk
 
 
 
+wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf -O/etc/wifi/sockets
+
+
+wpa_supplicant_overlay.conf:
+disable_scan_offload=1
+
+wpa_supplicant.conf:
+ctrl_interface=/etc/wifi/sockets
+disable_scan_offload=1
+update_config=1
+wowlan_triggers=any
+
+
+wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf -O/etc/sockets
 
 
 
+[D-BUS Service] 
+Name=fi.epitest.hostap.WPASupplicant  
+Exec=/sbin/wpa_supplicant -u -f /var/log/wpa_supplicant.log 
+User=root
 
 
-
-
-
-
-
-
-
-
+[D-BUS Service] 
+Name=fi.epitest.hostap.WPASupplicant  
+Exec=/sbin/wpa_supplicant -u -onl80211 -O/var/run/wpa_supplicant 
+User=root
 
 
 

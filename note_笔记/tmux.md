@@ -210,3 +210,210 @@ setw -g xterm-keys on
 #------------------------------------------------------------------------------#
 
 ~~~
+
+
+
+
+
+
+
+
+
+# tmux简洁教程及config关键配置
+
+[![img](https://cdn2.jianshu.io/assets/default_avatar/12-aeeea4bedf10f2a12c0d50d626951489.jpg)](https://www.jianshu.com/u/57bdea70aa86)
+
+[赤乐君](https://www.jianshu.com/u/57bdea70aa86)关注
+
+0.8682017.04.06 16:08:45字数 1,801阅读 36,253
+
+这个教程的目的是为了更好地使用tmux，作为一个小白，看了网上众多的资料后，感觉资料太多，质量也良莠不齐。在youtube上找了一个很好地系列教程，实际跟着做了一遍后tmux最有用的部分都学会了。有什么不懂得直接查查速查表即可。
+
+本次教程的环境是MAC OS 10.11. 关于如何安装tmux可以参考这两篇文章。
+
+[http://cenalulu.github.io/linux/tmux/](https://link.jianshu.com/?t=http://cenalulu.github.io/linux/tmux/) ： 了解session，window，pane的区别
+[http://harttle.com/2015/11/06/tmux-startup.html](https://link.jianshu.com/?t=http://harttle.com/2015/11/06/tmux-startup.html)
+
+这两篇是我个人觉得比较好的文章，可以看完这两篇文章后再来看我的教程。做一个梳理和总结。
+
+这个教程是我跟着视频做完的笔记，视频里有些内容因为时间问题不能用，我也做了相应的改进。建议最好还是把视频跟一遍，然后拿我的笔记用做复习。
+
+本教程参考的视频：[https://www.youtube.com/watch?v=FEfuXRTqINg](https://link.jianshu.com/?t=https://www.youtube.com/watch?v=FEfuXRTqINg)
+
+快捷键速查表：[https://tmuxcheatsheet.com](https://link.jianshu.com/?t=https://tmuxcheatsheet.com)
+
+# 1 Introduction
+
+为什么使用tmux？
+因为如果我们用terminal连接remote server。发生一些不可抗力，terminal关了的话，your work is GONE!
+
+但是tmux不一样，即使你关闭了tmux。下次重新attch的时候，你会发现之前的东西都还在。这是因为即使你关闭了tmux，它也还在服务器的后台运行。
+
+- prefix默认指的是ctrl键位和b键位，两个一起press，然后再按其他键位来实现不同的命令。在第4部分，我们会更改这个默认设置为ctrl+a，方便输入。在此之前默认都是ctrl+b
+
+举个栗子：
+**prefix + % :水平分割pane**
+上面这句话里的`+`号和`:`号可以无视。`:`号之后的内容是我写的注释。
+prefix是按下ctrl和b, 然后再按`%`键，这个`%`键就是shift+5。
+
+# 2 Panes
+
+分割pane
+
+- prefix + % :水平分割pane
+- prefix + " : 竖直分割pane
+
+退出
+
+- exit ： 退出一个pane，直接在shell里输入即可，这个比快捷键方便
+
+放大一个pane
+
+- prefix + z : 把当前一个pane放大（zoom in)。比如在用ls查看output的时候，因为一个pane可能空间太小，所以把这个pane放大，你可以把注意力全放在这个pane里。回到之前的多pane状态的话只需要重复一遍命令即可(zoom out)
+
+在pane之间switch
+
+- prefix + 上下左右的箭头 :这个说实话还是不方便，之后会有设置的方法来用鼠标选择pane
+
+resize the pane
+
+- prefix + （ctrl）+上下左右箭头 : 与上面命令不同的是，ctrl + b按完之后，不要松开ctrl，一直按着，然后再按箭头来调整。不过因为在mac下ctrl+箭头是切换屏幕，所以还得在偏好设置->键盘->快捷键->Mission Control里把对应的快捷键取消掉。
+
+# 3 Windows
+
+创建window
+
+- prefix + c : 创建一个新的window。最下面会多出window的编号。有*号所在的window就是当前正在操作的window。
+
+在不同的window间移动
+
+- prefix + 数字1，2，3 : 因为能看到不同window的数字编号，所以直接输入想去的window的数字编号即可
+
+关闭window
+
+- prefix + & ： 关闭当前window
+
+重命名window：因为创建新的window后，下面除了数字编号不同外window名称都是一样的。所以为了知道每一个window是什么，最好重命名一下。
+
+- prefix + , (逗号）：更改window名称。但是这里遇到一个问题。更名后，我随便使用ls或cd命令后，window名称会随着目录的不同而变化。google后发现这个是zsh下oh-my-zsh的特性。于是打开~/.zshrc, 讲DISABLE_AUTO_TITLE="true"这一行反注释掉。source ~/.zshrc后，测试更改的名称，发现一切正常。
+
+# 4 Configuration
+
+如果没有配置文件的话先创建: `touch ~/.tmux.conf`
+视频中的文件配置
+
+
+
+```bash
+# Send prefix
+set-option -g prefix C-a
+unbind-key C-a
+bind-key C-a send-prefix
+
+# Use Alt-arrow keys to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left previous-window
+bind -n S-Right next-window
+
+# Mouse mode
+set -g mode-mouse on
+set -g mouse-resize-pane on
+set -g mouse-select-pane on
+set -g mouse-select-window on
+
+# Set easier window split keys
+bind-key v split-window -h
+bind-key h split-window -v
+
+# Easy config reload
+bind-key r source-file ~/.tmux.conf \; display-message "tmux.conf reloaded"
+```
+
+首先，在更改了.tmux.conf后，在tmux里的快捷键没有变化。查找后发现是tmux只有在新建session的时候，才会去找tmux.conf文件。所以说，我之前创建的那些session都没有参考tmux.conf. 所以我就用`tmux lstmux kill-session -a`只保留当前session。再删除当前session `tmux kill-session -t py27`。这下删除了所有创建好的session。
+
+然后再次用`tmux new -s py27`创建一个新的名为`py27`的session。有提示了，但是错误提示显示没有mode-mouse命令。google之发现在2.1之后的tmux版本里，已经废除了这个命令。想要开启mouse mode的话，只需要一个句命令即可`set -g mouse on`。
+
+更新后如下
+
+
+
+```bash
+# Send prefix
+set-option -g prefix C-a
+unbind-key C-a
+bind-key C-a send-prefix
+
+# Use Alt-arrow keys to switch panes
+bind -n M-Left select-pane -L
+bind -n M-Right select-pane -R
+bind -n M-Up select-pane -U
+bind -n M-Down select-pane -D
+
+# Shift arrow to switch windows
+bind -n S-Left previous-window
+bind -n S-Right next-window
+
+# Mouse mode
+set -g mouse on
+
+
+# Set easier window split keys
+bind-key v split-window -h
+bind-key h split-window -v
+
+# Easy config reload
+bind-key r source-file ~/.tmux.conf \; display-message "tmux.conf reloaded"
+```
+
+**Send prefix**
+把prefix的ctrl+b变为了ctrl+a，因为这样按起来方便些。基本上用tmux的都改了这个。
+
+**Use Alt-arrow keys to switch panes**
+不用按prefix，直接用alt+箭头在pane之间switch。实际用过之后才发现真是太方便了！
+
+**Shift arrow to switch windows**
+不用按prefix，直接用shift+箭头在window之间switch。太方便了！
+
+**Mouse mode**
+开启鼠标模式。用鼠标就能切换window，pane，还能调整pane的大小，方便！
+
+**Set easier window split keys**
+这一部分是用来更方便切分pane的。prefix + v 代表竖着切，prefix + h 代表横着切。比起默认的切割方法不仅直观而且方便。
+
+**Easy config reload**
+下一次如果修改了.tmux.conf的设置的话，不用关掉tmux。直接用prefix+r,就能重新加载设置。
+
+# 5 Session
+
+查看所有的session（在terminal输入）
+
+- tmux ls : 这个命令是在terminal里输入的。当前正常运作中的tmux server会显示（attached）。没有的话就是已关闭，tmux server在后台运行。
+
+更名session（tmux状态下输入）
+
+- prefix + $ : 更名后好让自己知道每一个session是用来做什么的。通常一个session对应一个project
+
+创建session的时候直接命名(在terminal输入）
+
+- tmux new -s py35 : 新建一个名为py35的session
+
+断开一个session(detached) （tmux状态下输入）
+
+- prefix + d ：退出session。在只有一个window的状态下，直接输入exit也能退出
+
+重新连接某一个session wich name（在terminal输入）
+
+- tmux a -t py35 : 重新连接py35 session。这里的a是attach的意思
+
+偷懒连接上一个session（在terminal输入）
+
+- tmux a : 如果只有一个session的话，这个是最快的连接方法
+
+删除session（在terminal输入）
+
+- tmux kill-session -a -t py35 : 删除除了py35以外的所有session

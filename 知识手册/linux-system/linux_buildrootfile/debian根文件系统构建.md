@@ -70,11 +70,11 @@ umount ./debian9
 
 对img进行校验
 
-e2fsck -p -f linuxroot.img
+e2fsck -p -f rootfs.img
 
 对img大小进行重新设定
 
-resize2fs  -M linuxroot.img
+resize2fs  -M rootfs.img
 
 搞定了
 ————————————————
@@ -113,3 +113,14 @@ e2fsck [-pacnydfvFV] [-b superblock] [-B blocksize] [-l|-L bad_blocks_file] [-C 
 # riscv64系统rootfs制作说明
 
 https://wiki.debian.org/RISC-V#OS_.2F_filesystem_images
+
+
+
+
+
+
+
+nohub /home/xiao/nihao.sh &
+
+lib/ext2fs/ismounted.c:11:**#include<sys/sysmacros.h>** 
+lib/blkid/devname.c:15:**#include<sys/sysmacros.h>**
