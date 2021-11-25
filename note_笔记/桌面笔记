@@ -175,7 +175,7 @@ echo 4 10 0 0 0x4 0x101 0 0 0 8 > param;
 echo 1 > start;
 echo 1 > /sys/class/disp/disp/attr/colorbar 
 
-
+echo 0 > /sys/class/disp/disp/attr/colorbar 
 
 cd /sys/kernel/debug/dispdbg ;
 echo disp0 > name; 
@@ -284,4 +284,40 @@ dd if=/dev/zero of=/dev/sda bs=512 seek=$(( $(blockdev --getsz /dev/sdb) - 63 ))
 
 
 
+
+Debian更新系统时间
+ 
+A 更新源，并安装ntpdate：
+0.date 查看当前的系统时间
+1.sudo apt-get update 更新源
+2.sudo apt-get install ntpdate 安装ntpdate
+3.sudo ntpdate ntp1.aliyun.com 更新系统时间
+出现错误可以停止ntp服务再同步时系统时间
+/etc/init.d/ntp stop
+
+B 更新时区：
+4.date -R 可查看时区 不是08区，则更新时区
+5.sudo tzselect
+6.选择5 Asia
+7.选择9 China
+8.选择1 Beijing Time
+9.选择1 Yes
+
+C 更新系统变量：
+10.执行 sudo nano /etc/profile
+11.在export PATH 前加一行：export TZ='Asia/Shanghai'
+12.export PATH 添加：export PATH=$JAVA_HOME/bin:$TZ:$PATH
+13.Crtl+O写入、Ctrl+X退出
+14.执行：source /etc/profile更新系统变量
+
+15.再date查看时间，完成。
+ 
+debian10系统一键修改时区
+ 
+timedatectl set-timezone  Asia/Shanghai
+
+
+
+服务手册中文网址
+https://www.wenjiangs.com/doc/systemd-systemd-modules-load.service
 

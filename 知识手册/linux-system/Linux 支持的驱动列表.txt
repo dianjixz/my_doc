@@ -1,0 +1,125 @@
+ Linux 支持的驱动列表
+SATA
+SATA
+产品名称 芯片型号 驱动名称 是否支持
+ICH5/ICH6  ata_piix/ Y
+ICH7/ICH7R  ahci Y
+NForce  sata_nv  
+Silicon Image 3112/3114  sata_sil Y
+Silicon Image 3124  Sata_Sil24 N 2．4内核
+Silicon Image 3124  Sata_sil24 Y 2,6内核
+Aic8130  Stata_mv Y 2.6内核
+Highpro1104  hp1104  
+Highpro1108  hp1108  
+IDE/SATA RAID
+Promise乔鼎 www.promise.com.tw
+产品名称 芯片型号 驱动名称 是否支持 備註
+FastTrak TX2000  FastTrak Y
+FastTrak TX4000
+FastTrak S150 TX4
+FastTrak S150 TX2Plus
+FastTrak 378/SATA 378  ft3xx Y
+FastTrak TX2200
+FastTrak TX4200
+FastTrak TX2300
+FastTrak TX4300  ftsata2 Y
+PDC20319 ft3xx Y ASUS PSCH-L
+PDC20378 ft3xx Y
+FastTrak TX4310
+FastTrak S150  FastTrak2 Y SATAII
+    
+HightPoint www.hightpoint-tech.com
+产品名称 芯片型号 驱动名称 是否支持 备注
+RocketRAID 100/133  hpt37x2 Y
+RocketRAID 404/454
+RocketRAID 1640  hpt374 Y 2.6内核不支持1640
+RocketRAID 1820  hptmv Y
+RocketRAID 2220  Hptmv6 Y SATAII
+RocketRAID 2310   N SATAII
+    
+SCSI/RAID
+Adaptec www.adaptec.com
+产品名称 芯片型号 驱动名称 是否支持
+Adaptec 29320
+Adaptec 39320  aic79xx Y
+2120S  aacraid Y
+Adaptec 2130S  aacraid Y
+Dell 2610  aacraid Y
+ADAPTEC 2010S  Aacraid Y
+    
+LSI Logic www.lsilogic.com
+产品名称 芯片型号 驱动名称 是否支持
+LSI 20320-R  mptscsih Y IM, IS
+LSI 1030  Mptscsih Y Lsi logic /symbios logic 53c1030 ultra320 scsi
+NETWORK CARD
+Dlink
+产品名称 芯片型号 驱动名称 是否支持
+    
+    
+Marvell
+产品名称 芯片型号 驱动名称 是否支持
+88e8801  Sk98lin Y
+    
+
+Intel
+产品名称 芯片型号 驱动名称 是否支持
+Intel pro 1000  e1000 Y
+Intel 82547/82541  e1000 Y
+Intel 82540EB  e1000 Y
+
+3Com
+产品名称 芯片型号 驱动名称 是否支持
+    
+Broadcom
+产品名称 芯片型号 驱动名称 是否支持
+5721  tg3 Y
+
+
+1. 按键驱动
+\drivers\input\keyboard\utu2440_buttons.c
+
+2. LED驱动
+\drivers\char\utu2440-led.c
+
+3. DM9000网卡驱动
+\drivers\net\DM9000.c
+
+4. 串口(包含三个串口驱动0,1,2，对应设备名，/dev/s3c2410_serial0，/dev/s3c2410_serial1，/dev/s3c2410_serial2)
+\drivers\seria\s3c2410.c
+
+5.实时时钟RTC驱动
+\drivers\rtc\rtc-s3c.c
+
+6. 触摸屏驱动
+\drivers\input\touchscreen\s3c2410_ts.c
+
+7. YAFFS文件系统源代码目录
+\fs\yaffs2
+
+8. USB鼠标、键盘驱动
+\drivers\hid
+
+9. SD/MMC卡驱动程序目录(目前支持1G以上的)
+\drivers\mmc
+
+10. Nand flash驱动
+\drivers\mtd\nand
+
+11. UDA1341音频驱动目录(注意有两个目录)
+\sound\oss\uda1341.c
+\drivers\l3
+
+12. LCD驱动(包含3.5",4.3"，7", 8.4", 10.4"等大小的驱动)
+\drivers\video\s3c2410fb.c
+
+13. 优盘支持驱动
+\drivers\usb\storage
+
+14. 中星微USB摄像头驱动
+\drivers\media\gspca
+————————————————
+版权声明：本文为CSDN博主「奔跑的蜗牛0510」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/jia0511/article/details/7611754
+
+linux源码网址，可以在这里找到很多开源的驱动
+网址：https://elixir.bootlin.com/linux/latest/source

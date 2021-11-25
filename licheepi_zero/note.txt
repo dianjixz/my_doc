@@ -1,0 +1,32 @@
+ ### 第一种配置(默认配置)
+
+使用buildroot自带的工具链编译,好处是不用下载编译工具链.
+
+- 配置Target options
+
+![](/home/nihao/work/my_doc/image/licheepi_zero_spi_tag.png)
+
+- 配置Toolchain
+
+![](/home/nihao/work/my_doc/image/licheepi_zero_spi_tool.png)
+
+
+
+
+### 第二种配置(自定义配置,可选)
+
+
+![](/home/nihao/work/my_doc/image/licheepi_zero_spi_zidongyi.png)
+
+
+
+~~~ bash
+#当使用自定义工具链时,会出现一个
+#freadahead.c:92:3: error: #error "Please port gnulib freadahead.c to your platform! Look at the definition of fflush, fread, ungetc on your system, then report this to bug-gnulib."报错
+#解决可以参考https://blog.csdn.net/Jun626/article/details/104870430/
+#首先进入output/build/host-m4-1.4.18文件目录下
+sed -i 's/IO_ftrylockfile/IO_EOF_SEEN/' lib/*.c
+echo "#define _IO_IN_BACKUP 0x100" >> lib/stdio-impl.h
+#输入完以上命令后,返回工程目录,继续make就能编译成功.
+#make clean后编译会继续报这个错误,继续运行上面修补命令即可
+~~~

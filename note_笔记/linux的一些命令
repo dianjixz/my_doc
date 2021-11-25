@@ -24,9 +24,6 @@ resize2fs  -p linuxroot.img
 sudo watch -n 5 pkill -USR1 ^dd$
 
 
-<<<<<<< HEAD
-
-=======
 动态调整分区大小的命令：
 tunefs - 调整现有的UFS文件系统
 growfs - 扩展现有的UFS文件系统
@@ -125,12 +122,6 @@ FreeBSD#cd /etc/rc.d
 FreeBSD#./sshd start|stop|restart
 或直接输入完整的路径并带上命令操作：
 FreeBSD#/etc/rc.d/sshd start|stop|restart
-
- 
-
-================ End
->>>>>>> ede77b29b79a95ecea232cd479c0c5567c520fff
-
 
 
 
@@ -238,7 +229,7 @@ https://www.cnblogs.com/zhoading/p/9602423.html
 
 linux interfaces配置文件详解
 https://blog.csdn.net/mountzf/article/details/52035499
-
+/etc/network/interfaces
 
 　　 auto lo
 　　 iface lo inet loopback
@@ -258,24 +249,42 @@ https://blog.csdn.net/mountzf/article/details/52035499
 在系统的终端处修改打印级别，例如，屏蔽所有的内核printk打印，那么只需要将第一个数值调到最小值1或0即可
 # echo 1 4 1 7 > /proc/sys/kernel/printk
 or
-# echo0 4 0 7 > /proc/sys/kernel/printk
+# echo 0 4 0 7 > /proc/sys/kernel/printk
+
+
+
+wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf -O/etc/wifi/sockets
+
+
+wpa_supplicant_overlay.conf:
+disable_scan_offload=1
+
+wpa_supplicant.conf:
+ctrl_interface=/etc/wifi/sockets
+disable_scan_offload=1
+update_config=1
+wowlan_triggers=any
+
+
+wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf -O/etc/sockets
+
+
+
+[D-BUS Service] 
+Name=fi.epitest.hostap.WPASupplicant  
+Exec=/sbin/wpa_supplicant -u -f /var/log/wpa_supplicant.log 
+User=root
+
+
+[D-BUS Service] 
+Name=fi.epitest.hostap.WPASupplicant  
+Exec=/sbin/wpa_supplicant -u -onl80211 -O/var/run/wpa_supplicant 
+User=root
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+../configure CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ AR=aarch64-linux-gnu-ar RANLIB=aarch64-linux-gnu-ranlib --host=aarch64-linux-gnu --build=arm64 --disable-ipv6 --prefix=/home/nihao/tool/Python-3.9.5/build/nihao ac_cv_file__dev_ptc=no ac_cv_file__dev_ptmx=no --eable-loadable-sqlite-extensions
 
 
 

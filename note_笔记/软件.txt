@@ -10,8 +10,9 @@ iftop		用于实时查看网卡流量
 sar		用于实时查看网卡流量
 
 
+bashtop		linux酷炫电脑状态显示软件
 
-
+nmtui linux终端可视化联网界面
 
 
 
