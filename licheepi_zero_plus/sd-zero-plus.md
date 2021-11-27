@@ -103,6 +103,8 @@ git clone https://github.com/Lichee-Pi/linux.git
 
 cd linux  
 
+git checkout s3-5.3-rc2
+
 make ARCH=arm licheepi_zero_plus_defconfig  
 
 make ARCH=arm menuconfig   #add bluethooth, etc.  

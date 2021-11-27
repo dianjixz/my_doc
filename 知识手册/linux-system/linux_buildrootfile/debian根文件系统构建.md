@@ -18,7 +18,7 @@ mkfs.ext4 -b 4096 rootfs.img
 
 然后把 rootfs.img mount 到 刚刚新建的文件夹下
 
-mount rootfs.img ./debian9 -o loop
+sudo mount rootfs.img ./debian9 -o loop
 
 cd /debian9
 
@@ -77,6 +77,28 @@ e2fsck -p -f rootfs.img
 resize2fs  -M rootfs.img
 
 搞定了
+
+~~~ bash
+if [ -d ./debian9 ] ; then
+echo "find dir!"
+else
+mkdir ./debian9
+fi
+dd if=/dev/zero of=rootfs.img bs=1M count=2048
+mkfs.ext4 -b 4096 rootfs.img
+sudo mount rootfs.img ./debian9 -o loop
+
+sudo umount ./debian9
+e2fsck -p -f rootfs.img
+resize2fs  -M rootfs.img
+
+
+~~~
+
+
+
+
+
 ————————————————
 版权声明：本文为CSDN博主「maze_linux」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/u012839187/article/details/78092998
@@ -110,6 +132,18 @@ e2fsck [-pacnydfvFV] [-b superblock] [-B blocksize] [-l|-L bad_blocks_file] [-C 
 
 
 
+需要安装的软件包:
+
+~~~ bash
+network-manager wpasupplicant openssh-server vim tree net-tools 
+~~~
+
+
+
+
+
+
+
 # riscv64系统rootfs制作说明
 
 https://wiki.debian.org/RISC-V#OS_.2F_filesystem_images
@@ -124,3 +158,24 @@ nohub /home/xiao/nihao.sh &
 
 lib/ext2fs/ismounted.c:11:**#include<sys/sysmacros.h>** 
 lib/blkid/devname.c:15:**#include<sys/sysmacros.h>**
+
+
+
+在系统的终端处修改打印级别，例如，屏蔽所有的内核printk打印，那么只需要将第一个数值调到最小值1或0即可
+~~~ bash
+# echo 1 4 1 7 > /proc/sys/kernel/printk
+or
+
+# echo 0 4 0 7 > /proc/sys/kernel/printk
+~~~
+
+Load the module by running:
+
+depmod -a && modprobe awusb
+
+
+
+```shell
+sudo nmcli dev wifi connect Sipeed_2.4G password aPy5W9x. wep-key-type key ifname wlan0
+```
+
