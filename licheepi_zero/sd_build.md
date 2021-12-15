@@ -20,6 +20,10 @@ vim /etc/bash.bashrc
 source /etc/bash.bashrc
 arm-linux-gnueabihf-gcc -v
 sudo apt-get install device-tree-compiler
+
+sudo apt install flex python2 swig python2-dev bison libncurses5-dev libncursesw5-dev
+sudo apt-get install libssl-dev bc gawk
+#安装依赖包
 ~~~~
 
 下载编译Uboot

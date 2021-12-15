@@ -14,9 +14,18 @@ bashtop		linux酷炫电脑状态显示软件
 
 nmtui linux终端可视化联网界面
 
+neofetch	终端查看发行版的脚本
 
 
+ping :
+	inetutils-ping
+	
+ifconfig  :
+	net-tools
 
+rsync:文件同步RSYNC=rsync-3.1.3
+	交叉编译要用低版本的https://blog.csdn.net/weixin_42892101/article/details/104224587
+	
 
 --   Media I/O: 
 --     ZLib:                        /lib64/libz.so (ver 1.2.11)

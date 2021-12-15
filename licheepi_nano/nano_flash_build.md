@@ -31,6 +31,10 @@ PATH="$PATH:/opt/gcc-linaro-7.2.1-2017.11-x86_64_arm-linux-gnueabi/bin"
 
 # 使路径生效
 source /etc/bash.bashrc
+
+sudo apt install flex python2 swig python2-dev bison libncurses5-dev libncursesw5-dev
+sudo apt-get install libssl-dev bc gawk
+#安装依赖包
 ~~~
 终端输入:arm-linux-gnueabi-gcc -v  
 如果显示出版本信息，那么工具链就安装成功了。  
