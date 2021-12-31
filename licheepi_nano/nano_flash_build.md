@@ -108,11 +108,14 @@ linux编译
 克隆源代码
 --------
 ~~~
-git clone https://github.com/Icenowy/linux.git
+git clone https://github.com/Lichee-Pi/linux.git
 #克隆linux分支
 
 git branch -a
-#查看全部的分支
+#查看全部的分支,按q退出
+git checkout nano-5.2-flash
+
+
 
 ~~~
 
@@ -120,7 +123,7 @@ git branch -a
 配置
 ---
 首先选用默认配置  
-> make ARCH=arm f1c100s_nano_linux_defconfig
+> make ARCH=arm licheepi_nano_defconfig
 
 编译
 ---

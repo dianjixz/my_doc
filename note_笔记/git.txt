@@ -124,7 +124,10 @@ git config --local credential.helper store  #记录仓库帐号密码
 > git reset --hard 
 
 
-
+git 添加远程仓库示例
+[remote "server"]
+	url = ssh://dianjixz@192.168.0.104:2678/mnt/wd2T/lgx-sdk/my_git/v83x-maixpy3-steam.git
+	fetch = +refs/heads/*:refs/remotes/server/*
 
 
 
