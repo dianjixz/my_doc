@@ -35,3 +35,7 @@ https://www.celinuxforum.org/                                           #CE Linu
 eLinux.org 是 Linux 基金会下属 Consumer Electronics Linux Forum 维护的一个 Embedded Linux Wiki。该 Wiki 全面系统地梳理了嵌入式 Linux 方方面面的知识。
 
 ChinaUnix博客   http://blog.chinaunix.net/uid-31087949-id-5760669.html         描述linux wifi sdio设备驱动
+
+
+
+https://www.kernel.org/doc/html/v4.16/process/howto.html

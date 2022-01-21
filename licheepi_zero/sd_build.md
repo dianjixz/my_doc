@@ -194,3 +194,10 @@ $ 有时候构建会出现莫名其妙的错误，make clean下会ok？
 ![](https://img-blog.csdnimg.cn/20190511133122919.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0p1bjYyNg==,size_16,color_FFFFFF,t_70)
 
 ![](https://img-blog.csdnimg.cn/20190511133202574.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0p1bjYyNg==,size_16,color_FFFFFF,t_70)
+
+Number  Start (sector)   End (sector)  Size    Code  Name 
+  1      49152      49663  256.0 KiB  0700  env 
+  2      49664      61951  6.0 MiB   0700  boot 
+  3      61952      225791  80.0 MiB   0700  swap 
+  4      225792      635391  200.0 MiB  0700  rootfs 
+  5      635392     61069311  28.8 GiB   0700  UDISK
