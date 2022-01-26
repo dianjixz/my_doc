@@ -19,3 +19,289 @@ https://www.cnblogs.com/zuiyirenjian/archive/2012/08/11/2633675.html
 
 
 https://www.iteye.com/blog/davidlee1986-1919416
+
+
+
+# unison
+
+一:Unison简介
+Unison是windows和unix平台下都可以使用的文件同步工具，它能使两个文件夹（本地或网络上的）保持内容的一致。Unison有文字界面和图形界面，这里只介绍如何在文字界面下使用. unison拥有其它一些同步工具或文件系统的相同特性，但也有自己的特点：
+   跨平台使用；
+   对内核和用户权限没有特别要求；
+   unison是双向的，它能自动处理两分拷贝中更新没有冲突的部分，有冲突的部分将会显示出来让用户选择更新策略；
+   只要是能连通的两台主机，就可以运行unison，可以直接使用socket连接或安全的ssh连接方式，对带宽的要求不高，使用类似rsync的压缩传输协议。
+
+二:安装unison
+unison各种版本下载地址：
+http://www.seas.upenn.edu/~bcpierce/unison//download.html
+unison编译器下载地址：
+http://caml.inria.fr/pub/distrib/ocaml-3.10
+其它有用链接；
+http://worldhello.net/doc/bcp/unison.html
+http://www.seas.upenn.edu/~bcpierce/unison//contrib.html
+http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#rshmeth
+http://linux.chinaunix.net/bbs/viewthread.php?tid=888250&extra=page%3D1%26amp%3Bfilter%3Dreward
+从以上地址可以下载各种平台,各种版本的unison,有基于源码安装的,有二进制的,我下载的是二进制的,可以直接使用.这里介绍源码安装:
+源码安装unison
+Linux下从源码包编译安装，需要一个叫做Objective Caml compiler的工具，版本至少3.0.7，可以从这里下载：http://caml.inria.fr/
+Ocaml安装脚本如下：
+\# tar -zxf ocaml-3.09.3.tar.gz
+\# cd ocaml-3.09.3
+\# ./configure
+\# make world opt
+\# make install
+Unison对版本要求很高，进行同步的两台主机需要相同版本的unison，所以这里使用和windows一致的版本2.13.16，unison-2.13.16.tar.gz
+安装脚本如下：
+\# tar -zxf unison-2.13.16.tar.gz
+\# cd unison-2.13.16
+\# make UISTYLE=text
+\# make install
+之后将生成可执行文件unison，将其cp到系统PATH即可。
+\# cp ./unison /usr/local/bin
+
+三:配置双机ssh信任
+由于unison在远程同步文件夹要登陆远程服务器,因此要配置两机互相信任
+本例假设本地机为：10.178.1.132(linux)  远程机：10.178.1.110(solaris)
+
+\1.  在两台机器上创建 RSA密钥
+以下操作要在本地机和远程机上都执行一遍
+  （1）以 root 用户登录
+  （2）在 root 用户的 主目录内创建.ssh 目录并设置正确的权限
+  [root@gsgatzhapp1 ~]# mkdir ~/.ssh
+  [root@gsgatzhapp1 ~]# chmod 700 ~/.ssh
+ （3）使用 ssh-keygen 命令生成第 2 版本的 SSH 协议的 RSA 密钥
+  [root@gsgatzhapp1 ~]# ssh-keygen -t rsa
+  Generating public/private rsa key pair.
+  Enter file in which to save the key (/root/.ssh/id_rsa):
+  Enter passphrase (empty for no passphrase):
+  Enter same passphrase again:
+  Your identification has been saved in /root/.ssh/id_rsa.
+  Your public key has been saved in /root/.ssh/id_rsa.pub.
+  The key fingerprint is:
+  17:e4:7c:79:8d:a0:00:3b:d9:f7:7a:56:f3:ac:54:4d oracle@gsgatzhapp1
+  在提示保存私钥（key）和公钥（public key）的位置时，使用默认值。如果需要私钥密码（passphrase），则输入一个私钥密码（如果使用私钥密码，使用 ssh 执行远程命令时需要输入私钥密码，因此，本案例中未使用私钥密码），因此，直接回车即可。
+
+  \2. 添加密钥到授权密钥文件（authorized key file）中
+  （1）以 root 用户登录
+  （2）在本地机上执行
+   [root@gsgatzhapp1 ~] # cd ~/.ssh
+   [root@gsgatzhapp1.ssh]#ssh 10.178.1.132 cat /root/.ssh/id_rsa.pub >> authorized_keys
+   [oracle@gsgatzhapp1.ssh]#ssh 10.178.1.110 cat /root/.ssh/id_rsa.pub >> authorized_keys
+   [oracle@gsgatzhapp1.ssh]#scp authorized_keys 10.178.1.110:/root/.ssh/
+   [oracle@gsgatzhapp1 .ssh]# chmod 600 /root/.ssh/authorized_keys
+ （3）在远程机10.178.1.110 上：
+   bash-2.05# chmod 600 /root/.ssh/authorized_keys
+ （4）测试
+   完成后，在 gsgatzhapp1 上执行：
+   [root@gsgatzhapp1 ~]# ssh 10.178.1.132 date
+   [root@gsgatzhapp1 ~]#ssh 10.178.1.110 date
+   如果不需要输入密码就出现系统日期，说明 SSH 配置成功。
+   
+四:unison的使用
+
+Unison可以在一台主机上使用，同步两个文件夹，也可以在网络上是用。
+1:本地使用
+使用方法：
+\#unison 111 222 #同步本地的111和222文件夹
+Contacting server...
+Looking for changes
+Warning: No archive files were found for these roots. This can happen either
+because this is the first time you have synchronized these roots,
+or because you have upgraded Unison to a new version with a different
+archive format.
+Update detection may take a while on this run if the replicas are
+large.
+Unison will assume that the 'last synchronized state' of both replicas
+was completely empty. This means that any files that are different
+will be reported as conflicts, and any files that exist only on one
+replica will be judged as new and propagated to the other replica.
+If the two replicas are identical, then no changes will be reported.
+Press return to continue.[<spc>] Reconciling changes
+111     222       
+     <---- file    aaaaaaaaaaaaa [f] ?
+Commands:
+ <ret> or f or <spc>  follow unison's recommendation (if any)
+ I           ignore this path permanently
+ E           permanently ignore files with this extension
+ N           permanently ignore paths ending with this name
+ m           merge the versions
+ d           show differences
+ x           show details
+ l           list all suggested changes
+ p or b        go back to previous item
+ g           proceed immediately to propagating changes
+ q           exit unison without propagating any changes
+ /           skip
+ \> or .        propagate from left to right
+ < or ,        propagate from right to left
+ 
+<---- file    aaaaaaaaaaaaa [f] f
+ 
+Proceed with propagating updates? [] y
+Propagating updates
+ 
+UNISON started propagating changes at 15:06:08 on 27 Aug 2007
+[BGN] Copying aaaaaaaaaaaaa
+ from /222
+ to /111
+[END] Copying aaaaaaaaaaaaa
+UNISON finished propagating changes at 15:06:08 on 27 Aug 2007
+Saving synchronizer state
+Synchronization complete (1 item transferred, 0 skipped, 0 failures)
+如果检测到两个文件夹有所不同，unison会提示，让你选择相应的操作。如上例所示.
+表示右边222的文件夹有新的文件，是否同步到左边的111文件夹，f表示force，然后将确认,进行更新,如果输入？会有更详细的介绍。
+
+2: unison远程使用
+使用方法：
+\# unison <本地目录> ssh://remotehostname(IP)/<远程目录的绝对路径>
+例如:
+\# unison /home/AAA ssh://username@remotehostname(ip)//DB/path/BBB
+表示将本机的目录/home/AAA和远端主机的/DB/path/BBB进行同步。一般的，需要两台机能ssh连接。
+注意 在主机和目录间又多加了一个 "/"
+
+3:unison参数说明
+Unison有很多参数,这里只介绍经常使用的几个,详细的请参看unison手册:
+"   -testserver
+测试连通性，连接到服务器即退出。示例:
+$ unison / ssh://opensou1@bluehost/  -servercmd=~/bin/unison -testserver
+如果服务器端 unison 可执行文件不在默认目录下，甚至没有 unison 命令（需要你编译一个上传到服务器），则需要使用 -servercmd 参数告诉要执行的服务器 unison 命令位置。
+使用 -testserver 参数，则成功链接即退出，也不会去执行目录的比较等后续操作。
+"   -servercmd xxx
+告诉 unison， 服务器端的 unison 命令是什么。参见上面的示例。
+"   -auto
+接受缺省的动作，然后等待用户确认是否执行。
+"   -batch
+batch mode, 全自动模式，接受缺省动作，并执行。
+"   -ignore xxx
+增加 xxx 到忽略列表中
+"   -ignorecase [true|false|default]
+是否忽略文件名大小写
+"   -follow xxx
+是否支持对符号连接指向内容的同步
+"   owner = true (保持同步过来的文件属主)
+"   group = true (保持同步过来的文件组信息)
+"   perms = -1  (保持同步过来的文件读写权限)
+"   repeat = 1  (间隔1秒后,开始新的一次同步检查)
+"   retry = 3  (失败重试)
+"   sshargs = -C (使用ssh的压缩传输方式)
+"   xferbycopying = true
+ 
+"   -immutable xxx
+不变目录，扫描时可以忽略
+"   -silent
+安静模式
+"   -times
+同步修改时间
+"   -path xxx 参数
+只同步 -path 参数指定的子目录以及文件，而非整个目录。-path 可以多次出现,例如
+ unison /home/username ssh://remotehost//home/username \
+   -path shared \
+   -path pub \
+   -path .netscape/bookmarks.html
+
+4:通过配置文件来使用unison
+尽管可以完全通过命令行的方式来指定unison运行所需要的参数，但我们还是推荐使用配置文件来进行配置使用unison，原因很简单，看配置文件比看命令行容易理解，而且可管理性更强。
+默认的配置文件夹位于~currentuser/.unison，即当前用户的home目录下，windows则位于C:\Documents and Settings\currentuser\.unison，默认的配置文件名是default.prf.
+运行这样的命令:
+\#unison exitgogo
+Unison将默认读取~currentuser/.unison/exitgogo.prf文件里的配置信息.我的配置信息在/root/.unison/exitgogo.prf,因此我们可以根据上面参数的介绍,把所有的参数配置信息写入到一个.prf的文件中.
+下面是我的一个web应用中两个文件夹同步的配置信息:
+root = /sina/webdata
+root = ssh://root@192.168.60.121//sina/webdata
+\#force =/sina/webdata
+ignore = Path as/*
+\#prefer = ssh://root@192.168.60.121//sina/webdata
+batch = true
+\#repeat = 1
+\#retry = 3
+owner = true
+group = true
+perms = -1
+fastcheck=false
+rsync =false
+\#debug=verbose
+sshargs = -C
+xferbycopying = true
+log = true
+logfile = /root/.unison/sina_122.1547.log
+说明如下:
+两个root表示需要同步的文件夹
+force表示以本地的/var/www/bbsnew文件夹为标准，将该目录同步到远端。注意,如果指定了force参数,那么unison就变成了单项同步了,也就是说会以force指定的文件夹为准进行同步.
+Unison本身是可以双向同步的,但是要做到双向同步,就不要设置force参数,如果设置了force参数,就成了单项同步了,此时unison类似与sync.
+Unison双向同步基本原理是:假如有A B两个文件夹,A文件夹把自己的改动同步到B,B文件夹也把自己的改动同步到A,最后A B两文件夹的内容相同,是 A B文件夹的合集.
+Unison双向同步的一个缺点是,对于一个文件在两个同步文件夹中都被修改时,unison是不会去同步的,因为unison无法判断以那个为准.
+ignore = Path表示忽略/sina/webdata下面的WEB-INF/tmp目录,即同步时不同步它。
+batch = true,表示全自动模式，接受缺省动作，并执行
+-fastcheck true表示同步时使用文件的创建时间来比较两地文件，如果这个选项为false，unison则将比较两地文件的内容.建议设置为true
+log = true表示在终端输出运行信息。
+logfile则指定了同时将输出写入log文件。
+
+五:unison FAQ
+如何在和远程服务器同步大量数据，上传一部分数据后，超时：
+9% 559:15 ETARead from remote host bluehost: Connection reset by peer
+Fatal error: Lost connection with the server
+实际操作中，最好的方法是,第一次先把要上传的文件打成包，用 ftp 上传，然后展开到服务器中，之后执行一次 unison 同步即可。
+ 
+原文地址 http://www.263mail.com.cn/blog/ + http://ixdba.blog.51cto.com/2895551/584334
+
+完！
+
+
+
+[unison@server2 ~]$ vim /home/unison/.unison/default.prf
+
+
+#Unison preferences file
+root = /home/unison/test
+root = ssh://unison@192.168.137.61//home/unison/test/
+#force =
+#ignore =
+batch = true
+#repeat = 1
+#retry = 3
+owner = true
+group = true
+perms = -1
+fastcheck = false
+rsync = false
+sshargs = -C
+xferbycopying = true
+log = true
+logfile = /home/unison/.unison/unison.log
+
+
+相关注解如下：
+force表示会以本地所指定文件夹为标准，将该目录同步到远端。这里需要注意，如果指定了force参数，那么Unison就变成了单项同步了，也就是说会以force指定的文件夹为准进行同步，类似与rsync。
+Unison双向同步基本原理是：假如有A B两个文件夹，A文件夹把自己的改动同步到B，B文件夹也把自己的改动同步到A，最后A B两文件夹的内容相同，是AB文件夹的合集。
+Unison双向同步的一个缺点是，对于一个文件在两个同步文件夹中都被修改时，unison是不会去同步的，因为unison无法判断以那个为准。
+ignore = Path表示忽略指定目录，即同步时不同步它。
+batch = true，表示全自动模式，接受缺省动作，并执行。
+-fastcheck true 表示同步时仅通过文件的创建时间来比较，如果选项为false，Unison则将比较两地文件的内容。
+log = true 表示在终端输出运行信息。
+logfile 指定输出的log文件。
+
+
+另外，Unison有很多参数，这里仅介绍常用的几个，详细的请参看Unison手册。
+-auto //接受缺省的动作，然后等待用户确认是否执行。
+-batch //batch mode, 全自动模式，接受缺省动作，并执行。
+-ignore xxx //增加 xxx 到忽略列表中
+-ignorecase [true|false|default] //是否忽略文件名大小写
+-follow xxx //是否支持对符号连接指向内容的同步
+owner = true //保持同步过来的文件属主
+group = true //保持同步过来的文件组信息
+perms = -1 //保持同步过来的文件读写权限
+repeat = 1 //间隔1秒后,开始新的一次同步检查
+retry = 3 //失败重试
+sshargs = -C //使用ssh的压缩传输方式
+xferbycopying = true"
+-immutable xxx //不变目录，扫描时可以忽略
+-silent //安静模式
+-times //同步修改时间
+-path xxx 参数 //只同步 -path 参数指定的子目录以及文件，而非整个目录，-path 可以多次出现。
+
+
+PS：Windows下的unison配置文件默认位于C:\Documents and Settings\currentuser\.unison目录，默认的配置文件名是default.prf。
+-----------------------------------
+©著作权归作者所有：来自51CTO博客作者xmlgrg的原创作品，请联系作者获取转载授权，否则将追究法律责任
+双向同步软件Unison的安装与配置
+https://blog.51cto.com/xmlgrg/1792167

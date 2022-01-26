@@ -64,3 +64,83 @@ https://blog.csdn.net/weixin_33850890/article/details/85887400
     canconfig can1 stop
 
 http://t.zoukankan.com/chenfulin5-p-7816220.html
+
+
+
+
+
+wget http://kernel.org/pub/linux/utils/net/iproute2/iproute2-4.0.0.tar.xz
+
+iproute2-4.0.0
+
+
+
+编译can工具
+
+http://t.zoukankan.com/idyllcheung-p-10637217.html
+
+
+
+https://www.cnblogs.com/chenfulin5/p/6797756.html
+
+一、下载源码
+
+下载canutils和libsocketcan
+
+libsocketcan地址：https://public.pengutronix.de/software/libsocketcan/libsocketcan-0.0.11.tar.bz2 #0.0.11版本
+
+canutils地址：https://public.pengutronix.de/software/socket-can/canutils/v4.0/canutils-4.0.6.tar.bz2 #4.0.6版本
+
+https://git.pengutronix.de/cgit/tools/canutils/ 这个地址git下来的有点问题。
+
+二、先编译libsocketcan
+
+//解压
+
+tar -jxvf libsocketcan-0.0.11.tar.bz2
+
+cd ./libsocketcan-0.0.11
+
+mkdir out
+
+//配置
+
+./configure --host=arm-linux-gnueabhif --prefix=/home/zhangyi/work/psoc_ltp/libsocketcan-0.0.11/out
+
+//编译
+
+make
+
+make install
+
+如果没有新建out文件夹，会报错。
+
+生成的库在out/lib目录下，
+
+三、编译canutils
+
+```
+// 先将 libsocketcan 里面的头文件 libsocketcan.h can_netlink.h 复制到 canutils 的 include 里面
+```
+
+//解压
+
+tar -jxvf canutils-4.0.6.tar.bz2
+
+cd ./canutils-4.0.6
+mkdir out
+//配置
+
+./configure --host=arm-linux-gnueabhif --prefix=/home/zhangyi/work/psoc_ltp/canutils-4.0.6/out  libsocketcan_LIBS=-lsocketcan LDFLAGS="-L/home/zhangyi/work/psoc_ltp/libsocketcan-0.0.11/out/lib/" libsocketcan_CFLAGS="-I/home/zhangyi/work/psoc_ltp/libsocketcan-0.0.11/out/include"
+
+//编译
+
+make
+
+make install
+
+四、将libsocketcan和canutils生成的文件拷贝到文件系统中
+
+./libsocketcan-0.0.11/out/lib/ （包含libsocketcan.so.2.3.0和pkgconfig）
+
+./canutils-4.0.6/out/（包含bin lib sbin share）
