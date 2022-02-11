@@ -269,3 +269,27 @@ pgp.mit.edu
 subkeys.pgp.net
 www.gpg-keyserver.de
 ```
+
+
+
+```sh
+echo "deb http://your.repo.domain/repository/ $(lsb_release -c -s) universe" | sudo tee /etc/apt/sources.list.d/your-repo-name.list
+
+sudo apt -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true update
+
+## if the 'apt update' above fails it is likely due to previously
+## having the GPG key and repository on the system, you can clean
+## out the old lists with `sudo rm /var/lib/apt/lists/your.repo.domain*`
+
+apt-get -o APT::Get::AllowUnauthenticated=true install repo-keyring-pkgname
+
+## If you ever run `sudo apt-key del your-repos-keyID`
+## you may have to `sudo apt remove --purge repo-keyring-pkgname`
+## Update should run without the GPG warnings now that the key is installed
+
+apt-get update
+apt-get install somepkg-from-repo
+```
+
+
+

@@ -1,6 +1,6 @@
 首先你先新建一个用于mount的目录
 
-mkdir /debian9
+mkdir debian9
 
 其次你需要保证主机上有 debootstrap 以及 qemu-user-static
 
@@ -20,7 +20,7 @@ mkfs.ext4 -b 4096 rootfs.img
 
 sudo mount rootfs.img ./debian9 -o loop
 
-cd /debian9
+cd ./debian9
 
 在文件夹里下载debian9
 
@@ -79,6 +79,7 @@ resize2fs  -M rootfs.img
 搞定了
 
 ~~~ bash
+#!/bin/bash
 if [ -d ./debian9 ] ; then
 echo "find dir!"
 else
@@ -87,11 +88,46 @@ fi
 dd if=/dev/zero of=rootfs.img bs=1M count=2048
 mkfs.ext4 -b 4096 rootfs.img
 sudo mount rootfs.img ./debian9 -o loop
+cd ./debian9
 
+
+sudo debootstrap --foreign --arch riscv64 sid . file:///home/nihao/wd1T/riscv-base/mirror/ftp.ports.debian.org/debian-ports
+sudo cp /usr/bin/qemu-arm-static usr/bin/
+sudo LC_ALL=C LANGUAGE=C LANG=C chroot . /debootstrap/debootstrap --second-stage
+sudo LC_ALL=C LANGUAGE=C LANG=C chroot . dpkg --configure -a
+
+sudo mount /home/nihao/wd1T/riscv-base /home/nihao/work/debian9/mnt -o bind
+sudo mount /tmp /home/nihao/work/debian9/tmp -o bind
+
+sudo chroot . 
+
+
+
+
+
+sudo umount /home/nihao/work/debian9/tmp
+sudo umount /home/nihao/work/debian9/mnt
+cd /home/nihao/work
 sudo umount ./debian9
 e2fsck -p -f rootfs.img
 resize2fs  -M rootfs.img
 
+
+~~~
+
+~~~ bash
+#!/bin/bash
+echo "deb file:///mnt/mirror/ftp.ports.debian.org/debian-ports sid main" >> /etc/apt/sources.list
+
+sudo apt -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true update
+
+apt -o APT::Get::AllowUnauthenticated=true install gnupg -y
+
+cat /mnt/mirror/archive_2022.key | apt-key add -
+apt update
+
+apt remove vim-common
+apt install vim
 
 ~~~
 

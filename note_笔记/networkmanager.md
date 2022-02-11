@@ -93,3 +93,4 @@ nmtui 是一个基于curses的图形化前端，包括在networkmanager中。
 开机启动：chkconfig NetworkManager on
 
 禁用开机启动：chkconfig NetworkManager off
+
