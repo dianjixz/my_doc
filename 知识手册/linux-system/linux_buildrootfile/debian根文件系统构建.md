@@ -212,6 +212,6 @@ depmod -a && modprobe awusb
 
 
 ```shell
-sudo nmcli dev wifi connect Sipeed_2.4G password aPy5W9x. wep-key-type key ifname wlan0
+sudo nmcli dev wifi connect XXX password XXX wep-key-type key ifname wlan0
 ```
 
