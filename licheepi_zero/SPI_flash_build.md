@@ -130,6 +130,8 @@ onst struct spi_flash_info spi_flash_ids[] = {
 
 #define CONFIG_BOOTARGS      "console=ttyS0,115200 earlyprintk panic=5 rootwait " \
                             "mtdparts=spi32766.0:1M(uboot)ro,64k(dtb)ro,4M(kernel)ro,-(rootfs) root=31:03 rw rootfstype=jffs2"
+                            
+
 ~~~~
 
 环境命令解析：

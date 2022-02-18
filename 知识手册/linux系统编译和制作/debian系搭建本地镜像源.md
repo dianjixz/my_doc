@@ -278,3 +278,28 @@ Current status: 43 updates [+41], 27994 new [+27654].
 # 使用apt-mirror做一个本地ubuntu离线apt源
 
 https://blog.csdn.net/yanjiee/article/details/85011779
+
+
+
+
+
+另一种简易源的离线方法
+其实ubuntu官网下载下来的iso里面是包含一些常用的软件源的，比如python和openssh等。我们也可以通过apt-cdrom这个方法，将一些常用软件的源离线使用，他肯定没有上面170G源完整，但是可以对付一些小场合。
+
+先挂载iso
+如果我们用iso制作完了U盘，那需要在U盘中再次拷贝一份这个iso，比如ubuntu.iso
+使用命令将iso挂载到cdrom下：
+
+sudo mount -o loop usb/ubunto.iso /media/cdrom
+1
+添加源
+sudo apt-cdrom add -m
+1
+-m 表示不指定节点，使用默认的/media/cdrom作为节点
+运行完可以看到在/etc/apt/sources.list下，多了一条cdrom的节点
+
+更新
+sudo apt-get update
+————————————————
+版权声明：本文为CSDN博主「yanjiee」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/yanjiee/article/details/85011779

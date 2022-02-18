@@ -153,16 +153,18 @@ wpa_params数据结构 主要记录 与网络接口无关 的一些参数设置�
 
 Archlinux安装完wpa_supplicant，然后到/etc/wpa_supplicant目录下填写配置文件，随便自定义一个，例如test.conf
 
-ap_scan=1
+~~~ bash
+ctrl_interface=/var/run/wpa_supplicant
+# update_config=1
 network={
-ssid="2601"
-\#psk="HANHONG2601"
-proto=WPA
-key_mgmt=WPA-PSK
-pairwise=CCMP TKIP
-group=CCMP TKIP
-psk=5932952becf956d4712e51016640ee2d3518a5119a38c61c3f693116ae15e2a9
+ssid="XXXX"
+psk="XXX"
 }
+~~~
+
+
+
+
 
 该文件配置详见arch官方文档。
 
@@ -296,3 +298,4 @@ wpa_supplicant -D nl80211 -i wlan0 -c /etc/wpa_supplicant.conf -B
 -c /etc/wpa_supplicant.conf：表示配置文件为wpa_supplicant.conf
 
 -B：表示将守护进程wpa_supplicant 挂到后台运行
+

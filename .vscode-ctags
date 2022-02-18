@@ -1,0 +1,674 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	Development	//
+ANY_H	lib_example/any_test/any.h	26;"	d
+ANY_H	源码/any/C++11实现的Boost库中的Any类/any.h	2;"	d
+ANY_H	源码/any/one/any.h	26;"	d
+Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any()$/;"	f	class:Any
+Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any(Any &&other)$/;"	f	class:Any
+Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any(_Ty &&value$/;"	f	class:Any
+Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any(const Any &other)$/;"	f	class:Any
+Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any(const _Ty &value)$/;"	f	class:Any
+Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^class Any$/;"	c
+BRD_GPIO_DEV_PATH	lib_example/linux_uart/mf_brd.h	19;"	d
+BRD_IIC_DEV	lib_example/linux_uart/mf_brd.h	22;"	d
+BRD_KEY_DEV	lib_example/linux_uart/mf_brd.h	18;"	d
+BRD_KEY_DEV	lib_example/linux_uart/mf_brd.h	21;"	d
+BRD_SPK_FAIL_FILE	lib_example/linux_uart/mf_brd.h	24;"	d
+BRD_SPK_RECORD_OK_FILE	lib_example/linux_uart/mf_brd.h	25;"	d
+BRD_SPK_SUCCESS_FILE	lib_example/linux_uart/mf_brd.h	26;"	d
+BRD_UARTP_DEV	lib_example/linux_uart/mf_brd.h	20;"	d
+BRD_WATCHDOG_DEV	lib_example/linux_uart/mf_brd.h	23;"	d
+BaseQueueInit	源码/摄像头/queue.c	/^int BaseQueueInit(void)$/;"	f
+Buffer	lib_example/日志库/NanoLog.cpp	/^    	Buffer() : m_buffer(static_cast<Item*>(std::malloc(size * sizeof(Item))))$/;"	f	class:nanolog::Buffer
+Buffer	lib_example/日志库/NanoLog.cpp	/^    class Buffer$/;"	c	namespace:nanolog	file:
+BufferBase	lib_example/日志库/NanoLog.cpp	/^    struct BufferBase$/;"	s	namespace:nanolog	file:
+BufferCnt	源码/摄像头/camera.c	/^    int         BufferCnt;$/;"	m	struct:__anon4	file:
+BufferSize	源码/摄像头/display.c	/^static const int BufferSize = CONFIG_CAPTURE_WIDTH * CONFIG_CAPTURE_HEIGHT * 4;$/;"	v	file:
+CAMERA_H	源码/摄像头/camera.h	3;"	d
+CAMERA_SATTE_CAP	源码/摄像头/camera.c	/^    CAMERA_SATTE_CAP,$/;"	e	enum:__anon3	file:
+CAMERA_SATTE_OPEN	源码/摄像头/camera.c	/^    CAMERA_SATTE_OPEN,$/;"	e	enum:__anon3	file:
+CAMERA_STATE_CLOSE	源码/摄像头/camera.c	/^    CAMERA_STATE_CLOSE,$/;"	e	enum:__anon3	file:
+CAMERA_STATE_ERR	源码/摄像头/camera.c	/^    CAMERA_STATE_ERR$/;"	e	enum:__anon3	file:
+CC	lib_example/make-example/Makefile	/^CC   =gcc$/;"	m
+CFLAG	源码/摄像头/Makefile	/^CFLAG = -Wall -O2$/;"	m
+CFLAGS	lib_example/make-example/Makefile	/^CFLAGS  =-Wall$/;"	m
+CONFIG_CAPTURE_BUF_CNT	源码/摄像头/config.h	8;"	d
+CONFIG_CAPTURE_DEVICE	源码/摄像头/config.h	13;"	d
+CONFIG_CAPTURE_FPS	源码/摄像头/config.h	7;"	d
+CONFIG_CAPTURE_HEIGHT	源码/摄像头/config.h	6;"	d
+CONFIG_CAPTURE_WIDTH	源码/摄像头/config.h	5;"	d
+CONFIG_CSP	源码/摄像头/encode.c	14;"	d	file:
+CONFIG_DEVNAME_LEN	源码/摄像头/config.h	11;"	d
+CONFIG_DISPLAY_DEV	源码/摄像头/config.h	14;"	d
+CONFIG_ENCODE_BITRATE	源码/摄像头/config.h	9;"	d
+CONFIG_H	源码/摄像头/config.h	3;"	d
+CONFIG_IOCTL_RETRY	源码/摄像头/config.h	12;"	d
+CONFIG_QUEUE_LIMIT	源码/摄像头/config.h	17;"	d
+CONFIG_QUEUE_SIZE	源码/摄像头/config.h	16;"	d
+CRIT	lib_example/日志库/NanoLog.hpp	/^		CRIT$/;"	e	enum:nanolog::LogLevel
+CameraCaptureCallbackSet	源码/摄像头/camera.c	/^int CameraCaptureCallbackSet(vCameraFrameProcess pCallback)$/;"	f
+CameraCaptureStart	源码/摄像头/camera.c	/^int CameraCaptureStart(void)$/;"	f
+CameraCaptureStop	源码/摄像头/camera.c	/^int CameraCaptureStop(void)$/;"	f
+CameraCaptureThread	源码/摄像头/camera.c	/^static void* CameraCaptureThread(void* pParam)$/;"	f	file:
+CameraClose	源码/摄像头/camera.c	/^int CameraClose(void)$/;"	f
+CameraOpen	源码/摄像头/camera.c	/^int CameraOpen(const char* pDevName)$/;"	f
+CaptureThreadId	源码/摄像头/camera.c	/^    pthread_t   CaptureThreadId;$/;"	m	struct:__anon4	file:
+Cnt	源码/摄像头/queue.c	/^    int Cnt;$/;"	m	struct:__anon9	file:
+DBG_LINE	lib_example/linux_uart/mf_brd.c	29;"	d	file:
+DEBUG	lib_example/make-example/Makefile	/^DEBUG   =-DUSE_DEBUG$/;"	m
+DIR_NAME_BUF_SIZE	lib_example/tree.c	9;"	d	file:
+DIR_NAME_BUF_SIZE	源码/tree/tree.c	9;"	d	file:
+DISPLAY_H	源码/摄像头/display.h	3;"	d
+DISPLAY_STATE_START	源码/摄像头/display.c	/^    DISPLAY_STATE_START$/;"	e	enum:__anon5	file:
+DISPLAY_STATE_STOP	源码/摄像头/display.c	/^    DISPLAY_STATE_STOP,$/;"	e	enum:__anon5	file:
+DObject	知识手册/编程模版/python_module/two/one_mode_two.c	/^} DObject;$/;"	t	typeref:struct:__anon1	file:
+Data	源码/摄像头/queue.h	/^    sQueueData Data[CONFIG_QUEUE_SIZE];$/;"	m	struct:__anon10
+DevFd	源码/摄像头/camera.c	/^    int         DevFd;$/;"	m	struct:__anon4	file:
+DevFd	源码/摄像头/display.c	/^    int DevFd;$/;"	m	struct:__anon6	file:
+DevInfoReset	源码/摄像头/camera.c	/^static void DevInfoReset(void)$/;"	f	file:
+DevName	源码/摄像头/camera.c	/^    char        DevName[CONFIG_DEVNAME_LEN];$/;"	m	struct:__anon4	file:
+DevNameSet	源码/摄像头/camera.c	/^static int DevNameSet(const char* pDevName)$/;"	f	file:
+DisplayInit	源码/摄像头/display.c	/^int DisplayInit(const char* pDevName)$/;"	f
+DisplayStart	源码/摄像头/display.c	/^int DisplayStart(void)$/;"	f
+DisplayStop	源码/摄像头/display.c	/^int DisplayStop(void)$/;"	f
+DisplayThread	源码/摄像头/display.c	/^static void* DisplayThread(void* pParam)$/;"	f	file:
+DisplayThreadId	源码/摄像头/display.c	/^    pthread_t DisplayThreadId;$/;"	m	struct:__anon6	file:
+ENCODE_H	源码/摄像头/encode.h	3;"	d
+ENCODE_STATE_START	源码/摄像头/encode.c	/^    ENCODE_STATE_START$/;"	e	enum:__anon7	file:
+ENCODE_STATE_STOP	源码/摄像头/encode.c	/^    ENCODE_STATE_STOP,$/;"	e	enum:__anon7	file:
+EXP_BIT	源码/浮点数转定点数/f_to_uint.c	4;"	d	file:
+EnQueueCallback	源码/摄像头/main.c	/^void EnQueueCallback(uint8_t* pData, uint32_t Width, uint32_t Height, uint32_t Length)$/;"	f
+EncodeStart	源码/摄像头/encode.c	/^int EncodeStart(const char* pFilename)$/;"	f
+EncodeStop	源码/摄像头/encode.c	/^int EncodeStop(void)$/;"	f
+EncodeThreadId	源码/摄像头/encode.c	/^    pthread_t EncodeThreadId;$/;"	m	struct:__anon8	file:
+FBDEV	lib_example/framebuffer/fbtools.h	/^} FBDEV, *PFBDEV;$/;"	t	typeref:struct:fbdev
+FB_DEV_PATH	lib_example/framebuffer.c	8;"	d	file:
+FileWriter	lib_example/日志库/NanoLog.cpp	/^	FileWriter(std::string const & log_directory, std::string const & log_file_name, uint32_t log_file_roll_size_mb)$/;"	f	class:nanolog::FileWriter
+FileWriter	lib_example/日志库/NanoLog.cpp	/^    class FileWriter$/;"	c	namespace:nanolog	file:
+GuaranteedLogger	lib_example/日志库/NanoLog.hpp	/^	struct GuaranteedLogger$/;"	s	namespace:nanolog
+H264EncodeThread	源码/摄像头/encode.c	/^static void* H264EncodeThread(void* pParam)$/;"	f	file:
+H264FrameEncode	源码/摄像头/encode.c	/^static int H264FrameEncode(const uint8_t* pData, uint32_t Width, uint32_t Height, uint32_t Length)$/;"	f	file:
+H264FrameEncodeBegin	源码/摄像头/encode.c	/^static int H264FrameEncodeBegin(uint32_t Width, uint32_t Height)$/;"	f	file:
+H264FrameEncodeEnd	源码/摄像头/encode.c	/^static int H264FrameEncodeEnd(void)$/;"	f	file:
+HeadIndex	源码/摄像头/queue.h	/^    int HeadIndex;$/;"	m	struct:__anon10
+Height	源码/摄像头/camera.c	/^    uint32_t    Height;$/;"	m	struct:__anon4	file:
+INCLUDES	lib_example/make-example/Makefile	/^INCLUDES   =-I.\/include$/;"	m
+INFO	lib_example/日志库/NanoLog.hpp	/^		INFO,$/;"	e	enum:nanolog::LogLevel
+INIT	lib_example/日志库/NanoLog.cpp	/^		INIT,$/;"	e	enum:nanolog::NanoLogger::State	file:
+IOCTL_VIDEO	源码/摄像头/camera.c	20;"	d	file:
+Item	lib_example/日志库/NanoLog.cpp	/^	    Item(NanoLogLine && nanologline) : logline(std::move(nanologline)) {}$/;"	f	struct:nanolog::Buffer::Item
+Item	lib_example/日志库/NanoLog.cpp	/^    	struct Item$/;"	s	class:nanolog::Buffer	file:
+KEY_DBL	lib_example/linux_uart/mf_brd.h	/^	KEY_DBL=3$/;"	e	enum:__anon14
+KEY_LONGPRESS	lib_example/linux_uart/mf_brd.h	/^	KEY_LONGPRESS=2,$/;"	e	enum:__anon14
+KEY_PRESS	lib_example/linux_uart/mf_brd.h	/^	KEY_PRESS=1,$/;"	e	enum:__anon14
+KEY_RELEASE	lib_example/linux_uart/mf_brd.h	/^	KEY_RELEASE=0,$/;"	e	enum:__anon14
+LIB	源码/摄像头/Makefile	/^LIB = -pthread $/;"	m
+LIB_NAMES	lib_example/make-example/Makefile	/^LIB_NAMES  =-lfun_a -lfun_so$/;"	m
+LIB_PATH	lib_example/make-example/Makefile	/^LIB_PATH  =-L.\/lib$/;"	m
+LOG_CRIT	lib_example/日志库/NanoLog.hpp	167;"	d
+LOG_INFO	lib_example/日志库/NanoLog.hpp	165;"	d
+LOG_WARN	lib_example/日志库/NanoLog.hpp	166;"	d
+Length	源码/摄像头/camera.c	/^    int Length;$/;"	m	struct:__anon2	file:
+Length	源码/摄像头/queue.h	/^    uint32_t Length;$/;"	m	struct:QueueData
+LinkListMutex	源码/摄像头/queue.c	/^    pthread_mutex_t LinkListMutex;$/;"	m	struct:__anon9	file:
+LinkListNode	源码/摄像头/queue.c	/^typedef struct LinkListNode$/;"	s	file:
+LinkedListAdd	源码/摄像头/queue.c	/^int LinkedListAdd(void* pData)$/;"	f
+LinkedListDel	源码/摄像头/queue.c	/^int LinkedListDel(void* pData)$/;"	f
+LogLevel	lib_example/日志库/NanoLog.hpp	/^	enum class LogLevel : uint8_t$/;"	g	namespace:nanolog
+MF_BOARD_MF2_V	lib_example/linux_uart/mf_brd.h	/^	MF_BOARD_MF2_V		= 2,	\/*伟创2.8寸*\/$/;"	e	enum:__anon13
+MF_BOARD_MF7_H	lib_example/linux_uart/mf_brd.h	/^	MF_BOARD_MF7_H		= 1,	\/*7寸横屏标案*\/$/;"	e	enum:__anon13
+MF_BOARD_MF7_V	lib_example/linux_uart/mf_brd.h	/^	MF_BOARD_MF7_V		= 0,	\/*7寸竖屏标案*\/$/;"	e	enum:__anon13
+MF_BOARD_NONE	lib_example/linux_uart/mf_brd.h	/^	MF_BOARD_NONE,		\/* Invalid *\/$/;"	e	enum:__anon13
+MOAccess	lib_example/any_test/any.h	/^        MOAccess,$/;"	e	enum:any::ManageOption
+MOAccess	源码/any/one/any.h	/^        MOAccess,$/;"	e	enum:any::ManageOption
+MOClone	lib_example/any_test/any.h	/^        MOClone,$/;"	e	enum:any::ManageOption
+MOClone	源码/any/one/any.h	/^        MOClone,$/;"	e	enum:any::ManageOption
+MODestroy	lib_example/any_test/any.h	/^        MODestroy,$/;"	e	enum:any::ManageOption
+MODestroy	源码/any/one/any.h	/^        MODestroy,$/;"	e	enum:any::ManageOption
+MOGetTypeInfo	lib_example/any_test/any.h	/^        MOGetTypeInfo,$/;"	e	enum:any::ManageOption
+MOGetTypeInfo	源码/any/one/any.h	/^        MOGetTypeInfo,$/;"	e	enum:any::ManageOption
+MOXfer	lib_example/any_test/any.h	/^        MOXfer$/;"	e	enum:any::ManageOption
+MOXfer	源码/any/one/any.h	/^        MOXfer$/;"	e	enum:any::ManageOption
+ManageArg	lib_example/any_test/any.h	/^    union ManageArg$/;"	u	class:any
+ManageArg	源码/any/one/any.h	/^    union ManageArg$/;"	u	class:any
+ManageOption	lib_example/any_test/any.h	/^    enum ManageOption {$/;"	g	class:any
+ManageOption	源码/any/one/any.h	/^    enum ManageOption {$/;"	g	class:any
+Manager_external	lib_example/any_test/any.h	/^    struct Manager_external$/;"	s	class:any
+Manager_external	源码/any/one/any.h	/^    struct Manager_external$/;"	s	class:any
+Manager_internal	lib_example/any_test/any.h	/^    struct Manager_internal$/;"	s	class:any
+Manager_internal	源码/any/one/any.h	/^    struct Manager_internal$/;"	s	class:any
+NANO_LOG	lib_example/日志库/NanoLog.hpp	164;"	d
+NANO_LOG_HEADER_GUARD	lib_example/日志库/NanoLog.hpp	27;"	d
+NEST_COUNT	lib_example/tree.c	11;"	d	file:
+NEST_COUNT	源码/tree/tree.c	11;"	d	file:
+NanoLog	lib_example/日志库/NanoLog.hpp	/^	struct NanoLog$/;"	s	namespace:nanolog
+NanoLogLine	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine::NanoLogLine(LogLevel level, char const * file, char const * function, uint32_t line)$/;"	f	class:nanolog::NanoLogLine
+NanoLogLine	lib_example/日志库/NanoLog.hpp	/^	class NanoLogLine$/;"	c	namespace:nanolog
+NanoLogger	lib_example/日志库/NanoLog.cpp	/^	NanoLogger(GuaranteedLogger gl, std::string const & log_directory, std::string const & log_file_name, uint32_t log_file_roll_size_mb)$/;"	f	class:nanolog::NanoLogger
+NanoLogger	lib_example/日志库/NanoLog.cpp	/^	NanoLogger(NonGuaranteedLogger ngl, std::string const & log_directory, std::string const & log_file_name, uint32_t log_file_roll_size_mb)$/;"	f	class:nanolog::NanoLogger
+NanoLogger	lib_example/日志库/NanoLog.cpp	/^    class NanoLogger$/;"	c	namespace:nanolog	file:
+NonGuaranteedLogger	lib_example/日志库/NanoLog.hpp	/^		NonGuaranteedLogger(uint32_t ring_buffer_size_mb_) : ring_buffer_size_mb(ring_buffer_size_mb_) {}$/;"	f	struct:nanolog::NonGuaranteedLogger
+NonGuaranteedLogger	lib_example/日志库/NanoLog.hpp	/^	struct NonGuaranteedLogger$/;"	s	namespace:nanolog
+OBJ	lib_example/make-example/Makefile	/^OBJ   =$(patsubst %.c, %.o, $(SOURCES))$/;"	m
+PATH_BUF_SIZE	lib_example/tree.c	10;"	d	file:
+PATH_BUF_SIZE	源码/tree/tree.c	10;"	d	file:
+PFBDEV	lib_example/framebuffer/fbtools.h	/^} FBDEV, *PFBDEV;$/;"	t	typeref:struct:fbdev
+PRINF_HEX_ARR	lib_example/linux_uart/linux_uart.h	6;"	d
+PYBIND11_MODULE	lib_example/pybin11_testone.cpp	/^PYBIND11_MODULE(demo3, m) {$/;"	f
+PY_SSIZE_T_CLEAN	知识手册/编程模版/python_module/one/hellomodule.c	1;"	d	file:
+PY_SSIZE_T_CLEAN	知识手册/编程模版/python_module/two/one.c	2;"	d	file:
+Person	lib_example/pybin11_testone.cpp	/^    Person() {};$/;"	f	class:Person
+Person	lib_example/pybin11_testone.cpp	/^    Person(std::string name, std::string gender, int age) {$/;"	f	class:Person
+Person	lib_example/pybin11_testone.cpp	/^class Person$/;"	c	file:
+PrintTree	lib_example/tree.c	/^static void PrintTree(int nest, char *name) \/\/树打印函数$/;"	f	file:
+PrintTree	源码/tree/tree.c	/^static void PrintTree(int nest, char *name) \/\/树打印函数$/;"	f	file:
+PyInit__test	知识手册/编程模版/python_module/two/one.c	/^PyMODINIT_FUNC PyInit__test(void)$/;"	f
+PyInit_hello	知识手册/编程模版/python_module/one/hellomodule.c	/^PyInit_hello(void)$/;"	f
+PyObject_HEAD	知识手册/编程模版/python_module/two/one_mode_two.c	/^    PyObject_HEAD;$/;"	m	struct:__anon1	file:
+QUEUE_H	源码/摄像头/queue.h	3;"	d
+QueueBuffer	lib_example/日志库/NanoLog.cpp	/^	QueueBuffer() : m_current_read_buffer{nullptr}$/;"	f	class:nanolog::QueueBuffer
+QueueBuffer	lib_example/日志库/NanoLog.cpp	/^    class QueueBuffer : public BufferBase$/;"	c	namespace:nanolog	file:
+QueueCallback	源码/摄像头/queue.c	/^int QueueCallback(sQueueData* pQueueData)$/;"	f
+QueueData	源码/摄像头/queue.h	/^typedef struct QueueData$/;"	s
+QueueInit	源码/摄像头/queue.c	/^int QueueInit(sQueue* pQueuePrivateData)$/;"	f
+QueueList	源码/摄像头/queue.c	/^    sQueue* QueueList[CONFIG_QUEUE_LIMIT];$/;"	m	struct:__anon9	file:
+QueueMutex	源码/摄像头/queue.c	/^    pthread_mutex_t QueueMutex;$/;"	m	struct:__anon9	file:
+QueueMutex	源码/摄像头/queue.h	/^    pthread_mutex_t QueueMutex;$/;"	m	struct:__anon10
+QueuePopData	源码/摄像头/queue.c	/^int QueuePopData(sQueue* pQueuePrivateData, sQueueData* pData)$/;"	f
+QueuePrivateData	源码/摄像头/display.c	/^    sQueue QueuePrivateData;$/;"	m	struct:__anon6	file:
+QueuePrivateData	源码/摄像头/encode.c	/^    sQueue QueuePrivateData;$/;"	m	struct:__anon8	file:
+QueuePushBack	源码/摄像头/queue.c	/^static int QueuePushBack(sQueue* pQueuePrivateData, sQueueData* pData)$/;"	f	file:
+QueuePutData	源码/摄像头/queue.c	/^int QueuePutData(sQueueData* pData)$/;"	f
+READY	lib_example/日志库/NanoLog.cpp	/^		READY,$/;"	e	enum:nanolog::NanoLogger::State	file:
+RingBuffer	lib_example/日志库/NanoLog.cpp	/^    	RingBuffer(size_t const size) $/;"	f	class:nanolog::RingBuffer
+RingBuffer	lib_example/日志库/NanoLog.cpp	/^    class RingBuffer : public BufferBase$/;"	c	namespace:nanolog	file:
+SHUTDOWN	lib_example/日志库/NanoLog.cpp	/^		SHUTDOWN$/;"	e	enum:nanolog::NanoLogger::State	file:
+SIGN_BIT	源码/浮点数转定点数/f_to_uint.c	3;"	d	file:
+SOURCES	lib_example/make-example/Makefile	/^SOURCES   =$(wildcard .\/source\/*.c)$/;"	m
+S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Args&&... __args)$/;"	f	struct:any::Manager_external
+S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Args&&... args)$/;"	f	struct:any::Manager_internal
+S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Up&& value)$/;"	f	struct:any::Manager_external
+S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Up&& value)$/;"	f	struct:any::Manager_internal
+S_create	源码/any/one/any.h	/^        static void S_create(Storage& storage, _Args&&... __args)$/;"	f	struct:any::Manager_external
+S_create	源码/any/one/any.h	/^        static void S_create(Storage& storage, _Args&&... args)$/;"	f	struct:any::Manager_internal
+S_create	源码/any/one/any.h	/^        static void S_create(Storage& storage, _Up&& value)$/;"	f	struct:any::Manager_external
+S_create	源码/any/one/any.h	/^        static void S_create(Storage& storage, _Up&& value)$/;"	f	struct:any::Manager_internal
+S_manage	lib_example/any_test/any.h	/^void any::Manager_external<_Tp>::S_manage(ManageOption which, const any* a, ManageArg* arg)$/;"	f	class:any::Manager_external
+S_manage	lib_example/any_test/any.h	/^void any::Manager_internal<_Tp>::S_manage(ManageOption which, const any* a, ManageArg* arg)$/;"	f	class:any::Manager_internal
+S_manage	源码/any/one/any.h	/^void any::Manager_external<_Tp>::S_manage(ManageOption which, const any* a, ManageArg* arg)$/;"	f	class:any::Manager_external
+S_manage	源码/any/one/any.h	/^void any::Manager_internal<_Tp>::S_manage(ManageOption which, const any* a, ManageArg* arg)$/;"	f	class:any::Manager_internal
+ScreenHeight	源码/摄像头/display.c	/^    uint32_t ScreenHeight;$/;"	m	struct:__anon6	file:
+ScreenSize	源码/摄像头/display.c	/^    int ScreenSize;$/;"	m	struct:__anon6	file:
+ScreenWidth	源码/摄像头/display.c	/^    uint32_t ScreenWidth;$/;"	m	struct:__anon6	file:
+Search	lib_example/tree.c	/^static void Search(int nest, char *path)$/;"	f	file:
+Search	源码/tree/tree.c	/^static void Search(int nest, char *path)$/;"	f	file:
+Sign3	源码/摄像头/camera.c	/^static int Sign3 = 1;$/;"	v	file:
+SignalHandle	源码/摄像头/main.c	/^void SignalHandle(int SignalNumber)$/;"	f
+SpinLock	lib_example/日志库/NanoLog.cpp	/^	SpinLock(std::atomic_flag & flag) : m_flag(flag)$/;"	f	struct:nanolog::SpinLock
+SpinLock	lib_example/日志库/NanoLog.cpp	/^    struct SpinLock$/;"	s	namespace:nanolog	file:
+State	lib_example/日志库/NanoLog.cpp	/^	enum class State$/;"	g	class:nanolog::NanoLogger	file:
+State	源码/摄像头/camera.c	/^    eCAMERA_STATE State;                            \/* 0 未打开, 1打开摄像头, 2开始捕捉, 3错误 *\/$/;"	m	struct:__anon4	file:
+State	源码/摄像头/display.c	/^    eDisplayState State;$/;"	m	struct:__anon6	file:
+State	源码/摄像头/encode.c	/^    eEncodeState State;$/;"	m	struct:__anon8	file:
+Storage	lib_example/any_test/any.h	/^        constexpr Storage()$/;"	f	union:any::Storage
+Storage	lib_example/any_test/any.h	/^    union Storage$/;"	u	class:any
+Storage	源码/any/one/any.h	/^        constexpr Storage()$/;"	f	union:any::Storage
+Storage	源码/any/one/any.h	/^    union Storage$/;"	u	class:any
+SupportedTypes	lib_example/日志库/NanoLog.cpp	/^    typedef std::tuple < char, uint32_t, uint64_t, int32_t, int64_t, double, NanoLogLine::string_literal_t, char * > SupportedTypes;$/;"	t	namespace:nanolog	file:
+TAIL_BIT	源码/浮点数转定点数/f_to_uint.c	5;"	d	file:
+TARGET	lib_example/make-example/Makefile	/^TARGET  =app$/;"	m
+TARGET	源码/摄像头/Makefile	/^TARGET = YTC100$/;"	m
+TailIndex	源码/摄像头/queue.h	/^    int TailIndex;$/;"	m	struct:__anon10
+Times	源码/摄像头/queue.c	/^    uint8_t Times;$/;"	m	struct:LinkListNode	file:
+TupleIndex	lib_example/日志库/NanoLog.cpp	/^    struct TupleIndex < T, std::tuple < T, Types... > > $/;"	s	namespace:__anon11	file:
+TupleIndex	lib_example/日志库/NanoLog.cpp	/^    struct TupleIndex < T, std::tuple < U, Types... > > $/;"	s	namespace:__anon11	file:
+VERSION	lib_example/make-example/Makefile	/^ VERSION  =1.00$/;"	m
+WARN	lib_example/日志库/NanoLog.hpp	/^		WARN,$/;"	e	enum:nanolog::LogLevel
+Width	源码/摄像头/camera.c	/^    uint32_t    Width;$/;"	m	struct:__anon4	file:
+Yuv2Rgb	源码/摄像头/camera.c	/^static inline int Yuv2Rgb(int Y, int U, int V)$/;"	f	file:
+Yuyv2Rgb24	源码/摄像头/camera.c	/^int Yuyv2Rgb24(uint8_t* pYuv, uint8_t* pRgb, uint32_t Width, uint32_t Height)$/;"	f
+Yuyv2Rgb32	源码/摄像头/camera.c	/^int Yuyv2Rgb32(uint8_t* pYuv, uint8_t* pRgb, uint32_t Width, uint32_t Height)$/;"	f
+_2_del	知识手册/编程模版/python_module/two/one_mode_two.c	/^static void _2_del(DObject *self)$/;"	f	file:
+_2_init	知识手册/编程模版/python_module/two/one_mode_two.c	/^static int _2_init(DObject *self, PyObject *args, PyObject *kwds)$/;"	f	file:
+_2_methods	知识手册/编程模版/python_module/two/one_mode_two.c	/^static PyMethodDef _2_methods[] = {$/;"	v	file:
+_2_new	知识手册/编程模版/python_module/two/one_mode_two.c	/^static PyObject* _2_new(PyTypeObject *type, PyObject *args, PyObject *kwds)$/;"	f	file:
+_2_str	知识手册/编程模版/python_module/two/one_mode_two.c	/^static PyObject *_2_str(PyObject *object)$/;"	f	file:
+_DEBUG_ERROR	lib_example/linux_uart/mf_brd.c	42;"	d	file:
+_DEBUG_INFO	lib_example/linux_uart/mf_brd.c	36;"	d	file:
+_FBTOOLS_H_	lib_example/framebuffer/fbtools.h	2;"	d
+_If	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct _If$/;"	s	namespace:detail
+_If	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct _If<true, _Ty1, _Ty2>$/;"	s	namespace:detail
+__LINUX_UART_H	lib_example/linux_uart/linux_uart.h	2;"	d
+__MF_BRD_H	lib_example/linux_uart/mf_brd.h	2;"	d
+_and	lib_example/any_test/any.h	/^struct _and<>$/;"	s	namespace:detail
+_and	lib_example/any_test/any.h	/^struct _and<_B1, _B2, _B3, _Bn...>$/;"	s	namespace:detail
+_and	lib_example/any_test/any.h	/^struct _and<_B1, _B2>$/;"	s	namespace:detail
+_and	lib_example/any_test/any.h	/^struct _and<_B1>$/;"	s	namespace:detail
+_and	源码/any/one/any.h	/^struct _and<>$/;"	s	namespace:detail
+_and	源码/any/one/any.h	/^struct _and<_B1, _B2, _B3, _Bn...>$/;"	s	namespace:detail
+_and	源码/any/one/any.h	/^struct _and<_B1, _B2>$/;"	s	namespace:detail
+_and	源码/any/one/any.h	/^struct _and<_B1>$/;"	s	namespace:detail
+_any	lib_example/any_test/any.h	/^        any* _any;$/;"	m	union:any::ManageArg
+_any	源码/any/one/any.h	/^        any* _any;$/;"	m	union:any::ManageArg
+_any_caster	lib_example/any_test/any.h	/^void* _any_caster(const any* a)$/;"	f
+_any_caster	源码/any/one/any.h	/^void* _any_caster(const any* a)$/;"	f
+_brd_deinit	lib_example/linux_uart/mf_brd.c	/^static void _brd_deinit(void)$/;"	f	file:
+_brd_init	lib_example/linux_uart/mf_brd.c	/^static mf_err_t _brd_init(void)$/;"	f	file:
+_do_emplace	lib_example/any_test/any.h	/^        void _do_emplace(std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
+_do_emplace	lib_example/any_test/any.h	/^    void _do_emplace(_Args&&... args)$/;"	f	class:any
+_do_emplace	源码/any/one/any.h	/^        void _do_emplace(std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
+_do_emplace	源码/any/one/any.h	/^    void _do_emplace(_Args&&... args)$/;"	f	class:any
+_get_baud	lib_example/linux_uart/linux_uart.c	/^static int _get_baud(int baud)$/;"	f	file:
+_get_baud	lib_example/linux_uart/mf_brd.c	/^static int _get_baud(int baud)$/;"	f	file:
+_get_gpio_num	lib_example/linux_uart/mf_brd.c	/^static int _get_gpio_num(char* pin)$/;"	f	file:
+_get_pwm_num	lib_example/linux_uart/mf_brd.c	/^static int _get_pwm_num(char *pin)$/;"	f	file:
+_gpio_deinit	lib_example/linux_uart/mf_brd.c	/^static void _gpio_deinit(char* pin)$/;"	f	file:
+_gpio_init	lib_example/linux_uart/mf_brd.c	/^static void* _gpio_init(char* pin, int mode, int state)$/;"	f	file:
+_gpio_read	lib_example/linux_uart/mf_brd.c	/^static void _gpio_read(char* pin, int* state)$/;"	f	file:
+_gpio_write	lib_example/linux_uart/mf_brd.c	/^static void _gpio_write(char* pin, int state)$/;"	f	file:
+_i2c_deinit	lib_example/linux_uart/mf_brd.c	/^static void _i2c_deinit(int fd)$/;"	f	file:
+_i2c_init	lib_example/linux_uart/mf_brd.c	/^static int _i2c_init(char* dev, void* param)$/;"	f	file:
+_i2c_read	lib_example/linux_uart/mf_brd.c	/^static void _i2c_read(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf)$/;"	f	file:
+_i2c_smbus_read	lib_example/linux_uart/mf_brd.c	/^static void _i2c_smbus_read(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf)$/;"	f	file:
+_i2c_smbus_write	lib_example/linux_uart/mf_brd.c	/^static void _i2c_smbus_write(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf)$/;"	f	file:
+_i2c_write	lib_example/linux_uart/mf_brd.c	/^static void _i2c_write(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf)$/;"	f	file:
+_in_place_type_t	lib_example/any_test/any.h	/^struct _in_place_type_t$/;"	s	namespace:detail
+_in_place_type_t	源码/any/one/any.h	/^struct _in_place_type_t$/;"	s	namespace:detail
+_is_in_place_type	lib_example/any_test/any.h	/^struct _is_in_place_type$/;"	s	namespace:detail
+_is_in_place_type	源码/any/one/any.h	/^struct _is_in_place_type$/;"	s	namespace:detail
+_is_in_place_type_impl	lib_example/any_test/any.h	/^struct _is_in_place_type_impl : std::false_type$/;"	s	namespace:detail
+_is_in_place_type_impl	lib_example/any_test/any.h	/^struct _is_in_place_type_impl<_in_place_type_t<_Tp>> : std::true_type$/;"	s	namespace:detail
+_is_in_place_type_impl	源码/any/one/any.h	/^struct _is_in_place_type_impl : std::false_type$/;"	s	namespace:detail
+_is_in_place_type_impl	源码/any/one/any.h	/^struct _is_in_place_type_impl<_in_place_type_t<_Tp>> : std::true_type$/;"	s	namespace:detail
+_is_valid_cast	lib_example/any_test/any.h	/^    static constexpr bool _is_valid_cast()$/;"	f	class:any
+_is_valid_cast	源码/any/one/any.h	/^    static constexpr bool _is_valid_cast()$/;"	f	class:any
+_not	lib_example/any_test/any.h	/^struct _not$/;"	s	namespace:detail
+_not	源码/any/one/any.h	/^struct _not$/;"	s	namespace:detail
+_obj	lib_example/any_test/any.h	/^        void* _obj;$/;"	m	union:any::ManageArg
+_obj	源码/any/one/any.h	/^        void* _obj;$/;"	m	union:any::ManageArg
+_or	lib_example/any_test/any.h	/^struct _or<>$/;"	s	namespace:detail
+_or	lib_example/any_test/any.h	/^struct _or<_B1, _B2, _B3, _Bn...>$/;"	s	namespace:detail
+_or	lib_example/any_test/any.h	/^struct _or<_B1, _B2>$/;"	s	namespace:detail
+_or	lib_example/any_test/any.h	/^struct _or<_B1>$/;"	s	namespace:detail
+_or	源码/any/one/any.h	/^struct _or<>$/;"	s	namespace:detail
+_or	源码/any/one/any.h	/^struct _or<_B1, _B2, _B3, _Bn...>$/;"	s	namespace:detail
+_or	源码/any/one/any.h	/^struct _or<_B1, _B2>$/;"	s	namespace:detail
+_or	源码/any/one/any.h	/^struct _or<_B1>$/;"	s	namespace:detail
+_pwm_deinit	lib_example/linux_uart/mf_brd.c	/^static void _pwm_deinit(char *pin)$/;"	f	file:
+_pwm_init	lib_example/linux_uart/mf_brd.c	/^static void _pwm_init(char *pin, uint64_t fre, float duty)$/;"	f	file:
+_pwm_set_duty	lib_example/linux_uart/mf_brd.c	/^static void _pwm_set_duty(char * pin, float duty)$/;"	f	file:
+_read_file_only	lib_example/linux_uart/mf_brd.c	/^static int _read_file_only(char* path, void* buf, size_t count)$/;"	f	file:
+_read_key	lib_example/linux_uart/mf_brd.c	/^static void _read_key(int32_t key_idx, int* state)$/;"	f	file:
+_read_tp	lib_example/linux_uart/mf_brd.c	/^static void _read_tp(int* x, int* y)$/;"	f	file:
+_run	知识手册/编程模版/python_module/two/one_mode_two.c	/^static PyObject* _run(DecoderYolo2Object *self, PyObject *args, PyObject *kw_args)$/;"	f	file:
+_set_bl_led	lib_example/linux_uart/mf_brd.c	/^static void _set_bl_led(int state)$/;"	f	file:
+_set_irled	lib_example/linux_uart/mf_brd.c	/^static void _set_irled(int state)$/;"	f	file:
+_set_relay	lib_example/linux_uart/mf_brd.c	/^static void _set_relay(int state, uint32_t ms)$/;"	f	file:
+_set_wled	lib_example/linux_uart/mf_brd.c	/^static void _set_wled(int state)$/;"	f	file:
+_spi_deinit	lib_example/linux_uart/mf_brd.c	/^static void _spi_deinit(int spifd)$/;"	f	file:
+_spi_init	lib_example/linux_uart/mf_brd.c	/^static int _spi_init(char* dev, void* param)$/;"	f	file:
+_spi_rw	lib_example/linux_uart/mf_brd.c	/^static void _spi_rw(int spifd, int cnt, uint8_t* buf_w, uint8_t* buf_r)$/;"	f	file:
+_spk_play	lib_example/linux_uart/mf_brd.c	/^static void _spk_play(int time, char* file_path, int16_t* buf)$/;"	f	file:
+_turn_bl_led	lib_example/linux_uart/mf_brd.c	/^static void _turn_bl_led(float duty)$/;"	f	file:
+_turn_irled	lib_example/linux_uart/mf_brd.c	/^static void _turn_irled(float duty)$/;"	f	file:
+_turn_wled	lib_example/linux_uart/mf_brd.c	/^static void _turn_wled(float duty)$/;"	f	file:
+_typeinfo	lib_example/any_test/any.h	/^        const std::type_info* _typeinfo;$/;"	m	class:any::ManageArg::std
+_typeinfo	源码/any/one/any.h	/^        const std::type_info* _typeinfo;$/;"	m	class:any::ManageArg::std
+_uart_deinit	lib_example/linux_uart/mf_brd.c	/^static void _uart_deinit(void* handle)$/;"	f	file:
+_uart_init	lib_example/linux_uart/mf_brd.c	/^static void* _uart_init(char* dev, void* param)$/;"	f	file:
+_uart_read	lib_example/linux_uart/mf_brd.c	/^static int _uart_read(void* handle, int cnt, uint8_t* buf)$/;"	f	file:
+_uart_write	lib_example/linux_uart/mf_brd.c	/^static int _uart_write(void* handle, int cnt, uint8_t* buf)$/;"	f	file:
+_watchdog_feed	lib_example/linux_uart/mf_brd.c	/^static void _watchdog_feed(void)$/;"	f	file:
+_watchdog_init	lib_example/linux_uart/mf_brd.c	/^static void _watchdog_init(int feed_time)$/;"	f	file:
+_what	源码/any/C++11实现的Boost库中的Any类/any.h	/^        std::string _what;$/;"	m	class:detail::bad_cast
+_write_file_only	lib_example/linux_uart/mf_brd.c	/^static int _write_file_only(char* path, void* buf, size_t count)$/;"	f	file:
+add	lib_example/日志库/NanoLog.cpp	/^	void add(NanoLogLine && logline)$/;"	f	class:nanolog::NanoLogger
+add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference$/;"	s	namespace:detail
+add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference<const void>$/;"	s	namespace:detail
+add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference<const volatile void>$/;"	s	namespace:detail
+add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference<void>$/;"	s	namespace:detail
+add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference<volatile void>$/;"	s	namespace:detail
+address	lib_example/linux_uart/mf_brd.h	/^	uint32_t address;$/;"	m	struct:__anon16
+address	lib_example/pybin11_testone.cpp	/^    std::string address;            \/\/住址$/;"	m	class:Person	file:
+age	lib_example/pybin11_testone.cpp	/^    int age;                        \/\/年龄$/;"	m	class:Person	file:
+any	lib_example/any_test/any.cpp	/^any::any(const any& other)$/;"	f	class:any
+any	lib_example/any_test/any.h	/^        any(_ValueType&& value)$/;"	f	class:any
+any	lib_example/any_test/any.h	/^        explicit any(detail::_in_place_type_t<_ValueType>, _Args&&... args)$/;"	f	class:any
+any	lib_example/any_test/any.h	/^        explicit any(detail::_in_place_type_t<_ValueType>, std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
+any	lib_example/any_test/any.h	/^class any$/;"	c
+any	源码/any/one/any.cpp	/^any::any(const any& other)$/;"	f	class:any
+any	源码/any/one/any.h	/^        any(_ValueType&& value)$/;"	f	class:any
+any	源码/any/one/any.h	/^        explicit any(detail::_in_place_type_t<_ValueType>, _Args&&... args)$/;"	f	class:any
+any	源码/any/one/any.h	/^        explicit any(detail::_in_place_type_t<_ValueType>, std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
+any	源码/any/one/any.h	/^class any$/;"	c
+any_cast	lib_example/any_test/any.h	/^inline _ValueType any_cast(any& a)$/;"	f
+any_cast	lib_example/any_test/any.h	/^inline _ValueType any_cast(any&& a)$/;"	f
+any_cast	lib_example/any_test/any.h	/^inline _ValueType any_cast(const any& a)$/;"	f
+any_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^_Ty *any_cast(Any *operand)$/;"	f
+any_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^_Ty any_cast(Any &operand)$/;"	f
+any_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^inline _Ty any_cast(Any &&operand)$/;"	f
+any_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^inline _Ty any_cast(const Any &operand)$/;"	f
+any_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^inline const _Ty *any_cast(const Any *operand)$/;"	f
+any_cast	源码/any/one/any.h	/^inline _ValueType any_cast(any& a)$/;"	f
+any_cast	源码/any/one/any.h	/^inline _ValueType any_cast(any&& a)$/;"	f
+any_cast	源码/any/one/any.h	/^inline _ValueType any_cast(const any& a)$/;"	f
+atomic_nanologger	lib_example/日志库/NanoLog.cpp	/^    std::atomic < NanoLogger * > atomic_nanologger;$/;"	m	namespace:nanolog	file:
+bad_any_cast	lib_example/any_test/any.h	/^class bad_any_cast : public std::bad_cast$/;"	c
+bad_any_cast	源码/any/one/any.h	/^class bad_any_cast : public std::bad_cast$/;"	c
+bad_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^        explicit bad_cast(const std::string &msg)$/;"	f	class:detail::bad_cast
+bad_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^    class bad_cast$/;"	c	namespace:detail
+baud	lib_example/linux_uart/linux_uart.h	/^	int baud;$/;"	m	struct:__anon12
+baud	lib_example/linux_uart/mf_brd.h	/^	int baud;$/;"	m	struct:__anon15
+bits	lib_example/linux_uart/mf_brd.h	/^	uint8_t bits;			\/* 发送\/接收数据位 *\/$/;"	m	struct:__anon17
+bl	lib_example/linux_uart/mf_brd.c	/^    cfg_bl_param_t bl;$/;"	m	struct:__anon19	file:
+brd_t	lib_example/linux_uart/mf_brd.c	/^}brd_t;$/;"	t	typeref:struct:__anon19	file:
+buffer	lib_example/日志库/NanoLog.cpp	/^    char * NanoLogLine::buffer()$/;"	f	class:nanolog::NanoLogLine
+clear	源码/any/C++11实现的Boost库中的Any类/any.h	/^    void clear()$/;"	f	class:Any
+clear_custom_speed_flag	lib_example/linux_uart/linux_uart.c	/^static void clear_custom_speed_flag(int _fd)$/;"	f	file:
+clear_custom_speed_flag	lib_example/linux_uart/mf_brd.c	/^static void clear_custom_speed_flag(int _fd)$/;"	f	file:
+clone	源码/any/C++11实现的Boost库中的Any类/any.h	/^        virtual placeholder *clone() const$/;"	f	class:Any::holder
+content	源码/any/C++11实现的Boost库中的Any类/any.h	/^    placeholder *content;$/;"	m	class:Any
+data_bits	lib_example/linux_uart/linux_uart.h	/^	int data_bits;$/;"	m	struct:__anon12
+data_bits	lib_example/linux_uart/mf_brd.h	/^	int data_bits;$/;"	m	struct:__anon15
+decode	lib_example/日志库/NanoLog.cpp	/^    char * decode(std::ostream & os, char * b, Arg * dummy)$/;"	f	namespace:nanolog
+decode	lib_example/日志库/NanoLog.cpp	/^    char * decode(std::ostream & os, char * b, NanoLogLine::string_literal_t * dummy)$/;"	f	namespace:nanolog
+decode	lib_example/日志库/NanoLog.cpp	/^    char * decode(std::ostream & os, char * b, char ** dummy)$/;"	f	namespace:nanolog
+deinit	lib_example/linux_uart/mf_brd.h	/^	void (*deinit)(void);$/;"	m	struct:__anon18
+detail	lib_example/any_test/any.h	/^namespace detail {$/;"	n
+detail	源码/any/C++11实现的Boost库中的Any类/any.h	/^namespace detail$/;"	n
+detail	源码/any/one/any.h	/^namespace detail {$/;"	n
+dev	lib_example/framebuffer/fbtools.h	/^char dev[20];$/;"	m	struct:fbdev
+disable_if	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct disable_if : public disable_if_c<Cond::value, T>$/;"	s	namespace:detail
+disable_if_c	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct disable_if_c$/;"	s	namespace:detail
+disable_if_c	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct disable_if_c<true, T>$/;"	s	namespace:detail
+eCAMERA_STATE	源码/摄像头/camera.c	/^} eCAMERA_STATE;$/;"	t	typeref:enum:__anon3	file:
+eDisplayState	源码/摄像头/display.c	/^} eDisplayState;$/;"	t	typeref:enum:__anon5	file:
+eEncodeState	源码/摄像头/encode.c	/^} eEncodeState;$/;"	t	typeref:enum:__anon7	file:
+emplace	lib_example/any_test/any.h	/^        emplace(_Args&&... args)$/;"	f	class:any
+emplace	lib_example/any_test/any.h	/^        emplace(std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
+emplace	源码/any/one/any.h	/^        emplace(_Args&&... args)$/;"	f	class:any
+emplace	源码/any/one/any.h	/^        emplace(std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
+empty	源码/any/C++11实现的Boost库中的Any类/any.h	/^    bool empty()$/;"	f	class:Any
+encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(Arg arg)$/;"	f	class:nanolog::NanoLogLine
+encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(Arg arg, uint8_t type_id)$/;"	f	class:nanolog::NanoLogLine
+encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(char * arg)$/;"	f	class:nanolog::NanoLogLine
+encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(char const * arg)$/;"	f	class:nanolog::NanoLogLine
+encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(string_literal_t arg)$/;"	f	class:nanolog::NanoLogLine
+encode_c_string	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode_c_string(char const * arg, size_t length)$/;"	f	class:nanolog::NanoLogLine
+fb	lib_example/framebuffer/fbtools.h	/^int fb;$/;"	m	struct:fbdev
+fb_fix	lib_example/framebuffer/fbtools.h	/^struct fb_fix_screeninfo fb_fix;$/;"	m	struct:fbdev	typeref:struct:fbdev::fb_fix_screeninfo
+fb_mem	lib_example/framebuffer/fbtools.h	/^unsigned long fb_mem;$/;"	m	struct:fbdev
+fb_mem_offset	lib_example/framebuffer/fbtools.h	/^unsigned long fb_mem_offset;$/;"	m	struct:fbdev
+fb_var	lib_example/framebuffer/fbtools.h	/^struct fb_var_screeninfo fb_var;$/;"	m	struct:fbdev	typeref:struct:fbdev::fb_var_screeninfo
+fbdev	lib_example/framebuffer/fbtools.h	/^typedef struct fbdev{$/;"	s
+format_timestamp	lib_example/日志库/NanoLog.cpp	/^    void format_timestamp(std::ostream & os, uint64_t timestamp)$/;"	f	namespace:__anon11
+gender	lib_example/pybin11_testone.cpp	/^    std::string gender;             \/\/性别$/;"	m	class:Person	file:
+getAddress	lib_example/pybin11_testone.cpp	/^    std::string getAddress() {$/;"	f	class:Person
+getAge	lib_example/pybin11_testone.cpp	/^    int getAge() {$/;"	f	class:Person
+getGender	lib_example/pybin11_testone.cpp	/^    std::string getGender() {$/;"	f	class:Person
+getIdCardNum	lib_example/pybin11_testone.cpp	/^    std::string getIdCardNum() {$/;"	f	class:Person
+getName	lib_example/pybin11_testone.cpp	/^    std::string getName() {$/;"	f	class:Person
+getSubnetMask	lib_example/c获取ip地址/main.c	/^int getSubnetMask()$/;"	f
+getUniversity	lib_example/pybin11_testone.cpp	/^    static std::string getUniversity() {$/;"	f	class:Person
+get_next_read_buffer	lib_example/日志库/NanoLog.cpp	/^	Buffer * get_next_read_buffer()$/;"	f	class:nanolog::QueueBuffer	file:
+gpio_deinit	lib_example/linux_uart/mf_brd.h	/^	void (*gpio_deinit)(char* pin);$/;"	m	struct:__anon18
+gpio_export	lib_example/linux_uart/mf_brd.c	/^static int gpio_export(uint32_t gpio)  $/;"	f	file:
+gpio_get_value	lib_example/linux_uart/mf_brd.c	/^static int gpio_get_value(uint32_t gpio, uint32_t *value)  $/;"	f	file:
+gpio_init	lib_example/linux_uart/mf_brd.h	/^	void* (*gpio_init)(char* pin, int mode, int state);$/;"	m	struct:__anon18
+gpio_read	lib_example/linux_uart/mf_brd.h	/^	void (*gpio_read)(char* pin, int* state);$/;"	m	struct:__anon18
+gpio_set_dir	lib_example/linux_uart/mf_brd.c	/^static int gpio_set_dir(uint32_t gpio, uint32_t mode)  $/;"	f	file:
+gpio_set_value	lib_example/linux_uart/mf_brd.c	/^static int gpio_set_value(uint32_t gpio, uint32_t value)  $/;"	f	file:
+gpio_unexport	lib_example/linux_uart/mf_brd.c	/^static int gpio_unexport(uint32_t gpio)  $/;"	f	file:
+gpio_write	lib_example/linux_uart/mf_brd.h	/^	void (*gpio_write)(char* pin, int state);$/;"	m	struct:__anon18
+habbit	lib_example/pybin11_testone.cpp	/^    std::string habbit;             \/\/兴趣爱好$/;"	m	class:Person	file:
+held	源码/any/C++11实现的Boost库中的Any类/any.h	/^        _Ty held;$/;"	m	class:Any::holder
+helloMethods	知识手册/编程模版/python_module/one/hellomodule.c	/^static PyMethodDef helloMethods[] = {$/;"	v	file:
+hellomodule	知识手册/编程模版/python_module/one/hellomodule.c	/^static struct PyModuleDef hellomodule = {$/;"	v	typeref:struct:PyModuleDef	file:
+holder	源码/any/C++11实现的Boost库中的Any类/any.h	/^        holder(_Ty &&value)$/;"	f	class:Any::holder
+holder	源码/any/C++11实现的Boost库中的Any类/any.h	/^        holder(const _Ty &value) : held(value) {}$/;"	f	class:Any::holder
+holder	源码/any/C++11实现的Boost库中的Any类/any.h	/^    class holder : public placeholder$/;"	c	class:Any
+i2c_deinit	lib_example/linux_uart/mf_brd.h	/^    void (*i2c_deinit)(int i2cfd);$/;"	m	struct:__anon18
+i2c_init	lib_example/linux_uart/mf_brd.h	/^	int (*i2c_init)(char* dev, void* param);$/;"	m	struct:__anon18
+i2c_read	lib_example/linux_uart/mf_brd.h	/^	void (*i2c_read)(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+i2c_smbus_read	lib_example/linux_uart/mf_brd.h	/^    void (*i2c_smbus_read)(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+i2c_smbus_write	lib_example/linux_uart/mf_brd.h	/^    void (*i2c_smbus_write)(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+i2c_write	lib_example/linux_uart/mf_brd.h	/^	void (*i2c_write)(int i2cfd, uint8_t addr, uint16_t reg_addr, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+idCardNum	lib_example/pybin11_testone.cpp	/^    std::string idCardNum;          \/\/身份证号码$/;"	m	class:Person	file:
+init	lib_example/linux_uart/mf_brd.h	/^	mf_err_t (*init)(void);$/;"	m	struct:__anon18
+init	知识手册/编程模版/python_module/two/one_mode_two.c	/^    bool init;$/;"	m	struct:__anon1	file:
+init_flag	lib_example/linux_uart/mf_brd.h	/^	int init_flag;$/;"	m	struct:__anon18
+initialize	lib_example/日志库/NanoLog.cpp	/^    void initialize(GuaranteedLogger gl, std::string const & log_directory, std::string const & log_file_name, uint32_t log_file_roll_size_mb)$/;"	f	namespace:nanolog
+initialize	lib_example/日志库/NanoLog.cpp	/^    void initialize(NonGuaranteedLogger ngl, std::string const & log_directory, std::string const & log_file_name, uint32_t log_file_roll_size_mb)$/;"	f	namespace:nanolog
+irled	lib_example/linux_uart/mf_brd.c	/^    cfg_led_param_t irled;$/;"	m	struct:__anon19	file:
+isDir	lib_example/tree.c	/^static int isDir(char *filename)$/;"	f	file:
+isDir	源码/tree/tree.c	/^static int isDir(char *filename)$/;"	f	file:
+is_logged	lib_example/日志库/NanoLog.cpp	/^    bool is_logged(LogLevel level)$/;"	f	namespace:nanolog
+key_state_t	lib_example/linux_uart/mf_brd.h	/^} key_state_t;$/;"	t	typeref:enum:__anon14
+linux_uart_deinit	lib_example/linux_uart/linux_uart.c	/^void linux_uart_deinit(int fd)$/;"	f
+linux_uart_init	lib_example/linux_uart/linux_uart.c	/^int linux_uart_init(char* dev, void* param)$/;"	f
+linux_uart_read	lib_example/linux_uart/linux_uart.c	/^int linux_uart_read(int fd, int cnt, uint8_t* buf)$/;"	f
+linux_uart_write	lib_example/linux_uart/linux_uart.c	/^int linux_uart_write(int fd, int cnt, uint8_t* buf)$/;"	f
+loglevel	lib_example/日志库/NanoLog.cpp	/^    std::atomic < unsigned int > loglevel = {0};$/;"	m	namespace:nanolog	file:
+logline	lib_example/日志库/NanoLog.cpp	/^	    NanoLogLine logline;$/;"	m	struct:nanolog::Buffer::Item	file:
+m_buffer	lib_example/any_test/any.h	/^        std::aligned_storage<sizeof(m_ptr), alignof(void*)>::type m_buffer;$/;"	m	union:any::Storage
+m_buffer	lib_example/日志库/NanoLog.cpp	/^    	Item * m_buffer;$/;"	m	class:nanolog::Buffer	file:
+m_buffer	源码/any/one/any.h	/^        std::aligned_storage<sizeof(m_ptr), alignof(void*)>::type m_buffer;$/;"	m	union:any::Storage
+m_buffer_base	lib_example/日志库/NanoLog.cpp	/^	std::unique_ptr < BufferBase > m_buffer_base;$/;"	m	class:nanolog::NanoLogger	file:
+m_buffer_size	lib_example/日志库/NanoLog.hpp	/^		size_t m_buffer_size;$/;"	m	class:nanolog::NanoLogLine
+m_buffers	lib_example/日志库/NanoLog.cpp	/^	std::queue < std::unique_ptr < Buffer > > m_buffers;$/;"	m	class:nanolog::QueueBuffer	file:
+m_bytes_used	lib_example/日志库/NanoLog.hpp	/^		size_t m_bytes_used;$/;"	m	class:nanolog::NanoLogLine
+m_bytes_written	lib_example/日志库/NanoLog.cpp	/^	std::streamoff m_bytes_written = 0;$/;"	m	class:nanolog::FileWriter	file:
+m_current_read_buffer	lib_example/日志库/NanoLog.cpp	/^	Buffer * m_current_read_buffer;$/;"	m	class:nanolog::QueueBuffer	file:
+m_current_write_buffer	lib_example/日志库/NanoLog.cpp	/^    	std::atomic < Buffer * > m_current_write_buffer;$/;"	m	class:nanolog::QueueBuffer	file:
+m_file_number	lib_example/日志库/NanoLog.cpp	/^	uint32_t m_file_number = 0;$/;"	m	class:nanolog::FileWriter	file:
+m_file_writer	lib_example/日志库/NanoLog.cpp	/^	FileWriter m_file_writer;$/;"	m	class:nanolog::NanoLogger	file:
+m_flag	lib_example/日志库/NanoLog.cpp	/^	std::atomic_flag & m_flag;$/;"	m	class:nanolog::SpinLock::std	file:
+m_flag	lib_example/日志库/NanoLog.cpp	/^	std::atomic_flag m_flag;$/;"	m	class:nanolog::QueueBuffer	file:
+m_heap_buffer	lib_example/日志库/NanoLog.hpp	/^		std::unique_ptr<char[]> m_heap_buffer;$/;"	m	class:nanolog::NanoLogLine
+m_log_file_roll_size_bytes	lib_example/日志库/NanoLog.cpp	/^	uint32_t const m_log_file_roll_size_bytes;$/;"	m	class:nanolog::FileWriter	file:
+m_manager	lib_example/any_test/any.cpp	/^    : m_manager(nullptr)$/;"	f
+m_manager	lib_example/any_test/any.h	/^    void(*m_manager)(ManageOption, const any*, ManageArg*);$/;"	m	class:any
+m_manager	源码/any/one/any.cpp	/^    : m_manager(nullptr)$/;"	f
+m_manager	源码/any/one/any.h	/^    void(*m_manager)(ManageOption, const any*, ManageArg*);$/;"	m	class:any
+m_name	lib_example/日志库/NanoLog.cpp	/^	std::string const m_name;$/;"	m	class:nanolog::FileWriter::std	file:
+m_os	lib_example/日志库/NanoLog.cpp	/^	std::unique_ptr < std::ofstream > m_os;$/;"	m	class:nanolog::FileWriter	file:
+m_ptr	lib_example/any_test/any.h	/^        void* m_ptr;$/;"	m	union:any::Storage
+m_ptr	源码/any/one/any.h	/^        void* m_ptr;$/;"	m	union:any::Storage
+m_read_index	lib_example/日志库/NanoLog.cpp	/^    	unsigned int m_read_index;$/;"	m	class:nanolog::QueueBuffer	file:
+m_read_index	lib_example/日志库/NanoLog.cpp	/^    	unsigned int m_read_index;$/;"	m	class:nanolog::RingBuffer	file:
+m_ring	lib_example/日志库/NanoLog.cpp	/^    	Item * m_ring;$/;"	m	class:nanolog::RingBuffer	file:
+m_s	lib_example/日志库/NanoLog.hpp	/^			char const *m_s;$/;"	m	struct:nanolog::NanoLogLine::string_literal_t
+m_size	lib_example/日志库/NanoLog.cpp	/^    	size_t const m_size;$/;"	m	class:nanolog::RingBuffer	file:
+m_stack_buffer	lib_example/日志库/NanoLog.hpp	/^		char m_stack_buffer[256 - 2 * sizeof(size_t) - sizeof(decltype(m_heap_buffer)) - 8 \/* Reserved *\/];$/;"	m	class:nanolog::NanoLogLine
+m_state	lib_example/日志库/NanoLog.cpp	/^	std::atomic < State > m_state;$/;"	m	class:nanolog::NanoLogger	file:
+m_storage	lib_example/any_test/any.h	/^    Storage m_storage;$/;"	m	class:any
+m_storage	源码/any/one/any.h	/^    Storage m_storage;$/;"	m	class:any
+m_thread	lib_example/日志库/NanoLog.cpp	/^	std::thread m_thread;$/;"	m	class:nanolog::NanoLogger	file:
+m_write_index	lib_example/日志库/NanoLog.cpp	/^    	std::atomic < unsigned int > m_write_index;$/;"	m	class:nanolog::QueueBuffer	file:
+m_write_index	lib_example/日志库/NanoLog.cpp	/^    	std::atomic < unsigned int > m_write_index;$/;"	m	class:nanolog::RingBuffer	file:
+m_write_state	lib_example/日志库/NanoLog.cpp	/^	std::atomic < unsigned int > m_write_state[size + 1];$/;"	m	class:nanolog::Buffer	file:
+main	lib_example/any_test/main.cpp	/^int main(int, char*[])$/;"	f
+main	lib_example/c获取ip地址/main.c	/^int main(void)$/;"	f
+main	lib_example/framebuffer.c	/^int main ()   $/;"	f
+main	lib_example/framebuffer/fbtools.c	/^int main()$/;"	f
+main	lib_example/lin.c	/^int main(int argc, char *argv[])$/;"	f
+main	lib_example/tree.c	/^int main(int argc, const char * argv[])$/;"	f
+main	源码/tree/tree.c	/^int main(int argc, const char * argv[])$/;"	f
+main	源码/摄像头/main.c	/^int main(int Argc, char* pArgv[])$/;"	f
+main	源码/浮点数转定点数/f_to_uint.c	/^int main()$/;"	f
+main	知识手册/opencv笔记/lib.cpp	/^int main()$/;"	f
+make16color	lib_example/framebuffer/fbtools.c	/^inline static unsigned short int make16color(unsigned char r, unsigned char g, unsigned char b)$/;"	f	file:
+make_any	lib_example/any_test/any.h	/^any make_any(_Args&&... args)$/;"	f
+make_any	lib_example/any_test/any.h	/^any make_any(std::initializer_list<_Up> list, _Args&&... args)$/;"	f
+make_any	源码/any/one/any.h	/^any make_any(_Args&&... args)$/;"	f
+make_any	源码/any/one/any.h	/^any make_any(std::initializer_list<_Up> list, _Args&&... args)$/;"	f
+max_index	知识手册/编程模版/python_module/two/one_mode_two.c	/^static int max_index(float *a, int n)$/;"	f	file:
+mf_brd	lib_example/linux_uart/mf_brd.c	/^mf_brd_t mf_brd=$/;"	v
+mf_brd_iic_t	lib_example/linux_uart/mf_brd.h	/^}mf_brd_iic_t;$/;"	t	typeref:struct:__anon16
+mf_brd_spi_t	lib_example/linux_uart/mf_brd.h	/^}mf_brd_spi_t;$/;"	t	typeref:struct:__anon17
+mf_brd_t	lib_example/linux_uart/mf_brd.h	/^} mf_brd_t;$/;"	t	typeref:struct:__anon18
+mf_brd_type_t	lib_example/linux_uart/mf_brd.h	/^}mf_brd_type_t;$/;"	t	typeref:enum:__anon13
+mf_brd_uart_t	lib_example/linux_uart/linux_uart.h	/^}mf_brd_uart_t;$/;"	t	typeref:struct:__anon12
+mf_brd_uart_t	lib_example/linux_uart/mf_brd.h	/^}mf_brd_uart_t;$/;"	t	typeref:struct:__anon15
+mic_init	lib_example/linux_uart/mf_brd.c	/^static void mic_init(int fs, int gain)$/;"	f	file:
+mic_init	lib_example/linux_uart/mf_brd.h	/^	void (*mic_init)(int fs, int gain);	\/\/初始化采样率,增益，仅支持S16_little格式$/;"	m	struct:__anon18
+mic_record	lib_example/linux_uart/mf_brd.c	/^static void mic_record(int time, char* file_path, int16_t* buf)$/;"	f	file:
+mic_record	lib_example/linux_uart/mf_brd.h	/^	void (*mic_record)(int time, char* file_path, int16_t* buf);	\/\/录制音频到文件或者buf$/;"	m	struct:__anon18
+mode	lib_example/linux_uart/mf_brd.h	/^	uint32_t mode;			\/* 工作模式 *\/$/;"	m	struct:__anon17
+name	lib_example/pybin11_testone.cpp	/^    std::string name;               \/\/姓名$/;"	m	class:Person	file:
+nanolog	lib_example/日志库/NanoLog.cpp	/^namespace nanolog$/;"	n	file:
+nanolog	lib_example/日志库/NanoLog.hpp	/^namespace nanolog$/;"	n
+nanologger	lib_example/日志库/NanoLog.cpp	/^    std::unique_ptr < NanoLogger > nanologger;$/;"	m	namespace:nanolog	file:
+nest_str	lib_example/tree.c	/^static unsigned char nest_str[NEST_COUNT]; $/;"	v	file:
+nest_str	源码/tree/tree.c	/^static unsigned char nest_str[NEST_COUNT]; $/;"	v	file:
+one_Type	知识手册/编程模版/python_module/two/one_mode_two.c	/^PyTypeObject one_Type = {$/;"	v
+one_mode	知识手册/编程模版/python_module/two/one_mode_one.c	/^struct PyModuleDef one_mode = {$/;"	v	typeref:struct:PyModuleDef
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(char arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(double arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(int32_t arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(int64_t arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(std::string const & arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(uint32_t arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(uint64_t arg)$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.hpp	/^		NanoLogLine &operator<<(const char (&arg)[N])$/;"	f	class:nanolog::NanoLogLine
+operator <<	lib_example/日志库/NanoLog.hpp	/^		operator<<(Arg const &arg)$/;"	f	class:nanolog::NanoLogLine
+operator =	lib_example/any_test/any.cpp	/^any& any::operator=(const any& rhs)$/;"	f	class:any
+operator =	lib_example/any_test/any.h	/^        operator=(_ValueType&& rhs)$/;"	f	class:any
+operator =	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any &operator=(Any &&rhs)$/;"	f	class:Any
+operator =	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any &operator=(const Any &rhs)$/;"	f	class:Any
+operator =	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any &operator=(valueType &&rhs)$/;"	f	class:Any
+operator =	源码/any/one/any.cpp	/^any& any::operator=(const any& rhs)$/;"	f	class:any
+operator =	源码/any/one/any.h	/^        operator=(_ValueType&& rhs)$/;"	f	class:any
+operator ==	lib_example/日志库/NanoLog.cpp	/^    bool NanoLog::operator==(NanoLogLine & logline)$/;"	f	class:nanolog::NanoLog
+pCallback	源码/摄像头/camera.c	/^    vCameraFrameProcess pCallback;$/;"	m	struct:__anon4	file:
+pCameraBuffer	源码/摄像头/camera.c	/^    sBufferType* pCameraBuffer;$/;"	m	struct:__anon4	file:
+pData	源码/摄像头/queue.c	/^    void* pData;$/;"	m	struct:LinkListNode	file:
+pData	源码/摄像头/queue.h	/^    void* pData;$/;"	m	struct:QueueData
+pFile	源码/摄像头/encode.c	/^    FILE* pFile;$/;"	m	struct:__anon8	file:
+pHandle	源码/摄像头/encode.c	/^    x264_t* pHandle;$/;"	m	struct:__anon8	file:
+pLinkListRoot	源码/摄像头/queue.c	/^    sLinkListNode* pLinkListRoot;$/;"	m	struct:__anon9	file:
+pMmap	源码/摄像头/display.c	/^    uint8_t* pMmap;$/;"	m	struct:__anon6	file:
+pNals	源码/摄像头/encode.c	/^    x264_nal_t* pNals;$/;"	m	struct:__anon8	file:
+pNext	源码/摄像头/queue.c	/^    struct LinkListNode* pNext;$/;"	m	struct:LinkListNode	typeref:struct:LinkListNode::	file:
+pParam	源码/摄像头/encode.c	/^    x264_param_t* pParam;$/;"	m	struct:__anon8	file:
+pPicIn	源码/摄像头/encode.c	/^    x264_picture_t* pPicIn;$/;"	m	struct:__anon8	file:
+pStart	源码/摄像头/camera.c	/^    void* pStart;$/;"	m	struct:__anon2	file:
+pad	lib_example/日志库/NanoLog.cpp	/^	char pad[64];$/;"	m	class:nanolog::RingBuffer	file:
+padding	lib_example/日志库/NanoLog.cpp	/^	    char padding[256 - sizeof(NanoLogLine)];$/;"	m	struct:nanolog::Buffer::Item	file:
+parity	lib_example/linux_uart/linux_uart.h	/^	char parity;$/;"	m	struct:__anon12
+parity	lib_example/linux_uart/mf_brd.h	/^	char parity;$/;"	m	struct:__anon15
+placeholder	源码/any/C++11实现的Boost库中的Any类/any.h	/^    class placeholder$/;"	c	class:Any
+pop	lib_example/日志库/NanoLog.cpp	/^	void pop()$/;"	f	class:nanolog::NanoLogger
+push	lib_example/日志库/NanoLog.cpp	/^    	bool push(NanoLogLine && logline, unsigned int const write_index)$/;"	f	class:nanolog::Buffer
+push	lib_example/日志库/NanoLog.cpp	/^    	void push(NanoLogLine && logline) override$/;"	f	class:nanolog::QueueBuffer
+push	lib_example/日志库/NanoLog.cpp	/^    	void push(NanoLogLine && logline) override$/;"	f	class:nanolog::RingBuffer
+r_methods	知识手册/编程模版/python_module/two/one_mode_one.c	/^static PyMethodDef r_methods[] = {$/;"	v	file:
+read_key	lib_example/linux_uart/mf_brd.h	/^	void (*read_key)(int32_t key_idx, int* state);$/;"	m	struct:__anon18
+read_tp	lib_example/linux_uart/mf_brd.h	/^	void (*read_tp)(int* x, int* y);		$/;"	m	struct:__anon18
+relay	lib_example/linux_uart/mf_brd.c	/^    cfg_relay_param_t relay;$/;"	m	struct:__anon19	file:
+relay_keep_ms	lib_example/linux_uart/mf_brd.c	/^static uint64_t relay_keep_ms = 0;$/;"	v	file:
+relay_start_ms	lib_example/linux_uart/mf_brd.c	/^static uint64_t relay_start_ms = 0;$/;"	v	file:
+relay_thread	lib_example/linux_uart/mf_brd.c	/^static void *relay_thread(void *args)$/;"	f	file:
+relay_thread_flag	lib_example/linux_uart/mf_brd.c	/^static uint8_t relay_thread_flag = 0;$/;"	v	file:
+resize_buffer_if_needed	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::resize_buffer_if_needed(size_t additional_bytes)$/;"	f	class:nanolog::NanoLogLine
+ring_buffer_size_mb	lib_example/日志库/NanoLog.hpp	/^		uint32_t ring_buffer_size_mb;$/;"	m	struct:nanolog::NonGuaranteedLogger
+roll_file	lib_example/日志库/NanoLog.cpp	/^	void roll_file()$/;"	f	class:nanolog::FileWriter	file:
+rotateImage	知识手册/opencv笔记/lib.cpp	/^int rotateImage(const cv::Mat &src, cv::Mat &dst, const double angle, const int mode)$/;"	f
+rotateImage2	知识手册/opencv笔记/lib.cpp	/^int rotateImage2(const cv::Mat &src, cv::Mat &dst, const double angle, const int mode)$/;"	f
+sBufferType	源码/摄像头/camera.c	/^} sBufferType;$/;"	t	typeref:struct:__anon2	file:
+sCameraPrivateData	源码/摄像头/camera.c	/^} sCameraPrivateData;$/;"	v	typeref:struct:__anon4	file:
+sDisplayPrivateData	源码/摄像头/display.c	/^} sDisplayPrivateData;$/;"	v	typeref:struct:__anon6	file:
+sEncodePrivateData	源码/摄像头/encode.c	/^} sEncodePrivateData;$/;"	v	typeref:struct:__anon8
+sLinkListNode	源码/摄像头/queue.c	/^} sLinkListNode;$/;"	t	typeref:struct:LinkListNode	file:
+sQueue	源码/摄像头/queue.h	/^} sQueue;$/;"	t	typeref:struct:__anon10
+sQueueData	源码/摄像头/queue.h	/^} sQueueData;$/;"	t	typeref:struct:QueueData
+sQueuePrivateData	源码/摄像头/queue.c	/^} sQueuePrivateData;$/;"	v	typeref:struct:__anon9	file:
+s_brd	lib_example/linux_uart/mf_brd.c	/^static brd_t s_brd = {0};$/;"	v	file:
+s_key_fd	lib_example/linux_uart/mf_brd.c	/^static int s_key_fd;	$/;"	v	file:
+say_hello_ak	知识手册/编程模版/python_module/one/hellomodule.c	/^say_hello_ak(PyObject *self, PyObject *args)$/;"	f	file:
+setAddress	lib_example/pybin11_testone.cpp	/^    void setAddress(std::string address) {$/;"	f	class:Person
+setAge	lib_example/pybin11_testone.cpp	/^    void setAge(int age) {$/;"	f	class:Person
+setGender	lib_example/pybin11_testone.cpp	/^    void setGender(std::string gender) {$/;"	f	class:Person
+setIdCardNum	lib_example/pybin11_testone.cpp	/^    void setIdCardNum(std::string idCardNum) {$/;"	f	class:Person
+setName	lib_example/pybin11_testone.cpp	/^    void setName(std::string name) {$/;"	f	class:Person
+set_BL_LED	lib_example/linux_uart/mf_brd.h	/^	void (*set_BL_LED)(int state);$/;"	m	struct:__anon18
+set_IR_LED	lib_example/linux_uart/mf_brd.h	/^	void (*set_IR_LED)(int state);$/;"	m	struct:__anon18
+set_RGB	lib_example/linux_uart/mf_brd.h	/^	void (*set_RGB)(int state); \/\/b0:R, b1:G, b2:B$/;"	m	struct:__anon18
+set_W_LED	lib_example/linux_uart/mf_brd.h	/^	void (*set_W_LED)(int state);$/;"	m	struct:__anon18
+set_log_level	lib_example/日志库/NanoLog.cpp	/^    void set_log_level(LogLevel level)$/;"	f	namespace:nanolog
+set_relay	lib_example/linux_uart/mf_brd.h	/^	void (*set_relay)(int state, uint32_t ms); \/\/设置继电器打开ms，或者关闭$/;"	m	struct:__anon18
+setup_next_write_buffer	lib_example/日志库/NanoLog.cpp	/^	void setup_next_write_buffer()$/;"	f	class:nanolog::QueueBuffer	file:
+size	lib_example/日志库/NanoLog.cpp	/^	static constexpr const size_t size = 32768; \/\/ 8MB. Helps reduce memory fragmentation$/;"	m	class:nanolog::Buffer	file:
+speed	lib_example/linux_uart/mf_brd.h	/^	uint32_t speed;			\/* 频率 *\/$/;"	m	struct:__anon17
+spi_deinit	lib_example/linux_uart/mf_brd.h	/^	void (*spi_deinit)(int spifd);$/;"	m	struct:__anon18
+spi_init	lib_example/linux_uart/mf_brd.h	/^	int (*spi_init)(char* dev, void* param);$/;"	m	struct:__anon18
+spi_rw	lib_example/linux_uart/mf_brd.h	/^	void (*spi_rw)(int spifd, int cnt, uint8_t* buf_w, uint8_t *buf_r);$/;"	m	struct:__anon18
+spk_init	lib_example/linux_uart/mf_brd.c	/^static void spk_init(int fs, int gain)$/;"	f	file:
+spk_init	lib_example/linux_uart/mf_brd.h	/^	void (*spk_init)(int fs, int gain);	\/\/初始化采样率，增益，仅支持S16_little格式$/;"	m	struct:__anon18
+spk_play	lib_example/linux_uart/mf_brd.h	/^	void (*spk_play)(int time, char* file_path, int16_t* buf); \/\/播放音频文件或者buf$/;"	m	struct:__anon18
+stop_bits	lib_example/linux_uart/linux_uart.h	/^	int stop_bits;$/;"	m	struct:__anon12
+stop_bits	lib_example/linux_uart/mf_brd.h	/^	int stop_bits;$/;"	m	struct:__anon15
+string_literal_t	lib_example/日志库/NanoLog.hpp	/^			explicit string_literal_t(char const *s) : m_s(s) {}$/;"	f	struct:nanolog::NanoLogLine::string_literal_t
+string_literal_t	lib_example/日志库/NanoLog.hpp	/^		struct string_literal_t$/;"	s	class:nanolog::NanoLogLine
+stringify	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::stringify(std::ostream & os)$/;"	f	class:nanolog::NanoLogLine
+stringify	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::stringify(std::ostream & os, char * start, char const * const end)$/;"	f	class:nanolog::NanoLogLine
+swap	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any &swap(Any &rhs)$/;"	f	class:Any
+swap	源码/any/C++11实现的Boost库中的Any类/any.h	/^inline void swap(Any &lhs, Any &rhs)$/;"	f
+test_help	知识手册/编程模版/python_module/two/one.c	/^static PyObject* test_help() {$/;"	f	file:
+test_methods	知识手册/编程模版/python_module/two/one.c	/^static PyMethodDef test_methods[] = {$/;"	v	file:
+test_module	知识手册/编程模版/python_module/two/one.c	/^static struct PyModuleDef test_module = {$/;"	v	typeref:struct:PyModuleDef	file:
+this_thread_id	lib_example/日志库/NanoLog.cpp	/^    std::thread::id this_thread_id()$/;"	f	namespace:__anon11
+throw_bad_any_cast	lib_example/any_test/any.h	/^[[noreturn]] inline void throw_bad_any_cast()$/;"	f
+throw_bad_any_cast	源码/any/one/any.h	/^[[noreturn]] inline void throw_bad_any_cast()$/;"	f
+timestamp_now	lib_example/日志库/NanoLog.cpp	/^    uint64_t timestamp_now()$/;"	f	namespace:__anon11
+to_string	lib_example/日志库/NanoLog.cpp	/^    char const * to_string(LogLevel loglevel)$/;"	f	namespace:nanolog
+try_pop	lib_example/日志库/NanoLog.cpp	/^    	bool try_pop(NanoLogLine & logline) override$/;"	f	class:nanolog::QueueBuffer
+try_pop	lib_example/日志库/NanoLog.cpp	/^    	bool try_pop(NanoLogLine & logline) override$/;"	f	class:nanolog::RingBuffer
+try_pop	lib_example/日志库/NanoLog.cpp	/^    	bool try_pop(NanoLogLine & logline, unsigned int const read_index)$/;"	f	class:nanolog::Buffer
+turn_BL_LED	lib_example/linux_uart/mf_brd.h	/^	void (*turn_BL_LED)(float duty);$/;"	m	struct:__anon18
+turn_IR_LED	lib_example/linux_uart/mf_brd.h	/^	void (*turn_IR_LED)(float duty);$/;"	m	struct:__anon18
+turn_W_LED	lib_example/linux_uart/mf_brd.h	/^	void (*turn_W_LED)(float duty);$/;"	m	struct:__anon18
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef T type;$/;"	t	struct:detail::disable_if_c
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef _Ty1 type;$/;"	t	struct:detail::_If
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef _Ty2 type;$/;"	t	struct:detail::_If
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef const void type;$/;"	t	struct:detail::add_reference
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef const volatile void type;$/;"	t	struct:detail::add_reference
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef typename std::remove_reference<_Ty>::type &type;$/;"	t	class:detail::add_reference::std::remove_reference
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef void type;$/;"	t	struct:detail::add_reference
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef volatile void type;$/;"	t	struct:detail::add_reference
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        virtual const std::type_info &type() const$/;"	f	class:Any::holder::std
+type	源码/any/C++11实现的Boost库中的Any类/any.h	/^    const std::type_info &type() const$/;"	f	class:Any::std
+uart_deinit	lib_example/linux_uart/mf_brd.h	/^	void (*uart_deinit)(void* handle);$/;"	m	struct:__anon18
+uart_init	lib_example/linux_uart/mf_brd.h	/^	void* (*uart_init)(char* dev, void* param);$/;"	m	struct:__anon18
+uart_read	lib_example/linux_uart/mf_brd.h	/^	int (*uart_read)(void* handle, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+uart_write	lib_example/linux_uart/mf_brd.h	/^	int (*uart_write)(void* handle, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+university	lib_example/pybin11_testone.cpp	/^    static std::string university;$/;"	m	class:Person	file:
+university	lib_example/pybin11_testone.cpp	/^std::string Person::university = "xidian University";$/;"	m	class:Person	file:
+vCameraFrameProcess	源码/摄像头/camera.h	/^typedef void (*vCameraFrameProcess)(uint8_t* pData, uint32_t Width, uint32_t Height, uint32_t Length) ;$/;"	t
+value	lib_example/日志库/NanoLog.cpp	/^	static constexpr const std::size_t value = 0;$/;"	m	struct:__anon11::TupleIndex	file:
+value	lib_example/日志库/NanoLog.cpp	/^	static constexpr const std::size_t value = 1 + TupleIndex < T, std::tuple < Types... > >::value;$/;"	m	struct:__anon11::TupleIndex	file:
+value_type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        typedef _Ty value_type;$/;"	t	class:Any::holder
+watchdog_feed	lib_example/linux_uart/mf_brd.h	/^	void (*watchdog_feed)(void);$/;"	m	struct:__anon18
+watchdog_init	lib_example/linux_uart/mf_brd.h	/^	void (*watchdog_init)(int feed_time);	\/\/初始化看门狗，以及喂狗时间，内部新建线程喂狗$/;"	m	struct:__anon18
+what	源码/any/C++11实现的Boost库中的Any类/any.h	/^        const char *what() const$/;"	f	class:detail::bad_cast
+wigand_init	lib_example/linux_uart/mf_brd.c	/^static void wigand_init(int mode)$/;"	f	file:
+wigand_init	lib_example/linux_uart/mf_brd.h	/^	void (*wigand_init)(int mode);	\/\/韦根信号初始化，设定模式 接收0\/发送1$/;"	m	struct:__anon18
+wigand_read	lib_example/linux_uart/mf_brd.c	/^static void wigand_read(int* bitlen, uint64_t* data)$/;"	f	file:
+wigand_read	lib_example/linux_uart/mf_brd.h	/^	void (*wigand_read)(int* bitlen, uint64_t* data);	\/\/读取数据$/;"	m	struct:__anon18
+wigand_write	lib_example/linux_uart/mf_brd.c	/^static void wigand_write(int bitlen, uint64_t data)$/;"	f	file:
+wigand_write	lib_example/linux_uart/mf_brd.h	/^	void (*wigand_write)(int bitlen, uint64_t data);	\/\/写数据$/;"	m	struct:__anon18
+wled	lib_example/linux_uart/mf_brd.c	/^    cfg_led_param_t wled;$/;"	m	struct:__anon19	file:
+write	lib_example/日志库/NanoLog.cpp	/^	void write(NanoLogLine & logline)$/;"	f	class:nanolog::FileWriter
+~Any	源码/any/C++11实现的Boost库中的Any类/any.h	/^    ~Any()$/;"	f	class:Any
+~Buffer	lib_example/日志库/NanoLog.cpp	/^    	~Buffer()$/;"	f	class:nanolog::Buffer
+~NanoLogger	lib_example/日志库/NanoLog.cpp	/^	~NanoLogger()$/;"	f	class:nanolog::NanoLogger
+~Person	lib_example/pybin11_testone.cpp	/^    ~Person() {};$/;"	f	class:Person
+~RingBuffer	lib_example/日志库/NanoLog.cpp	/^    	~RingBuffer()$/;"	f	class:nanolog::RingBuffer
+~SpinLock	lib_example/日志库/NanoLog.cpp	/^	~SpinLock()$/;"	f	struct:nanolog::SpinLock
+~any	lib_example/any_test/any.cpp	/^any::~any()$/;"	f	class:any
+~any	源码/any/one/any.cpp	/^any::~any()$/;"	f	class:any
+~placeholder	源码/any/C++11实现的Boost库中的Any类/any.h	/^        virtual ~placeholder() {}$/;"	f	class:Any::placeholder

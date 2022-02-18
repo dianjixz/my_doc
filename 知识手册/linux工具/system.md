@@ -238,6 +238,12 @@ $ systemctl show -p CPUShares httpd.service
 
 #设置某个 Unit 的指定属性
 $ sudo systemctl set-property httpd.service CPUShares=500
+
+#使服务开机启动
+sudo sudo systemctl enable apache.service
+
+#关闭服务开机启动
+sudo sudo systemctl disable apache.service
 ```
 
 **4.4 依赖关系**
@@ -554,7 +560,7 @@ $ sudo journalctl --vacuum-time=1years
 sudo cp /lib/systemd/system/rc-local.service /etc/systemd/system/rc-local.service
 1
 修改内容如下，主要是添加Install字段信息
-
+~~~ bash
 #  SPDX-License-Identifier: LGPL-2.1+
 #
 #  This file is part of systemd.
@@ -581,25 +587,27 @@ GuessMainPID=no
 
 [Install]
 WantedBy=multi-user.target
-
+~~~
 其中Unit字段主要描述服务的启动顺序以及依赖关系，Service字段主要描述如何启动，Install字段描述如何安装这个服务。ubuntu 18.04系统默认已经将/etc/rc.local文件移除了，因此，我们需要手动创建一个，并将需要开机执行的命令写入到文件中，如
-
+~~~ bash
 #!/bin/bash
 
 /usr/bin/sslocal -c /home/xugaoxiang/Tools/ss/ss.json &
+~~~
 同样的，别忘了，给/etc/rc.local加上可执行的权限
-
+~~~ bash
 sudo chmod a+x /etc/rc.local
 然后执行
-
+~~~ bash
 xugaoxiang@ubuntu:~$ sudo systemctl enable rc-local
 Created symlink /etc/systemd/system/multi-user.target.wants/rc-local.service → /etc/systemd/system/rc-local.service.
 接着启动这个服务并查看它的状态
 
 sudo systemctl start rc-local.service
 sudo systemctl status rc-local.service
+~~~
 命令输出如下
-
+~~~ bash
 ● rc-local.service - /etc/rc.local Compatibility
    Loaded: loaded (/etc/systemd/system/rc-local.service; enabled; vendor preset: enabled)
   Drop-In: /lib/systemd/system/rc-local.service.d
@@ -616,7 +624,7 @@ sudo systemctl status rc-local.service
 11月 01 13:17:08 ubuntu rc.local[10810]: INFO: loading config from /home/xugaoxiang/Tools/ss/ss.json
 11月 01 13:17:08 ubuntu rc.local[10810]: 2018-11-01 13:17:08 INFO     loading libcrypto from libcrypto.so.1.1
 11月 01 13:17:08 ubuntu rc.local[10810]: 2018-11-01 13:17:08 INFO     starting local at 127.0.0.1:1080
-
+~~~
 可以看到rc.local中的脚本已经被正确执行了。
 ————————————————
 版权声明：本文为CSDN博主「迷途小书童的Note」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。

@@ -177,6 +177,22 @@ sudo launchpad-getkeys
 
 如果您使用代理服务器，则情况会稍微复杂一些，因此请参阅this获取更多信息
 
+### 方法四:
+
+~~~ bash
+#  vim  /etc/apt/sources.list.d/nginx.list
+
+##########################################################
+
+deb       [trusted=yes]      http://nginx.org/packages/ubuntu/   xenial nginx
+
+deb-src  [trusted=yes]     http://nginx.org/packages/ubuntu/   xenial nginx
+
+###########################################################
+~~~
+
+
+
 ## 设置代理
 ### 方式一
 使用 proxychains 软件代理.
@@ -201,6 +217,8 @@ Acquire::http::Proxy "http://user:pwd@192.168.1.1:8080";
 随后执行apt的任何操作，都将使用这个代理了。
 参考:
 
+https://blog.csdn.net/michaelwoshi/article/details/94185132
+
 https://ubuntuqa.com/article/111.html
 
 https://www.cnblogs.com/andrewwang/p/9293031.html
@@ -209,3 +227,14 @@ https://stackoverflow.com/questions/25322280/how-can-i-configure-a-http-proxy-fo
 # apt 相关内容
 multistrap 可用于建立基本的 debian 系文件系统.
 debootstrap 可用于建立基本的 debian 系文件系统.
+
+Ubuntu上搭建本地源，做离线安装:
+	https://blog.csdn.net/michaelwoshi/article/details/94185132
+
+​	https://www.cnblogs.com/faster/p/13199453.html
+
+​	https://www.modb.pro/db/11796
+
+相关系统管理包:
+
+​	https://zhuanlan.zhihu.com/p/28562152

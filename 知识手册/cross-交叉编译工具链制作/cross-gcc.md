@@ -36,42 +36,50 @@
 
 下载地址
 
-linux-2.6.10.tar.gz
-
+linux-5.4.61.tar.gz
+https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.4.61.tar.gz
 ftp.kernel.org
 
-glibc-2.3.2.tar.gz
-
+glibc-2.33.tar.gz
+http://ftp.gnu.org/gnu/glibc/glibc-2.33.tar.gz
 ftp.gnu.org
 
-binutils-2.15.tar.bz2
+binutils-2.37.tar.gz
+http://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz
 
 ftp.gnu.org
 
 glibc-linuxthreads-2.3.2.tar.gz
-
+http://ftp.gnu.org/gnu/glibc/glibc-linuxthreads-2.5.tar.bz2
 ftp.gnu.org
 
-gcc-3.3.6.tar.gz
-
+gcc-11.2.0.tar.gz
+http://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz
 ftp.gnu.org
+~~~ bash
+wget https://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.4.61.tar.gz &
+wget http://ftp.gnu.org/gnu/glibc/glibc-2.33.tar.gz &
+wget http://ftp.gnu.org/gnu/binutils/binutils-2.37.tar.gz &
+wget http://ftp.gnu.org/gnu/glibc/glibc-linuxthreads-2.5.tar.bz2 &
+wget http://ftp.gnu.org/gnu/gcc/gcc-11.2.0/gcc-11.2.0.tar.gz &
 
+~~~
 通过相关站点下载以上资源后，就能开始建立交叉编译工具链了。
 
 1．建立工作目录
 
 首先建立工作目录，工作目录就是在什么目录下构建交叉工具链，目录的构建一般没有特别的需求，能根据个人喜好建立。以下所建立的目录是作者自定义的，当前的用户定义为mike，因此用户目录为/home/mike，在用户目录下首先建立一个工作目录（armlinux），建立工作目录的命令行操作如下：
-
+~~~ bash
 # cd /home/mike
 
 # mkdir armlinux
-
+~~~
 再在这个工作目录armlinux下建立3个目录 build-tools、kernel 和 tools。具体操作如下：
-
+~~~ bash
 # cd armlinux
 
 # mkdir build-tools kernel tools
-
+~~~
 其中各目录的作用如下。
 
   ● build-tools  用来存放下载的binutils、gcc、glibc等原始码和用来编译这些原始码的目录；
@@ -83,7 +91,7 @@ ftp.gnu.org
 2．建立环境变量
 
 该步骤的目的是为了方便重复输入路径，因为重复操作每件相同的事情总会让人觉得非常麻烦，如果读者不习惯使用环境变量就能略过该步，直接输入绝对路径就能。声明以下环境变量的目的是在之后编译工具库的时候会用到，非常方便输入，尤其是能降低输错路径的风险。
-
+~~~ bash
 # export PRJROOT=/home/mike/armlinux
 
 # export TARGET=arm-linux
@@ -93,7 +101,7 @@ ftp.gnu.org
 # export TARGET_PREFIX=$PREFIX/$TARGET
 
 # export PATH=$PREFIX/bin:$PATH
-
+~~~
 注意，用export声明的变量是临时的变量，也就是当注销或更换了控制台，这些环境变量就消失了，如果还需要使用这些环境变量就必须重复export操作，所以有时会非常麻烦。值得庆幸的是，环境变量也能定义在bashrc文件中，这样当注销或更换控制台时，这些变量就一直有效，就不用老是export这些变量了。
 
 3．编译、安装Binutils
@@ -139,13 +147,13 @@ Binutils工具安装依赖于Bash、Coreutils、Diffutils、GCC、Gettext、Glib
 介绍完Binutils工具后，下面将分步介绍安装binutils-2.15的过程。
 
 首先解压binutils-2.15.tar.bz2包，命令如下：
-
+~~~ bash
 # cd $PRJROOT/build-tools
 
 # tar -xjvf binutils-2.15.tar.bz2
-
+~~~
 接着设置Binutils工具，建议建立一个新的目录用来存放设置和编译文件，这样能使源文件和编译文件独立开，具体操作如下：
-
+~~~ bash
 # cd $PRJROOT/build-tools
 
 # mkdir build-binutils
@@ -153,7 +161,7 @@ Binutils工具安装依赖于Bash、Coreutils、Diffutils、GCC、Gettext、Glib
 # cd build-binutils
 
 # ../ binutils-2.15/configure --target=$TARGET --prefix=$PREFIX
-
+~~~
 其中选项?target的意思是制定生成的是 arm-linux 的工具，--prefix 是指出可执行文件安装的位置。执行上述操作会出现非常多check信息，最后产生 Makefile 文件。接下来执行make和安装操作，命令如下：
 
 # make
@@ -317,7 +325,7 @@ int main( )
 {
 
      printf(“Hello,world!＼n”);
-
+    
      return 0;
 
 }
