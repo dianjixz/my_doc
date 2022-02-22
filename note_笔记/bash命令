@@ -113,3 +113,21 @@ fc-cache -fv   刷新字体缓存
 bash-completion		tab补全插件
 
 
+
+
+ Linux Shell中捕获CTRL+C
+
+#!/bin/bash
+
+trap 'onCtrlC' INT
+function onCtrlC () {
+echo 'Ctrl+C is captured'
+}
+
+while true; do
+echo 'I am working!'
+sleep 1
+done
+
+
+

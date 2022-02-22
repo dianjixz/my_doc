@@ -6,8 +6,11 @@ inotify-tools 是为linux下inotify文件监控工具提供的一套c的开发�
 
 
 
-```
-wget http:``//github``.com``/downloads/rvoicilas/inotify-tools/inotify-tools-3``.14.``tar``.gz``tar` `xzf inotify-tools-3.14.``tar``.gz ;``cd` `inotify-tools-3.14``.``/configure` `--prefix=``/usr` `&& ``make` `&& ``su` `-c ``'make install'
+```bash
+wget http://github.com/downloads/rvoicilas/inotify-tools/inotify-tools-3.14.tar.gz 
+tar xzf inotify-tools-3.14.tar.gz ;
+cd inotify-tools-3.14
+./configure --prefix=/usr && make && su -c 'make install'
 ```
 
 使用例子：
@@ -144,3 +147,4 @@ inotifywatch [-hvzrqf] [-e ] [-t ] [-a ] [-d ] [ ... ]
 | delete        | 文件或目录删除                                               |
 | delete_self   | 文件或目录移除，之后不再监听此文件或目录                     |
 | unmount       | 文件系统取消挂载，之后不再监听此文件系统。                   |
+
