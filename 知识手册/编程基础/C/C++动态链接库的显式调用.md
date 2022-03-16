@@ -115,7 +115,7 @@ int main()
 {
     int m,n;
     //打开库文件
-    void* handler = dlopen("libmymath.so",RTLD_LAZY);
+    void* handler = dlopen("libmymath.so",RTLD_NOW);
     if(dlerror() != NULL){
         printf("%s",dlerror());
     }
