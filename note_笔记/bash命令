@@ -129,5 +129,72 @@ echo 'I am working!'
 sleep 1
 done
 
+shell 计数命令     wc -w
+
+powerline
+地址：https://github.com/powerline/powerline
+终端本身是高效的，但有时也略显乏味，使用 powerline 可以为终端加上强大的 状态栏，比如在 vim 中显示当前状态，在打开 git 目录时显示当前分支等等。
+
+
+
+ranger
+
+地址：https://github.com/ranger/ranger
+
+Ranger 使用 Python 编写，默认为使用 vim 风格的按键绑定，对于使用 vim 的用户来说几乎没有学习成本，能够快速上手使用。
+
+
+
+nnn
+
+地址：https://github.com/jarun/nnn
+
+nnn (n³) 是一个功能齐全的终端文件管理器，速度非常快且几乎 0 配置，也是一个非常不错的选择。
+
+
+
+exa
+
+地址：https://github.com/ogham/exa
+
+一句话点评：用来替换 ls 命令的现代化工具。
+
+
+fd
+
+地址：https://github.com/sharkdp/fd
+
+一句话点评：简单、快速、好用，用于替换 find 的搜索工具。
+
+
+fzf
+
+地址：https://github.com/junegunn/fzf
+
+fzf 是一款支持模糊搜索的交互式工具，可以用来查找任何列表内容，包括文件、Git 分支、进程等。
+
+tldr
+
+地址：https://github.com/tldr-pages/tldr
+
+tldr  是 Too long, Don't read 的缩写，可以帮助你快速查看常用命令的使用实例，比如 tar 命令，那后面一长串参数谁记得清呢？当然，linux 大佬除外。
+
+
+
+The Fuck
+
+地址：https://github.com/nvbn/thefuck
+
+在终端下是不是经常输错命令，搞得自己心烦意乱，The Fuck 是一款了不起的工具，帮你彻底解决这个问题，当你输错命令后，只要输入 fuck 命令，它会帮你自动纠正错误，精彩之极！ 
+
+
+w3m
+
+地址：https://github.com/tats/w3m
+
+真正的程序员就该使用命令行来浏览网页。
+
+
+
 
 

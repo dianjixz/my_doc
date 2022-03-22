@@ -33,9 +33,16 @@ CAMERA_SATTE_CAP	源码/摄像头/camera.c	/^    CAMERA_SATTE_CAP,$/;"	e	enum:__
 CAMERA_SATTE_OPEN	源码/摄像头/camera.c	/^    CAMERA_SATTE_OPEN,$/;"	e	enum:__anon3	file:
 CAMERA_STATE_CLOSE	源码/摄像头/camera.c	/^    CAMERA_STATE_CLOSE,$/;"	e	enum:__anon3	file:
 CAMERA_STATE_ERR	源码/摄像头/camera.c	/^    CAMERA_STATE_ERR$/;"	e	enum:__anon3	file:
-CC	lib_example/make-example/Makefile	/^CC   =gcc$/;"	m
+CC	lib_example/expect/can_test/Makefile	/^CC   =  riscv64-unknown-elf-gcc$/;"	m
+CC	lib_example/expect/uart_test/Makefile	/^CC   =  \/home\/nihao\/work\/my_space\/tina-d1-open\/prebuilt\/gcc\/linux-x86\/riscv\/toolchain-thead-glibc\/riscv64-glibc-gcc-thead_20200702\/bin\/riscv64-unknown-linux-gnu-gcc$/;"	m
+CC	lib_example/make-example/Makefile	/^CC   		=  gcc$/;"	m
 CFLAG	源码/摄像头/Makefile	/^CFLAG = -Wall -O2$/;"	m
-CFLAGS	lib_example/make-example/Makefile	/^CFLAGS  =-Wall$/;"	m
+CFLAGS	lib_example/expect/can_master/Makefile	/^CFLAGS  =-Wall$/;"	m
+CFLAGS	lib_example/expect/can_test/Makefile	/^CFLAGS  =-Wall$/;"	m
+CFLAGS	lib_example/expect/uart_master/Makefile	/^CFLAGS  =-Wall$/;"	m
+CFLAGS	lib_example/expect/uart_test/Makefile	/^CFLAGS  =-Wall$/;"	m
+CFLAGS	lib_example/make-example/Makefile	/^CFLAGS  	=  -Wall$/;"	m
+CLIENT	lib_example/nanomsgdemo/pubsub.c	11;"	d	file:
 CONFIG_CAPTURE_BUF_CNT	源码/摄像头/config.h	8;"	d
 CONFIG_CAPTURE_DEVICE	源码/摄像头/config.h	13;"	d
 CONFIG_CAPTURE_FPS	源码/摄像头/config.h	7;"	d
@@ -59,7 +66,7 @@ CameraOpen	源码/摄像头/camera.c	/^int CameraOpen(const char* pDevName)$/;"	
 CaptureThreadId	源码/摄像头/camera.c	/^    pthread_t   CaptureThreadId;$/;"	m	struct:__anon4	file:
 Cnt	源码/摄像头/queue.c	/^    int Cnt;$/;"	m	struct:__anon9	file:
 DBG_LINE	lib_example/linux_uart/mf_brd.c	29;"	d	file:
-DEBUG	lib_example/make-example/Makefile	/^DEBUG   =-DUSE_DEBUG$/;"	m
+DEBUG	lib_example/make-example/Makefile	/^DEBUG   	=  -DUSE_DEBUG$/;"	m
 DIR_NAME_BUF_SIZE	lib_example/tree.c	9;"	d	file:
 DIR_NAME_BUF_SIZE	源码/tree/tree.c	9;"	d	file:
 DISPLAY_H	源码/摄像头/display.h	3;"	d
@@ -96,7 +103,11 @@ H264FrameEncodeBegin	源码/摄像头/encode.c	/^static int H264FrameEncodeBegin
 H264FrameEncodeEnd	源码/摄像头/encode.c	/^static int H264FrameEncodeEnd(void)$/;"	f	file:
 HeadIndex	源码/摄像头/queue.h	/^    int HeadIndex;$/;"	m	struct:__anon10
 Height	源码/摄像头/camera.c	/^    uint32_t    Height;$/;"	m	struct:__anon4	file:
-INCLUDES	lib_example/make-example/Makefile	/^INCLUDES   =-I.\/include$/;"	m
+INCLUDES	lib_example/expect/can_master/Makefile	/^INCLUDES   =-I.\/include$/;"	m
+INCLUDES	lib_example/expect/can_test/Makefile	/^INCLUDES   =-I.\/include$/;"	m
+INCLUDES	lib_example/expect/uart_master/Makefile	/^INCLUDES   =-I.\/include$/;"	m
+INCLUDES	lib_example/expect/uart_test/Makefile	/^INCLUDES   =-I.\/include$/;"	m
+INCLUDES	lib_example/make-example/Makefile	/^INCLUDES   	=  -I.\/include$/;"	m
 INFO	lib_example/日志库/NanoLog.hpp	/^		INFO,$/;"	e	enum:nanolog::LogLevel
 INIT	lib_example/日志库/NanoLog.cpp	/^		INIT,$/;"	e	enum:nanolog::NanoLogger::State	file:
 IOCTL_VIDEO	源码/摄像头/camera.c	20;"	d	file:
@@ -107,8 +118,8 @@ KEY_LONGPRESS	lib_example/linux_uart/mf_brd.h	/^	KEY_LONGPRESS=2,$/;"	e	enum:__a
 KEY_PRESS	lib_example/linux_uart/mf_brd.h	/^	KEY_PRESS=1,$/;"	e	enum:__anon14
 KEY_RELEASE	lib_example/linux_uart/mf_brd.h	/^	KEY_RELEASE=0,$/;"	e	enum:__anon14
 LIB	源码/摄像头/Makefile	/^LIB = -pthread $/;"	m
-LIB_NAMES	lib_example/make-example/Makefile	/^LIB_NAMES  =-lfun_a -lfun_so$/;"	m
-LIB_PATH	lib_example/make-example/Makefile	/^LIB_PATH  =-L.\/lib$/;"	m
+LIB_NAMES	lib_example/make-example/Makefile	/^LIB_NAMES  	=  -lfun_a -lfun_so$/;"	m
+LIB_PATH	lib_example/make-example/Makefile	/^LIB_PATH  	=  -L.\/lib$/;"	m
 LOG_CRIT	lib_example/日志库/NanoLog.hpp	167;"	d
 LOG_INFO	lib_example/日志库/NanoLog.hpp	165;"	d
 LOG_WARN	lib_example/日志库/NanoLog.hpp	166;"	d
@@ -153,10 +164,16 @@ NanoLogger	lib_example/日志库/NanoLog.cpp	/^	NanoLogger(NonGuaranteedLogger n
 NanoLogger	lib_example/日志库/NanoLog.cpp	/^    class NanoLogger$/;"	c	namespace:nanolog	file:
 NonGuaranteedLogger	lib_example/日志库/NanoLog.hpp	/^		NonGuaranteedLogger(uint32_t ring_buffer_size_mb_) : ring_buffer_size_mb(ring_buffer_size_mb_) {}$/;"	f	struct:nanolog::NonGuaranteedLogger
 NonGuaranteedLogger	lib_example/日志库/NanoLog.hpp	/^	struct NonGuaranteedLogger$/;"	s	namespace:nanolog
-OBJ	lib_example/make-example/Makefile	/^OBJ   =$(patsubst %.c, %.o, $(SOURCES))$/;"	m
+OBJ	lib_example/expect/can_master/Makefile	/^OBJ   =$(patsubst %.c, %.o, $(SOURCES))$/;"	m
+OBJ	lib_example/expect/can_test/Makefile	/^OBJ   =$(patsubst %.c, %.o, $(SOURCES))$/;"	m
+OBJ	lib_example/expect/uart_master/Makefile	/^OBJ   =$(patsubst %.c, %.o, $(SOURCES))$/;"	m
+OBJ	lib_example/expect/uart_test/Makefile	/^OBJ   =$(patsubst %.c, %.o, $(SOURCES))$/;"	m
+OBJ	lib_example/make-example/Makefile	/^OBJ   		=  $(patsubst %.c, %.o, $(SOURCES))$/;"	m
 PATH_BUF_SIZE	lib_example/tree.c	10;"	d	file:
 PATH_BUF_SIZE	源码/tree/tree.c	10;"	d	file:
 PFBDEV	lib_example/framebuffer/fbtools.h	/^} FBDEV, *PFBDEV;$/;"	t	typeref:struct:fbdev
+PRINF_HEX_ARR	lib_example/expect/uart_master/linux_uart.h	6;"	d
+PRINF_HEX_ARR	lib_example/expect/uart_test/linux_uart.h	6;"	d
 PRINF_HEX_ARR	lib_example/linux_uart/linux_uart.h	6;"	d
 PYBIND11_MODULE	lib_example/pybin11_testone.cpp	/^PYBIND11_MODULE(demo3, m) {$/;"	f
 PY_SSIZE_T_CLEAN	知识手册/编程模版/python_module/one/hellomodule.c	1;"	d	file:
@@ -186,9 +203,14 @@ QueuePutData	源码/摄像头/queue.c	/^int QueuePutData(sQueueData* pData)$/;"	
 READY	lib_example/日志库/NanoLog.cpp	/^		READY,$/;"	e	enum:nanolog::NanoLogger::State	file:
 RingBuffer	lib_example/日志库/NanoLog.cpp	/^    	RingBuffer(size_t const size) $/;"	f	class:nanolog::RingBuffer
 RingBuffer	lib_example/日志库/NanoLog.cpp	/^    class RingBuffer : public BufferBase$/;"	c	namespace:nanolog	file:
+SERVER	lib_example/nanomsgdemo/pubsub.c	10;"	d	file:
 SHUTDOWN	lib_example/日志库/NanoLog.cpp	/^		SHUTDOWN$/;"	e	enum:nanolog::NanoLogger::State	file:
 SIGN_BIT	源码/浮点数转定点数/f_to_uint.c	3;"	d	file:
-SOURCES	lib_example/make-example/Makefile	/^SOURCES   =$(wildcard .\/source\/*.c)$/;"	m
+SOURCES	lib_example/expect/can_master/Makefile	/^SOURCES   =$(wildcard .\/*.c)$/;"	m
+SOURCES	lib_example/expect/can_test/Makefile	/^SOURCES   =$(wildcard .\/*.c)$/;"	m
+SOURCES	lib_example/expect/uart_master/Makefile	/^SOURCES   =$(wildcard .\/*.c)$/;"	m
+SOURCES	lib_example/expect/uart_test/Makefile	/^SOURCES   =$(wildcard .\/*.c)$/;"	m
+SOURCES	lib_example/make-example/Makefile	/^SOURCES   	=  $(wildcard .\/*.c)$/;"	m
 S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Args&&... __args)$/;"	f	struct:any::Manager_external
 S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Args&&... args)$/;"	f	struct:any::Manager_internal
 S_create	lib_example/any_test/any.h	/^        static void S_create(Storage& storage, _Up&& value)$/;"	f	struct:any::Manager_external
@@ -220,13 +242,21 @@ Storage	源码/any/one/any.h	/^        constexpr Storage()$/;"	f	union:any::Stor
 Storage	源码/any/one/any.h	/^    union Storage$/;"	u	class:any
 SupportedTypes	lib_example/日志库/NanoLog.cpp	/^    typedef std::tuple < char, uint32_t, uint64_t, int32_t, int64_t, double, NanoLogLine::string_literal_t, char * > SupportedTypes;$/;"	t	namespace:nanolog	file:
 TAIL_BIT	源码/浮点数转定点数/f_to_uint.c	5;"	d	file:
-TARGET	lib_example/make-example/Makefile	/^TARGET  =app$/;"	m
+TARGET	lib_example/expect/can_master/Makefile	/^TARGET = can-master$/;"	m
+TARGET	lib_example/expect/can_test/Makefile	/^TARGET = can-test$/;"	m
+TARGET	lib_example/expect/uart_master/Makefile	/^TARGET = uart-master$/;"	m
+TARGET	lib_example/expect/uart_test/Makefile	/^TARGET = uart$/;"	m
+TARGET	lib_example/make-example/Makefile	/^TARGET  	=  app$/;"	m
 TARGET	源码/摄像头/Makefile	/^TARGET = YTC100$/;"	m
 TailIndex	源码/摄像头/queue.h	/^    int TailIndex;$/;"	m	struct:__anon10
 Times	源码/摄像头/queue.c	/^    uint8_t Times;$/;"	m	struct:LinkListNode	file:
 TupleIndex	lib_example/日志库/NanoLog.cpp	/^    struct TupleIndex < T, std::tuple < T, Types... > > $/;"	s	namespace:__anon11	file:
 TupleIndex	lib_example/日志库/NanoLog.cpp	/^    struct TupleIndex < T, std::tuple < U, Types... > > $/;"	s	namespace:__anon11	file:
-VERSION	lib_example/make-example/Makefile	/^ VERSION  =1.00$/;"	m
+VERSION	lib_example/expect/can_master/Makefile	/^VERSION = 1.00$/;"	m
+VERSION	lib_example/expect/can_test/Makefile	/^VERSION = 1.00$/;"	m
+VERSION	lib_example/expect/uart_master/Makefile	/^VERSION = 1.00$/;"	m
+VERSION	lib_example/expect/uart_test/Makefile	/^VERSION = 1.00$/;"	m
+VERSION	lib_example/make-example/Makefile	/^VERSION  	=  1.00$/;"	m
 WARN	lib_example/日志库/NanoLog.hpp	/^		WARN,$/;"	e	enum:nanolog::LogLevel
 Width	源码/摄像头/camera.c	/^    uint32_t    Width;$/;"	m	struct:__anon4	file:
 Yuv2Rgb	源码/摄像头/camera.c	/^static inline int Yuv2Rgb(int Y, int U, int V)$/;"	f	file:
@@ -242,8 +272,11 @@ _DEBUG_INFO	lib_example/linux_uart/mf_brd.c	36;"	d	file:
 _FBTOOLS_H_	lib_example/framebuffer/fbtools.h	2;"	d
 _If	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct _If$/;"	s	namespace:detail
 _If	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct _If<true, _Ty1, _Ty2>$/;"	s	namespace:detail
+__LINUX_UART_H	lib_example/expect/uart_master/linux_uart.h	2;"	d
+__LINUX_UART_H	lib_example/expect/uart_test/linux_uart.h	2;"	d
 __LINUX_UART_H	lib_example/linux_uart/linux_uart.h	2;"	d
 __MF_BRD_H	lib_example/linux_uart/mf_brd.h	2;"	d
+__TEST_H_	lib_example/dlsym/headers/test.h	2;"	d
 _and	lib_example/any_test/any.h	/^struct _and<>$/;"	s	namespace:detail
 _and	lib_example/any_test/any.h	/^struct _and<_B1, _B2, _B3, _Bn...>$/;"	s	namespace:detail
 _and	lib_example/any_test/any.h	/^struct _and<_B1, _B2>$/;"	s	namespace:detail
@@ -262,6 +295,8 @@ _do_emplace	lib_example/any_test/any.h	/^        void _do_emplace(std::initializ
 _do_emplace	lib_example/any_test/any.h	/^    void _do_emplace(_Args&&... args)$/;"	f	class:any
 _do_emplace	源码/any/one/any.h	/^        void _do_emplace(std::initializer_list<_Up> list, _Args&&... args)$/;"	f	class:any
 _do_emplace	源码/any/one/any.h	/^    void _do_emplace(_Args&&... args)$/;"	f	class:any
+_get_baud	lib_example/expect/uart_master/uart.c	/^static int _get_baud(int baud)$/;"	f	file:
+_get_baud	lib_example/expect/uart_test/uart.c	/^static int _get_baud(int baud)$/;"	f	file:
 _get_baud	lib_example/linux_uart/linux_uart.c	/^static int _get_baud(int baud)$/;"	f	file:
 _get_baud	lib_example/linux_uart/mf_brd.c	/^static int _get_baud(int baud)$/;"	f	file:
 _get_gpio_num	lib_example/linux_uart/mf_brd.c	/^static int _get_gpio_num(char* pin)$/;"	f	file:
@@ -326,6 +361,7 @@ _watchdog_feed	lib_example/linux_uart/mf_brd.c	/^static void _watchdog_feed(void
 _watchdog_init	lib_example/linux_uart/mf_brd.c	/^static void _watchdog_init(int feed_time)$/;"	f	file:
 _what	源码/any/C++11实现的Boost库中的Any类/any.h	/^        std::string _what;$/;"	m	class:detail::bad_cast
 _write_file_only	lib_example/linux_uart/mf_brd.c	/^static int _write_file_only(char* path, void* buf, size_t count)$/;"	f	file:
+add	lib_example/dlsym/sources/add.c	/^int add(int a,int b)$/;"	f
 add	lib_example/日志库/NanoLog.cpp	/^	void add(NanoLogLine && logline)$/;"	f	class:nanolog::NanoLogger
 add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference$/;"	s	namespace:detail
 add_reference	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct add_reference<const void>$/;"	s	namespace:detail
@@ -361,6 +397,8 @@ bad_any_cast	lib_example/any_test/any.h	/^class bad_any_cast : public std::bad_c
 bad_any_cast	源码/any/one/any.h	/^class bad_any_cast : public std::bad_cast$/;"	c
 bad_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^        explicit bad_cast(const std::string &msg)$/;"	f	class:detail::bad_cast
 bad_cast	源码/any/C++11实现的Boost库中的Any类/any.h	/^    class bad_cast$/;"	c	namespace:detail
+baud	lib_example/expect/uart_master/linux_uart.h	/^	int baud;$/;"	m	struct:__anon21
+baud	lib_example/expect/uart_test/linux_uart.h	/^	int baud;$/;"	m	struct:__anon20
 baud	lib_example/linux_uart/linux_uart.h	/^	int baud;$/;"	m	struct:__anon12
 baud	lib_example/linux_uart/mf_brd.h	/^	int baud;$/;"	m	struct:__anon15
 bits	lib_example/linux_uart/mf_brd.h	/^	uint8_t bits;			\/* 发送\/接收数据位 *\/$/;"	m	struct:__anon17
@@ -368,12 +406,23 @@ bl	lib_example/linux_uart/mf_brd.c	/^    cfg_bl_param_t bl;$/;"	m	struct:__anon1
 brd_t	lib_example/linux_uart/mf_brd.c	/^}brd_t;$/;"	t	typeref:struct:__anon19	file:
 buffer	lib_example/日志库/NanoLog.cpp	/^    char * NanoLogLine::buffer()$/;"	f	class:nanolog::NanoLogLine
 clear	源码/any/C++11实现的Boost库中的Any类/any.h	/^    void clear()$/;"	f	class:Any
+clear_custom_speed_flag	lib_example/expect/uart_master/uart.c	/^static void clear_custom_speed_flag(int _fd)$/;"	f	file:
+clear_custom_speed_flag	lib_example/expect/uart_test/uart.c	/^static void clear_custom_speed_flag(int _fd)$/;"	f	file:
 clear_custom_speed_flag	lib_example/linux_uart/linux_uart.c	/^static void clear_custom_speed_flag(int _fd)$/;"	f	file:
 clear_custom_speed_flag	lib_example/linux_uart/mf_brd.c	/^static void clear_custom_speed_flag(int _fd)$/;"	f	file:
+client	lib_example/nanomsgdemo/pubsub.c	/^client(const char *url, const char *name)$/;"	f
 clone	源码/any/C++11实现的Boost库中的Any类/any.h	/^        virtual placeholder *clone() const$/;"	f	class:Any::holder
 content	源码/any/C++11实现的Boost库中的Any类/any.h	/^    placeholder *content;$/;"	m	class:Any
+data_bits	lib_example/expect/uart_master/linux_uart.h	/^	int data_bits;$/;"	m	struct:__anon21
+data_bits	lib_example/expect/uart_test/linux_uart.h	/^	int data_bits;$/;"	m	struct:__anon20
 data_bits	lib_example/linux_uart/linux_uart.h	/^	int data_bits;$/;"	m	struct:__anon12
 data_bits	lib_example/linux_uart/mf_brd.h	/^	int data_bits;$/;"	m	struct:__anon15
+date	lib_example/nanomsgdemo/pubsub.c	/^date(void)$/;"	f
+debugging	lib_example/can_demo/can_read_write.c	/^int debugging ;$/;"	v
+debugging	lib_example/expect/can_master/main.c	/^int debugging ;$/;"	v
+debugging	lib_example/expect/can_test/main.c	/^int debugging ;$/;"	v
+debugging	lib_example/expect/uart_master/main.c	/^int debugging ;$/;"	v
+debugging	lib_example/expect/uart_test/main.c	/^int debugging ;$/;"	v
 decode	lib_example/日志库/NanoLog.cpp	/^    char * decode(std::ostream & os, char * b, Arg * dummy)$/;"	f	namespace:nanolog
 decode	lib_example/日志库/NanoLog.cpp	/^    char * decode(std::ostream & os, char * b, NanoLogLine::string_literal_t * dummy)$/;"	f	namespace:nanolog
 decode	lib_example/日志库/NanoLog.cpp	/^    char * decode(std::ostream & os, char * b, char ** dummy)$/;"	f	namespace:nanolog
@@ -385,6 +434,7 @@ dev	lib_example/framebuffer/fbtools.h	/^char dev[20];$/;"	m	struct:fbdev
 disable_if	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct disable_if : public disable_if_c<Cond::value, T>$/;"	s	namespace:detail
 disable_if_c	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct disable_if_c$/;"	s	namespace:detail
 disable_if_c	源码/any/C++11实现的Boost库中的Any类/any.h	/^    struct disable_if_c<true, T>$/;"	s	namespace:detail
+div	lib_example/dlsym/sources/div.c	/^int div(int a,int b)$/;"	f
 eCAMERA_STATE	源码/摄像头/camera.c	/^} eCAMERA_STATE;$/;"	t	typeref:enum:__anon3	file:
 eDisplayState	源码/摄像头/display.c	/^} eDisplayState;$/;"	t	typeref:enum:__anon5	file:
 eEncodeState	源码/摄像头/encode.c	/^} eEncodeState;$/;"	t	typeref:enum:__anon7	file:
@@ -399,6 +449,8 @@ encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(char * a
 encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(char const * arg)$/;"	f	class:nanolog::NanoLogLine
 encode	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode(string_literal_t arg)$/;"	f	class:nanolog::NanoLogLine
 encode_c_string	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::encode_c_string(char const * arg, size_t length)$/;"	f	class:nanolog::NanoLogLine
+fatal	lib_example/nanomsgdemo/bus.c	/^fatal(const char *func)$/;"	f
+fatal	lib_example/nanomsgdemo/pubsub.c	/^fatal(const char *func)$/;"	f
 fb	lib_example/framebuffer/fbtools.h	/^int fb;$/;"	m	struct:fbdev
 fb_fix	lib_example/framebuffer/fbtools.h	/^struct fb_fix_screeninfo fb_fix;$/;"	m	struct:fbdev	typeref:struct:fbdev::fb_fix_screeninfo
 fb_mem	lib_example/framebuffer/fbtools.h	/^unsigned long fb_mem;$/;"	m	struct:fbdev
@@ -428,6 +480,11 @@ habbit	lib_example/pybin11_testone.cpp	/^    std::string habbit;             \/\
 held	源码/any/C++11实现的Boost库中的Any类/any.h	/^        _Ty held;$/;"	m	class:Any::holder
 helloMethods	知识手册/编程模版/python_module/one/hellomodule.c	/^static PyMethodDef helloMethods[] = {$/;"	v	file:
 hellomodule	知识手册/编程模版/python_module/one/hellomodule.c	/^static struct PyModuleDef hellomodule = {$/;"	v	typeref:struct:PyModuleDef	file:
+help_p	lib_example/can_demo/can_read_write.c	/^static void help_p()$/;"	f	file:
+help_p	lib_example/expect/can_master/main.c	/^static void help_p()$/;"	f	file:
+help_p	lib_example/expect/can_test/main.c	/^static void help_p()$/;"	f	file:
+help_p	lib_example/expect/uart_master/main.c	/^static void help_p()$/;"	f	file:
+help_p	lib_example/expect/uart_test/main.c	/^static void help_p()$/;"	f	file:
 holder	源码/any/C++11实现的Boost库中的Any类/any.h	/^        holder(_Ty &&value)$/;"	f	class:Any::holder
 holder	源码/any/C++11实现的Boost库中的Any类/any.h	/^        holder(const _Ty &value) : held(value) {}$/;"	f	class:Any::holder
 holder	源码/any/C++11实现的Boost库中的Any类/any.h	/^    class holder : public placeholder$/;"	c	class:Any
@@ -448,9 +505,17 @@ isDir	lib_example/tree.c	/^static int isDir(char *filename)$/;"	f	file:
 isDir	源码/tree/tree.c	/^static int isDir(char *filename)$/;"	f	file:
 is_logged	lib_example/日志库/NanoLog.cpp	/^    bool is_logged(LogLevel level)$/;"	f	namespace:nanolog
 key_state_t	lib_example/linux_uart/mf_brd.h	/^} key_state_t;$/;"	t	typeref:enum:__anon14
+linux_uart_deinit	lib_example/expect/uart_master/uart.c	/^void linux_uart_deinit(int fd)$/;"	f
+linux_uart_deinit	lib_example/expect/uart_test/uart.c	/^void linux_uart_deinit(int fd)$/;"	f
 linux_uart_deinit	lib_example/linux_uart/linux_uart.c	/^void linux_uart_deinit(int fd)$/;"	f
+linux_uart_init	lib_example/expect/uart_master/uart.c	/^int linux_uart_init(char* dev, void* param)$/;"	f
+linux_uart_init	lib_example/expect/uart_test/uart.c	/^int linux_uart_init(char* dev, void* param)$/;"	f
 linux_uart_init	lib_example/linux_uart/linux_uart.c	/^int linux_uart_init(char* dev, void* param)$/;"	f
+linux_uart_read	lib_example/expect/uart_master/uart.c	/^int linux_uart_read(int fd, int cnt, uint8_t* buf)$/;"	f
+linux_uart_read	lib_example/expect/uart_test/uart.c	/^int linux_uart_read(int fd, int cnt, uint8_t* buf)$/;"	f
 linux_uart_read	lib_example/linux_uart/linux_uart.c	/^int linux_uart_read(int fd, int cnt, uint8_t* buf)$/;"	f
+linux_uart_write	lib_example/expect/uart_master/uart.c	/^int linux_uart_write(int fd, int cnt, uint8_t* buf)$/;"	f
+linux_uart_write	lib_example/expect/uart_test/uart.c	/^int linux_uart_write(int fd, int cnt, uint8_t* buf)$/;"	f
 linux_uart_write	lib_example/linux_uart/linux_uart.c	/^int linux_uart_write(int fd, int cnt, uint8_t* buf)$/;"	f
 loglevel	lib_example/日志库/NanoLog.cpp	/^    std::atomic < unsigned int > loglevel = {0};$/;"	m	namespace:nanolog	file:
 logline	lib_example/日志库/NanoLog.cpp	/^	    NanoLogLine logline;$/;"	m	struct:nanolog::Buffer::Item	file:
@@ -492,10 +557,19 @@ m_write_index	lib_example/日志库/NanoLog.cpp	/^    	std::atomic < unsigned in
 m_write_index	lib_example/日志库/NanoLog.cpp	/^    	std::atomic < unsigned int > m_write_index;$/;"	m	class:nanolog::RingBuffer	file:
 m_write_state	lib_example/日志库/NanoLog.cpp	/^	std::atomic < unsigned int > m_write_state[size + 1];$/;"	m	class:nanolog::Buffer	file:
 main	lib_example/any_test/main.cpp	/^int main(int, char*[])$/;"	f
+main	lib_example/can_demo/can_read.c	/^int main()$/;"	f
+main	lib_example/can_demo/can_read_write.c	/^int main(int argc,char *argv[])$/;"	f
 main	lib_example/c获取ip地址/main.c	/^int main(void)$/;"	f
+main	lib_example/dlsym/sources/main.c	/^int main()$/;"	f
+main	lib_example/expect/can_master/main.c	/^int main(int argc,char *argv[])$/;"	f
+main	lib_example/expect/can_test/main.c	/^int main(int argc,char *argv[])$/;"	f
+main	lib_example/expect/uart_master/main.c	/^int main(int argc,char *argv[])$/;"	f
+main	lib_example/expect/uart_test/main.c	/^int main(int argc,char *argv[])$/;"	f
 main	lib_example/framebuffer.c	/^int main ()   $/;"	f
 main	lib_example/framebuffer/fbtools.c	/^int main()$/;"	f
 main	lib_example/lin.c	/^int main(int argc, char *argv[])$/;"	f
+main	lib_example/nanomsgdemo/bus.c	/^main(int argc, const char **argv)$/;"	f
+main	lib_example/nanomsgdemo/pubsub.c	/^main(const int argc, const char **argv)$/;"	f
 main	lib_example/tree.c	/^int main(int argc, const char * argv[])$/;"	f
 main	源码/tree/tree.c	/^int main(int argc, const char * argv[])$/;"	f
 main	源码/摄像头/main.c	/^int main(int Argc, char* pArgv[])$/;"	f
@@ -525,6 +599,7 @@ nanolog	lib_example/日志库/NanoLog.hpp	/^namespace nanolog$/;"	n
 nanologger	lib_example/日志库/NanoLog.cpp	/^    std::unique_ptr < NanoLogger > nanologger;$/;"	m	namespace:nanolog	file:
 nest_str	lib_example/tree.c	/^static unsigned char nest_str[NEST_COUNT]; $/;"	v	file:
 nest_str	源码/tree/tree.c	/^static unsigned char nest_str[NEST_COUNT]; $/;"	v	file:
+node	lib_example/nanomsgdemo/bus.c	/^node(const int argc, const char **argv)$/;"	f
 one_Type	知识手册/编程模版/python_module/two/one_mode_two.c	/^PyTypeObject one_Type = {$/;"	v
 one_mode	知识手册/编程模版/python_module/two/one_mode_one.c	/^struct PyModuleDef one_mode = {$/;"	v	typeref:struct:PyModuleDef
 operator <<	lib_example/日志库/NanoLog.cpp	/^    NanoLogLine& NanoLogLine::operator<<(char arg)$/;"	f	class:nanolog::NanoLogLine
@@ -559,6 +634,8 @@ pPicIn	源码/摄像头/encode.c	/^    x264_picture_t* pPicIn;$/;"	m	struct:__an
 pStart	源码/摄像头/camera.c	/^    void* pStart;$/;"	m	struct:__anon2	file:
 pad	lib_example/日志库/NanoLog.cpp	/^	char pad[64];$/;"	m	class:nanolog::RingBuffer	file:
 padding	lib_example/日志库/NanoLog.cpp	/^	    char padding[256 - sizeof(NanoLogLine)];$/;"	m	struct:nanolog::Buffer::Item	file:
+parity	lib_example/expect/uart_master/linux_uart.h	/^	char parity;$/;"	m	struct:__anon21
+parity	lib_example/expect/uart_test/linux_uart.h	/^	char parity;$/;"	m	struct:__anon20
 parity	lib_example/linux_uart/linux_uart.h	/^	char parity;$/;"	m	struct:__anon12
 parity	lib_example/linux_uart/mf_brd.h	/^	char parity;$/;"	m	struct:__anon15
 placeholder	源码/any/C++11实现的Boost库中的Any类/any.h	/^    class placeholder$/;"	c	class:Any
@@ -590,6 +667,7 @@ sQueuePrivateData	源码/摄像头/queue.c	/^} sQueuePrivateData;$/;"	v	typeref:
 s_brd	lib_example/linux_uart/mf_brd.c	/^static brd_t s_brd = {0};$/;"	v	file:
 s_key_fd	lib_example/linux_uart/mf_brd.c	/^static int s_key_fd;	$/;"	v	file:
 say_hello_ak	知识手册/编程模版/python_module/one/hellomodule.c	/^say_hello_ak(PyObject *self, PyObject *args)$/;"	f	file:
+server	lib_example/nanomsgdemo/pubsub.c	/^server(const char *url)$/;"	f
 setAddress	lib_example/pybin11_testone.cpp	/^    void setAddress(std::string address) {$/;"	f	class:Person
 setAge	lib_example/pybin11_testone.cpp	/^    void setAge(int age) {$/;"	f	class:Person
 setGender	lib_example/pybin11_testone.cpp	/^    void setGender(std::string gender) {$/;"	f	class:Person
@@ -610,12 +688,15 @@ spi_rw	lib_example/linux_uart/mf_brd.h	/^	void (*spi_rw)(int spifd, int cnt, uin
 spk_init	lib_example/linux_uart/mf_brd.c	/^static void spk_init(int fs, int gain)$/;"	f	file:
 spk_init	lib_example/linux_uart/mf_brd.h	/^	void (*spk_init)(int fs, int gain);	\/\/初始化采样率，增益，仅支持S16_little格式$/;"	m	struct:__anon18
 spk_play	lib_example/linux_uart/mf_brd.h	/^	void (*spk_play)(int time, char* file_path, int16_t* buf); \/\/播放音频文件或者buf$/;"	m	struct:__anon18
+stop_bits	lib_example/expect/uart_master/linux_uart.h	/^	int stop_bits;$/;"	m	struct:__anon21
+stop_bits	lib_example/expect/uart_test/linux_uart.h	/^	int stop_bits;$/;"	m	struct:__anon20
 stop_bits	lib_example/linux_uart/linux_uart.h	/^	int stop_bits;$/;"	m	struct:__anon12
 stop_bits	lib_example/linux_uart/mf_brd.h	/^	int stop_bits;$/;"	m	struct:__anon15
 string_literal_t	lib_example/日志库/NanoLog.hpp	/^			explicit string_literal_t(char const *s) : m_s(s) {}$/;"	f	struct:nanolog::NanoLogLine::string_literal_t
 string_literal_t	lib_example/日志库/NanoLog.hpp	/^		struct string_literal_t$/;"	s	class:nanolog::NanoLogLine
 stringify	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::stringify(std::ostream & os)$/;"	f	class:nanolog::NanoLogLine
 stringify	lib_example/日志库/NanoLog.cpp	/^    void NanoLogLine::stringify(std::ostream & os, char * start, char const * const end)$/;"	f	class:nanolog::NanoLogLine
+sub	lib_example/dlsym/sources/sub.c	/^int sub(int a,int b)$/;"	f
 swap	源码/any/C++11实现的Boost库中的Any类/any.h	/^    Any &swap(Any &rhs)$/;"	f	class:Any
 swap	源码/any/C++11实现的Boost库中的Any类/any.h	/^inline void swap(Any &lhs, Any &rhs)$/;"	f
 test_help	知识手册/编程模版/python_module/two/one.c	/^static PyObject* test_help() {$/;"	f	file:
@@ -644,7 +725,13 @@ type	源码/any/C++11实现的Boost库中的Any类/any.h	/^        virtual const
 type	源码/any/C++11实现的Boost库中的Any类/any.h	/^    const std::type_info &type() const$/;"	f	class:Any::std
 uart_deinit	lib_example/linux_uart/mf_brd.h	/^	void (*uart_deinit)(void* handle);$/;"	m	struct:__anon18
 uart_init	lib_example/linux_uart/mf_brd.h	/^	void* (*uart_init)(char* dev, void* param);$/;"	m	struct:__anon18
+uart_one	lib_example/expect/uart_master/main.c	/^char uart_one[20];$/;"	v
+uart_one	lib_example/expect/uart_test/main.c	/^char uart_one[20];$/;"	v
+uart_parm	lib_example/expect/uart_master/main.c	/^uart_t uart_parm = {$/;"	v
+uart_parm	lib_example/expect/uart_test/main.c	/^uart_t uart_parm = {$/;"	v
 uart_read	lib_example/linux_uart/mf_brd.h	/^	int (*uart_read)(void* handle, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
+uart_t	lib_example/expect/uart_master/linux_uart.h	/^}uart_t;$/;"	t	typeref:struct:__anon21
+uart_t	lib_example/expect/uart_test/linux_uart.h	/^}uart_t;$/;"	t	typeref:struct:__anon20
 uart_write	lib_example/linux_uart/mf_brd.h	/^	int (*uart_write)(void* handle, int cnt, uint8_t* buf);$/;"	m	struct:__anon18
 university	lib_example/pybin11_testone.cpp	/^    static std::string university;$/;"	m	class:Person	file:
 university	lib_example/pybin11_testone.cpp	/^std::string Person::university = "xidian University";$/;"	m	class:Person	file:
