@@ -1,0 +1,3 @@
+[submodule "资源"]
+	path = 资源
+	url = git@github.com:dianjixz/EmbedSummary.git
