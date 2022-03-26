@@ -100,12 +100,6 @@ Use dir as the logical root directory for headers and libraries. For example, if
 If you use both this option and the -isysroot option, then the --sysroot option applies to libraries, but the -isysroot option applies to header files.
 
 The GNU linker (beginning with version 2.16) has the necessary support for this option. If your linker does not support this option, the header file aspect of --sysroot still works, but the library aspect does not.
-1
-2
-3
-4
-5
-6
 从--sysroot的说明可以看出，其会对编译和链接过程中，查找头文件和链接库造成影响。
 
 例如:
@@ -133,22 +127,6 @@ $ ./aarch64-linux-gnu-gcc --sysroot=/home/admin/tx2-rootfs -print-search-dirs |
 /usr/local/lib/linaro-7.3.1/aarch64-linux-gnu/lib
 /home/admin/tx2-rootfs/lib
 /home/admin/tx2-rootfs/usr/lib
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
 gcc选项--sysroot对-I的影响
 gcc官方文档关于-I依赖库搜索路径的介绍如下：
 
@@ -173,27 +151,6 @@ You can use -I to override a system header file, substituting your own version, 
 The -isystem and -idirafter options also mark the directory as a system directory, so that it gets the same special treatment that is applied to the standard system directories.
 
 If a standard system include directory, or a directory specified with -isystem, is also specified with -I, the -I option is ignored. The directory is still searched but as a system directory at its normal position in the system include chain. This is to ensure that GCC’s procedure to fix buggy system headers and the ordering for the #include_next directive are not inadvertently changed. If you really need to change the search order for system directories, use the -nostdinc and/or -isystem options.
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
 经过测试和验证发现，
 -Idir编译器只会从dir路径下搜索头文件；
 -I=dir或-I$SYSROOT/dir则会受--sysroot影响。
@@ -239,44 +196,14 @@ set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
 在执行cmake的时候指定该工具链文件，假如工具链文件的路径为/home/admin/workspace/tx2.cmake
 $ cd /home/admin/workspace/myprj/build
 $ cmake -DCMAKE_TOOLCHAIN_FILE=/home/admin/workspace/tx2.cmake ..
-1
-2
 或者在你CMakeLists.txt定义project(myprj)前添加include(tx2.cmake)亦可
 cmake_minimum_required (VERSION 3.19)
 include(tx2.cmake)
 project (myprj CXX)
-1
-2
-3
+
 2. CMAKE中用来添加头文件搜索路径的宏INCLUDE_DIRECTORIES()并不会受到--sysroot选项影响
 这是因为如果想要--sysroot产生作用，则需要-I=include_dir或-I$SYSROOT/include_dir，而如果通过INCLUDE_DIRECTORIES(“$SYSROOT/include_dir”)则CMAKE将这个$SYSROOT/include_dir识别为一个相对于当前工程的相对路径，并且会在编译阶段将路径补全成相对于当前工程目录的绝对路径,例如当前工程路径为/home/admin/workspace/myprj在编译阶段传递到gcc的参数就变成了-I/home/admin/workspace/myprj/\$SYSROOT/include_dir而不是真正想要的-I$SYSROOT/include_dir
 
@@ -285,8 +212,6 @@ project (myprj CXX)
 
 find_package(pkg)
 include_directories(${pkg_INCLUDE_DIR})
-1
-2
 注意：示例中查找的包名为pkg，则头文件路径会保存在名为pkg_INCLUDE_DIR的变量中,大小写敏感
 
 3. 解决链接时无法找到动态库依赖嵌套问题
@@ -304,8 +229,6 @@ warning: lib*.so.1, needed by lib*.so, not found (try using -rpath or -rpath-lin
 
 $ ls -la 
 lrwxrwxrwx  1 admin admin       32 Jun  5 01:25 libm.so -> /lib/aarch64-linux-gnu/libm.so.6
-1
-2
 发现libm.so指向了一个无效的链接，类似的无效符号链接有很多，为了保证以后链接不会出问题，需要：
 
 修复这些符号链接到正确的路径
@@ -316,8 +239,6 @@ lrwxrwxrwx  1 admin admin       32 Jun  5 01:25 libm.so -> /lib/aarch64-linux-gn
 
 set(CMAKE_INSTALL_RPATH "dir")
 set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
-1
-2
 可是实际操作发现，只能设置-rpath而不能设置-rpath-link。
 为了支持-rpath-link，推荐使用add_link_options增加-rpath-link选项
 

@@ -238,3 +238,23 @@ Ubuntu上搭建本地源，做离线安装:
 相关系统管理包:
 
 ​	https://zhuanlan.zhihu.com/p/28562152
+
+# 仓库 is expired (invalid since 14d 4h 8min 1s). Updates f
+or this repository will not be applied.
+
+在更新选项后添加 
+
+~~~
+-o Acquire::Check-Valid-Until=false
+
+apt -o Acquire::AllowInsecureRepositories=true -o Acquire::AllowDowngradeToInsecureRepositories=true -o Acquire::Check-Valid-Until=false update
+
+
+# sudo apt -o APT::Get::AllowUnauthenticated=true install repo-keyring-pkgname
+
+~~~
+
+
+
+
+

@@ -5,15 +5,15 @@ resize2fs:调整ext文件系统的空间大小
 
 
  对img进行校验
-
+~~~
 e2fsck -p -f linuxroot.img
-
+~~~
 对img大小进行重新设定
-
+~~~
 resize2fs  -M linuxroot.img
 
 resize2fs  -p linuxroot.img
-
+~~~
 
 
 
@@ -21,20 +21,26 @@ resize2fs  -p linuxroot.img
 运行dd命令刻录完镜像后可以用：sync命令来结束dd占用。
 
 查看dd进度
+~~~
 sudo watch -n 5 pkill -USR1 ^dd$
-
+~~~
 
 动态调整分区大小的命令：
+~~~
 tunefs - 调整现有的UFS文件系统
 growfs - 扩展现有的UFS文件系统
+~~~
 
- 
 
 查看已经连接的设备
+~~~
 root@lsgxbsd:~ # camcontrol devlist
-
+~~~
+~~~
 1. 删除ad0上所有分区
+
 # gpart destroy -F /dev/da1
+
 注: 没有数据情况才可以这样
 
 2. 创建gpt分区信息表
@@ -150,7 +156,7 @@ Base address：内存地址
 
 
 
-
+https://www.jb51.net/article/180111.htm
 
 
 
@@ -286,7 +292,42 @@ User=root
 
 ../configure CC=aarch64-linux-gnu-gcc CXX=aarch64-linux-gnu-g++ AR=aarch64-linux-gnu-ar RANLIB=aarch64-linux-gnu-ranlib --host=aarch64-linux-gnu --build=arm64 --disable-ipv6 --prefix=/home/nihao/tool/Python-3.9.5/build/nihao ac_cv_file__dev_ptc=no ac_cv_file__dev_ptmx=no --eable-loadable-sqlite-extensions
 
+iScas1001
+
+
+~~~
+
+
+~~~
+$$ 		Shell本身的PID（ProcessID，即脚本运行的当前 进程ID号）
+$! 		Shell最后运行的后台Process的PID(后台运行的最后一个进程的 进程ID号)
+$? 		最后运行的命令的结束代码（返回值）即执行上一个指令的返回值 (显示最后命令的退出状态。0表示没有错误，其他任何值表明有错误)
+$- 		显示shell使用的当前选项，与set命令功能相同
+$* 		所有参数列表。如"$*"用「"」括起来的情况、以"$1 $2 … $n"的形式输出所有参数，此选项参数可超过9个。
+$@ 		所有参数列表。如"$@"用「"」括起来的情况、以"$1" "$2" … "$n" 的形式输出所有参数。
+$@ 		跟$*类似，但是可以当作数组用
+$# 		添加到Shell的参数个数
+$0 		Shell本身的文件名
+$1～$n 		添加到Shell的各参数值。$1是第1参数、$2是第2参数…。 
+
+
+~~~
 
 
 
+我们在正常情况下切换虚拟终端只要用组合键：Ctrl+Alt+Fn ,这个n就是你要切换的虚拟终端的号，然后可以再按Ctrl+Alt+F7回到图形界面。
 
+但是在vmware中这个办法经常不奏效，原因大家应该知道的，就是在vmware下默认按住 Ctrl+Alt组合键，是用来在虚拟机和物理机之间互换的。
+
+但是有了chvt这个命令，就可以这样办拉。呵呵
+
+比如你现在在图形界面，想切换到tty1，也就是一号终端，只要执行
+
+chvt 1 即可
+
+如果你想回到图形己面，只要执行
+
+chvt 7 即可。。
+————————————————
+版权声明：本文为CSDN博主「杨瘦锅」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_21063873/article/details/50161893

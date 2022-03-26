@@ -4,7 +4,7 @@
 
 2、单向同步：rsync+inotify
 
-
+[lsyncd](https://axkibe.github.io/lsyncd/)
 
 
 
@@ -96,7 +96,7 @@ Unison对版本要求很高，进行同步的两台主机需要相同版本的un
    [root@gsgatzhapp1 ~]# ssh 10.178.1.132 date
    [root@gsgatzhapp1 ~]#ssh 10.178.1.110 date
    如果不需要输入密码就出现系统日期，说明 SSH 配置成功。
-   
+
 四:unison的使用
 
 Unison可以在一台主机上使用，同步两个文件夹，也可以在网络上是用。
@@ -134,12 +134,12 @@ Commands:
  /           skip
  \> or .        propagate from left to right
  < or ,        propagate from right to left
- 
+
 <---- file    aaaaaaaaaaaaa [f] f
- 
+
 Proceed with propagating updates? [] y
 Propagating updates
- 
+
 UNISON started propagating changes at 15:06:08 on 27 Aug 2007
 [BGN] Copying aaaaaaaaaaaaa
  from /222
@@ -185,7 +185,7 @@ batch mode, 全自动模式，接受缺省动作，并执行。
 "   retry = 3  (失败重试)
 "   sshargs = -C (使用ssh的压缩传输方式)
 "   xferbycopying = true
- 
+
 "   -immutable xxx
 不变目录，扫描时可以忽略
 "   -silent
@@ -241,7 +241,7 @@ logfile则指定了同时将输出写入log文件。
 9% 559:15 ETARead from remote host bluehost: Connection reset by peer
 Fatal error: Lost connection with the server
 实际操作中，最好的方法是,第一次先把要上传的文件打成包，用 ftp 上传，然后展开到服务器中，之后执行一次 unison 同步即可。
- 
+
 原文地址 http://www.263mail.com.cn/blog/ + http://ixdba.blog.51cto.com/2895551/584334
 
 完！
@@ -305,3 +305,226 @@ PS：Windows下的unison配置文件默认位于C:\Documents and Settings\curren
 ©著作权归作者所有：来自51CTO博客作者xmlgrg的原创作品，请联系作者获取转载授权，否则将追究法律责任
 双向同步软件Unison的安装与配置
 https://blog.51cto.com/xmlgrg/1792167
+
+
+
+# rsync
+
+~~~
+sshpass -p "root" rsync -rvlzt -e 'ssh -p 15630' ./dist root@127.0.0.1:/root
+~~~
+
+
+
+# 2.3 rsync三种工作方式
+
+以下是rsync的语法：
+
+```
+Local:  rsync [OPTION...] SRC... [DEST]
+ 
+Access via remote shell:
+  Pull: rsync [OPTION...] [USER@]HOST:SRC... [DEST]
+  Push: rsync [OPTION...] SRC... [USER@]HOST:DEST
+ 
+Access via rsync daemon:
+  Pull: rsync [OPTION...] [USER@]HOST::SRC... [DEST]
+        rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST]
+  Push: rsync [OPTION...] SRC... [USER@]HOST::DEST
+        rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST
+```
+
+由此语法可知，rsync有三种工作方式：
+
+(1).本地文件系统上实现同步。命令行语法格式为上述"Local"段的格式。
+
+(2).本地主机使用远程shell和远程主机通信。命令行语法格式为上述"Access via remote shell"段的格式。
+
+(3).本地主机通过网络套接字连接远程主机上的rsync daemon。命令行语法格式为上述"Access via rsync daemon"段的格式。
+
+前两者的本质是通过管道通信，即使是远程shell。而方式(3)则是让远程主机上运行rsync服务，使其监听在一个端口上，等待客户端的连接。
+
+# 2.4 选项说明和示例
+
+接下来是rsync的选项说明。
+
+```
+-v：显示rsync过程中详细信息。可以使用"-vvvv"获取更详细信息。
+-P：显示文件传输的进度信息。(实际上"-P"="--partial --progress"，其中的"--progress"才是显示进度信息的)。
+-n --dry-run  ：仅测试传输，而不实际传输。常和"-vvvv"配合使用来查看rsync是如何工作的。
+-a --archive  ：归档模式，表示递归传输并保持文件属性。等同于"-rtopgDl"。
+-r --recursive：递归到目录中去。
+-t --times：保持mtime属性。强烈建议任何时候都加上"-t"，否则目标文件mtime会设置为系统时间，导致下次更新
+          ：检查出mtime不同从而导致增量传输无效。
+-o --owner：保持owner属性(属主)。
+-g --group：保持group属性(属组)。
+-p --perms：保持perms属性(权限，不包括特殊权限)。
+-D        ：是"--device --specials"选项的组合，即也拷贝设备文件和特殊文件。
+-l --links：如果文件是软链接文件，则拷贝软链接本身而非软链接所指向的对象。
+-z        ：传输时进行压缩提高效率。
+-R --relative：使用相对路径。意味着将命令行中指定的全路径而非路径最尾部的文件名发送给服务端，包括它们的属性。用法见下文示例。
+--size-only ：默认算法是检查文件大小和mtime不同的文件，使用此选项将只检查文件大小。
+-u --update ：仅在源mtime比目标已存在文件的mtime新时才拷贝。注意，该选项是接收端判断的，不会影响删除行为。
+-d --dirs   ：以不递归的方式拷贝目录本身。默认递归时，如果源为"dir1/file1"，则不会拷贝dir1目录，使用该选项将拷贝dir1但不拷贝file1。
+--max-size  ：限制rsync传输的最大文件大小。可以使用单位后缀，还可以是一个小数值(例如："--max-size=1.5m")
+--min-size  ：限制rsync传输的最小文件大小。这可以用于禁止传输小文件或那些垃圾文件。
+--exclude   ：指定排除规则来排除不需要传输的文件。
+--delete    ：以SRC为主，对DEST进行同步。多则删之，少则补之。注意"--delete"是在接收端执行的，所以它是在
+            ：exclude/include规则生效之后才执行的。
+-b --backup ：对目标上已存在的文件做一个备份，备份的文件名后默认使用"~"做后缀。
+--backup-dir：指定备份文件的保存路径。不指定时默认和待备份文件保存在同一目录下。
+-e          ：指定所要使用的远程shell程序，默认为ssh。
+--port      ：连接daemon时使用的端口号，默认为873端口。
+--password-file：daemon模式时的密码文件，可以从中读取密码实现非交互式。注意，这不是远程shell认证的密码，而是rsync模块认证的密码。
+-W --whole-file：rsync将不再使用增量传输，而是全量传输。在网络带宽高于磁盘带宽时，该选项比增量传输更高效。
+--existing  ：要求只更新目标端已存在的文件，目标端还不存在的文件不传输。注意，使用相对路径时如果上层目录不存在也不会传输。
+--ignore-existing：要求只更新目标端不存在的文件。和"--existing"结合使用有特殊功能，见下文示例。
+--remove-source-files：要求删除源端已经成功传输的文件。
+```
+
+
+
+
+
+用法1：本地用法
+
+类似于cp、dd命令，实现备份文件的复制（备份)
+~~~
+# rsync /etc/passwd /home/passwd.bak
+# rsync -b --suffix=.bak2 --backup-dir=/tmp/ /etc/passwd /home/passwd.bak
+--suffix=xxx        指定旧备份文件的后缀名
+--backup-dir=xxxx   指定将旧备份文件移动到哪个位置下
+~~~
+
+
+用法2：远程shell
+~~~
+利用ssh实现数据的远程传输，类似于 scp
+拉取：rsync -v -e "ssh -p 22" root@192.168.31.201:/home/passwd /tmp/
+推送：rsync -v /root/c.sh root@192.168.31.201:/home/
+说明
+
+    rsync默认也是基于ssh来实现的，如果目标主机的ssh端口不是22，那么在用rsync的必须用-e选项
+    rsync通常都需要首先做密钥分发
+    rsync在远程传输文件的时候，仅仅会传输新文件
+    在进行文件传输过程中，必须使用对方主机上的一个用户，还必须知道其密码，而且该用户还要有权限
+
+用法3：守护进程模式
+
+rsync的配置文件： /etc/rsyncd.conf(默认不存在)
+案例：
+
+将192.168.31.200和192.168.31.202上的数据备份到192.168.31.201上，要求：
+1）备份到201的/data/backup
+2)201上的rsync以ruser身份运行
+准备工作：关闭防火墙，关闭selinux
+第一步：配置192.168.31.201（用于接收各主机节点传递过来的备份）
+~~~
+    创建目录
+~~~
+# mkdir -pv /data/backup
+~~~
+
+    
+    创建用于运行rsync进程的用户ruser
+~~~
+# useradd  -r  -s /sbin/nologin -u 361 ruser
+~~~
+
+    
+    修改目录的属主和属组
+~~~
+# chown -R 361.361 /data
+~~~
+
+    
+    修改（创建）rsync的配置文件：/etc/rsyncd.conf
+~~~
+# vim /etc/rsyncd.conf 
+pid file=/var/lock/subsys/rsync.pid
+lock file=/var/lock/subsys/rsync.lock
+uid=361
+gid=361
+log file=/var/log/rsync.log
+timeout=100
+
+[dir1]
+path=/data/backup
+max connections=100
+use chroot=yes
+read only=no
+list=yes
+auth users=suser
+secrets file=/etc/rsync.pwd
+hosts allow=192.168.31.0/24
+~~~
+
+    
+    创建虚拟用户文件，并创建虚拟用户
+~~~
+# echo "suser:123" >>/etc/rsync.pwd
+~~~
+
+    
+    修改虚拟用户文件的权限为600
+~~~
+# chmod 600  /etc/rsync.pwd
+~~~
+
+    
+    启动rsync服务
+~~~
+# rsync --daemon --config=/etc/rsyncd.conf
+~~~
+
+    
+    检查是否启动成功
+~~~
+# ss -tnl | grep 873
+~~~
+
+
+【至此，rsyncd就配置完成了，然后就可以在其他节点向rsync传递数据了】
+第二步：在192.168.31.200和192.168.31.202上对192.168.31.201做拉取和推送操作
+
+准备工作：在201的/data/backup目录下创建一个文件touch rsync.txt
+
+    执行推送和拉取 ，测试一下
+    拉取：# rsync -avz suser@192.168.31.201::dir1 ./
+    在任一客户端节点执行拉取操作，没有报错并且rsync.txt被拉取到当前位置，说明rsync配置没问题。
+    推送：# rsync -avz /etc/passwd suser@192.168.31.201::dir1
+    在任一客户端节点执行推送操作，没有报错并且在服务端/data/backup目录下有 passwd文件说明推送也能正常完成。
+    在客户端创建密码文件（方便实现自动化）
+~~~
+# echo "123" >>/etc/rsync_tuser.passwd
+~~~
+
+    
+    修改密码文件的权限为600
+~~~
+# chmod 600 /etc/rsync_tuser.passwd
+~~~
+
+    
+    再次执行推送/拉取，用密码文件实现认证
+~~~
+# rsync -avz suser@192.168.31.201::dir2 ./ --password-file=/etc/rsync_tuser.passwd
+~~~
+
+
+补充：选项--exclude=filename
+例子：
+
+    排除单个文件：–exclude=5.txt
+    排除多个文件：–exclude={5.txt, 7.txt}
+    基于通配符做排除：–exclude=*txt
+
+传输失败的原因传输失败的原因
+
+    用户名或者密码写错了
+    密码文件指定错了
+    虚拟用户密码文件权限不是600
+    模块对应的文件的属主不是rsync daemon的运行者身份
+————————————————
+版权声明：本文为CSDN博主「cx_baby」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/cx55887/article/details/82943760

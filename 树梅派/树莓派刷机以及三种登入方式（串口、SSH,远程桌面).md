@@ -26,16 +26,20 @@ USB-TTL转换模块（USB转串口模块）
 USB-TTL连接树莓派串口
 将模块的TXD线接到树莓派RXD针脚 （树莓派靠外侧第5个针脚），将模块RXD接到TXD针脚 （树莓派靠外侧第4个针脚）
 
-
 修改系统配置，启用串口登录树莓派
 1.打开SD卡根目录的"config.txt"文件，将以下内容添加在最后并且保存。（这样就停止了蓝牙，解除了对串口的占用）
 
+~~~
 dtoverlay=pi3-miniuart-bt
-1
+~~~
+
 2.然后再修改根目录的"cmdline.txt"，将里面的内容全部替换成以下内容，以防万一，请先备份好这个文件的原内容。
 
+~~~
 dwc_otg.lpm_enable=0 console=tty1 console=serial0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait
-1
+~~~
+
+
 启动树莓派，并用相关软件进行串口登录（SecureCRT）
 
 默认账号：pi
@@ -57,12 +61,7 @@ SSH登录
     
         psk="密码"
         }
-1
-2
-3
-4
-5
-6
+
 ctrl+o 保存（之后按下enter）
 ctrl+x 退出 nano文档编辑器（进入到里面就可以编写）
 重启 (sudo reboot)

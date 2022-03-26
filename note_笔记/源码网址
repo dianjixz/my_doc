@@ -24,3 +24,6 @@ q2
 uint16x8_t vshll_n_u8 (uint8x8_t __a, const int __b);  
 uint16x4_t vsri_n_u16 (uint16x4_t __a, uint16x4_t __b, const int __c);
 */
+
+
+openwrt_文档   https://oldwiki.archive.openwrt.org/zh-cn/doc/start
