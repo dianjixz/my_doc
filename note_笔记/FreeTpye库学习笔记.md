@@ -14,7 +14,6 @@ FreeType 是一个免费、开源、可移植且高质量的字体引擎，它�
 
 >  注意：本文采用的 FreeType 库为 AWTK 中的裁剪版，只有一个巨大的头文件，下载链接：[https://github.com/zlgopen/awtk/tree/master/3rd/freetype_single_header](https://link.zhihu.com/?target=https%3A//github.com/zlgopen/awtk/tree/master/3rd/freetype_single_header)。
 >  AWTK是 ZLG 开发的开源 GUI 引擎，官网地址：[https://www.zlg.cn/index/pub/awtk.html](https://link.zhihu.com/?target=https%3A//www.zlg.cn/index/pub/awtk.html)。
->  
 
 ## 二、FreeType解析矢量（.ttf）字体
 
@@ -376,3 +375,242 @@ FreeType 中文使用参考:
 [https://wenku.baidu.com/view/e7149f6748d7c1c708a14574.html](https://link.zhihu.com/?target=https%3A//wenku.baidu.com/view/e7149f6748d7c1c708a14574.html)
 
 希望能对大家有所帮助。
+
+
+
+
+
+# freetype学习笔记一
+
+[![img](https://upload.jianshu.io/users/upload_avatars/2368622/731128851415.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/96/h/96/format/webp)](https://www.jianshu.com/u/2f9ddadaabfe)
+
+[继续向前冲](https://www.jianshu.com/u/2f9ddadaabfe)
+
+0.072019.04.15 07:53:36字数 668阅读 3,152
+
+# freetype介绍
+
+freetype可以看作是一组组件，每个组件负责一部分任务，它们包括
+
+- 客户应⽤用程序一般会调⽤用freetype⾼高层API，它的功能都在一个组件中，叫做基础层。
+
+- 根据上下⽂文和环境，基础层会调⽤用一个或多个模块进⾏行行⼯工作，⼤大多数情况下，客户应⽤用 程序不不知道使⽤用那个模块。
+
+- 基础层还包含一组例例程来进⾏行行一些共通处理理，例例如内存分配，列列表处理理、io流解析、固 定点计算等等，这些函数可以被模块随意调⽤用，它们形成了了一个底层基础API。
+
+  ![img](https://upload-images.jianshu.io/upload_images/2368622-0b70d4e021991f63.jpeg?imageMogr2/auto-orient/strip|imageView2/2/w/592/format/webp)
+
+  image.jpeg
+
+## 基础类介绍
+
+因为freetype支持多种字体的加载以及渲染，所有分为多个model，
+
+### FT_LibraryRec
+
+freetype工程的library类 此类保存freetype的根数据，用`FT_New_Library()`创建library对象 用`FT_Done_Library()`方法释放对象
+ *构造略*
+
+### FT_FaceRec_
+
+freetype工程 root类，一个face 对象代表了一个字体文件。每个Face对象拥有一个`@FT_GlyphSlot` 对象, 以及一个或多个`@FT_Size` 对象。
+ num_faces; //字体文件所含外观数 一些字体文件可能包含多个face
+ **遗存：**face数量可能对应truetype中的cmap表 最少truetype字体应该是如此。
+
+```c
+typedef struct  FT_FaceRec_
+  {
+    FT_Long           num_faces; //字体文件所含外观数 一些字体文件可能包含多个face    
+    FT_Long           face_index;//当前外观索引值
+    FT_Long           face_flags;
+    FT_Long           style_flags;
+    FT_Long           num_glyphs;//当前外观所含字形文件数
+    FT_String*        family_name;
+    FT_String*        style_name;
+    FT_Int            num_fixed_sizes;
+    FT_Bitmap_Size*   available_sizes;
+    FT_Int            num_charmaps;// 字符表数
+    FT_CharMap*       charmaps;//字符表数组
+    FT_Generic        generic;
+    /*# The following member variables (down to `underline_thickness') */
+    /*# are only relevant to scalable outlines; cf. @FT_Bitmap_Size    */
+    /*# for bitmap fonts.                                              */
+    FT_BBox           bbox;
+    FT_UShort         units_per_EM;
+    FT_Short          ascender;
+    FT_Short          descender;
+    FT_Short          height;
+
+    FT_Short          max_advance_width;
+    FT_Short          max_advance_height;
+
+    FT_Short          underline_position;
+    FT_Short          underline_thickness;
+
+    FT_GlyphSlot      glyph;// 字形槽对象
+    FT_Size           size;
+    FT_CharMap        charmap;//当前字符表
+
+    /*@private begin */
+
+    FT_Driver         driver;
+    FT_Memory         memory;
+    FT_Stream         stream;
+
+    FT_ListRec        sizes_list;
+
+    FT_Generic        autohint;
+    void*             extensions;
+
+    FT_Face_Internal  internal;
+
+    /*@private end */
+
+  } FT_FaceRec;
+```
+
+### FT_CharMapRec_
+
+character map句柄，用于转换character code 到glyph indexes ，
+ **注意：**可能一写字体可能存在多个character map
+
+```c
+ typedef struct  FT_CharMapRec_
+  {
+    FT_Face      face;
+    FT_Encoding  encoding;
+    FT_UShort    platform_id;
+    FT_UShort    encoding_id;
+
+  } FT_CharMapRec;
+```
+
+### FT_GlyphSlotRec_
+
+存储Glyph对象句柄 一个slot相当于一个容器可以加载任何glyphs内容，每次使用`@FT_Load_Glyph` 或 `@FT_Load_Char` slot容器都会被新的glyph数据重新擦除。glyph数据包括outline或者bitmap数据。**例如：**一个outline glyph用于TrueType 或者Type-1
+ 通过FT_FaceRec_结构体中的num_glyphs属性可知，不同字体拥有的glyph数量不一样，参看实际字体文件可知，FT_GlyphSlotRec_存储着所有的字形数据，也是我们需要裁剪的重点。
+
+```c
+  typedef struct  FT_GlyphSlotRec_
+  {
+    FT_Library        library;
+    FT_Face           face; //指向父对象(FT_Face对象)
+    FT_GlyphSlot      next;
+    FT_UInt           reserved;       /* retained for binary compatibility */
+    FT_Generic        generic;
+
+    FT_Glyph_Metrics  metrics; //字形尺寸对象
+    FT_Fixed          linearHoriAdvance;
+    FT_Fixed          linearVertAdvance;
+    FT_Vector         advance;// 步进对象
+
+    FT_Glyph_Format   format;//字形槽格式
+
+    FT_Bitmap         bitmap;//字形位图
+    FT_Int            bitmap_left; //位图左行距离
+    FT_Int            bitmap_top; //位图上行距离
+      
+
+    FT_Outline        outline;
+
+    FT_UInt           num_subglyphs;
+    FT_SubGlyph       subglyphs;
+
+    void*             control_data;
+    long              control_len;
+
+    FT_Pos            lsb_delta;
+    FT_Pos            rsb_delta;
+
+    void*             other;
+
+    FT_Slot_Internal  internal;
+
+  } FT_GlyphSlotRec;
+```
+
+### FT_Slot_InternalRec_
+
+FT_GlyphSlot 的私有数据，GlyphSlot中包含的渲染字体的数据包含在其中
+
+```c
+  typedef struct  FT_Slot_InternalRec_
+  {
+    FT_GlyphLoader  loader;
+    FT_UInt         flags;
+    FT_Bool         glyph_transformed;
+    FT_Matrix       glyph_matrix;
+    FT_Vector       glyph_delta;
+    void*           glyph_hints;
+
+  } FT_GlyphSlot_InternalRec;
+```
+
+### FT_GlyphLoaderRec_
+
+用于装载glyph  FT_GlyphLoaderRec_程序实现不是高级 API 的一部分
+
+```cpp
+  typedef struct  FT_GlyphLoaderRec_
+  {
+    FT_Memory        memory;
+    FT_UInt          max_points;
+    FT_UInt          max_contours;
+    FT_UInt          max_subglyphs;
+    FT_Bool          use_extra;
+
+    FT_GlyphLoadRec  base;
+    FT_GlyphLoadRec  current;
+
+    void*            other;            /* for possible future extension? */
+
+  } FT_GlyphLoaderRec;
+ typedef struct  FT_GlyphLoadRec_
+  {
+    FT_Outline   outline;       /* outline                   */
+    FT_Vector*   extra_points;  /* extra points table        */
+    FT_Vector*   extra_points2; /* second extra points table */
+    FT_UInt      num_subglyphs; /* number of subglyphs       */
+    FT_SubGlyph  subglyphs;     /* subglyphs                 */
+
+  } FT_GlyphLoadRec, *FT_GlyphLoad;
+```
+
+## TrueType 字体类介绍
+
+TrueType结构在 ttypes.h 中
+
+## TT_FaceRec_
+
+TrueType Face类 这个对象，这些TrueType字体文件中的类模型与分辨率和与点大小无关的数据。与[TrueType规范](https://links.jianshu.com/go?to=%5Bhttps%3A%2F%2Fdeveloper.apple.com%2Ffonts%2FTrueType-Reference-Manual%2FRM06%2FChap6cmap.html%5D(https%3A%2F%2Fdeveloper.apple.com%2Ffonts%2FTrueType-Reference-Manual%2FRM06%2FChap6cmap.html))相对应。
+
+## 基础方法介绍
+
+```c
+    // 1. 初始化freetype2库
+    error = FT_Init_FreeType(&library);
+
+    // 2. 创建一个face
+    error = FT_New_Face(library, "/Users/qishao/Downloads/Rough cut.ttf", 0, &face);
+
+    // 3. 设置字体尺寸
+    error = FT_Set_Char_Size(face, 16*64, 16*64, 96, 96);
+
+    // 4. 获取字符图像索引
+    charIdx = FT_Get_Char_Index(face, wch);
+
+    // 5. 加载字符图像
+    FT_Load_Glyph(face, charIdx, FT_LOAD_DEFAULT);
+    if (face->glyph->format == FT_GLYPH_FORMAT_OUTLINE)
+    {
+        FT_Outline_Embolden(&(face->glyph->outline), 16);    // 加粗轮廓线
+    }
+
+    // 6. 获取字符位图
+    if (face->glyph->format != FT_GLYPH_FORMAT_BITMAP)
+    {
+        FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+    }
+```
+
+一篇比较全面的介绍性博客合集[《FreeType Glyph Conventions》](https://links.jianshu.com/go?to=%5Bhttps%3A%2F%2Fblog.csdn.net%2Fsloan6%2Farticle%2Fdetails%2F8330793%5D(https%3A%2F%2Fblog.csdn.net%2Fsloan6%2Farticle%2Fdetails%2F8330793))
