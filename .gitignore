@@ -1,2 +1,5 @@
 .vscode
 .vscode-ctags
+lib_example/scons/.sconsign.dblite
+lib_example/scons/hello
+lib_example/scons/hello.o
