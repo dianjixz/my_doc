@@ -135,6 +135,14 @@ sleep 1
 done
 ~~~ 
 ~~~ 
+
+Linux中shell脚本获取当前工作目录的方法：
+
+~~~
+workdir=$(cd $(dirname $0); pwd)
+~~~
+
+
 shell 计数命令     wc -w
 ~~~ 
 powerline
