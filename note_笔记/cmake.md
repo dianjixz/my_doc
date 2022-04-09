@@ -1943,3 +1943,35 @@ cmake ../src \
 链接：https://juejin.cn/post/6844903565803126798
 来源：稀土掘金
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+CMake常用语句：
+
+> \# 用于定义、修改变量
+> set()
+> \# 设置工程
+> project()
+> \# 用于添加可执行构建目标
+> add_executable()
+> \# 用于添加库构建目标
+> add_library()
+> \# 用于为构建目标设置构建规则和依赖
+> target_include_directories()
+> target_link_libraries()
+> target_link_directories()
+> target_link_options()
+> target_compile_definitions()
+> target_compile_features()
+> target_compile_options()
+> target_sources()
+> \# 设置目标属性
+> set_target_properties()
+> \# 设置全局包含目录、库文件目录、库文件名
+> include_directories()
+> link_directories()
+> link_libraries()
+> \# 查到包
+> find_package()
+> \# 用于自动生成目录源文件集合
+> aux_source_directory()
+> \# 添加子目录
+> add_subdirectory()

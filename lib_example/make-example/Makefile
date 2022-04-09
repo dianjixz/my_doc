@@ -6,7 +6,7 @@ SOURCES   	+=  $(wildcard ./*.c)
 SOURCES   	+= $(wildcard ./src/*.c)
 INCLUDES   	+=  -I./include
 INCLUDES   	+= -I./
-LIB_NAMES  	+=  -lfun_a -lfun_so
+LIB_NAMES  	+=
 LIB_PATH  	+=  -L./lib
 OBJ   		+=  $(patsubst %.c, %.o, $(SOURCES))
 TARGET  	?=  app
@@ -20,6 +20,9 @@ $(TARGET):$(OBJ)
 #compile
 %.o: %.c
 	$(CC) $(INCLUDES) $(DEBUG) -c $(CFLAGS) $< -o $@
+
+run: ./output/app1.00
+	./output/app1.00
 
 .PHONY:clean
 clean:
