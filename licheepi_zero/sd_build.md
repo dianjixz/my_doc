@@ -201,3 +201,40 @@ Number  Start (sector)   End (sector)  Size    Code  Name
   3      61952      225791  80.0 MiB   0700  swap 
   4      225792      635391  200.0 MiB  0700  rootfs 
   5      635392     61069311  28.8 GiB   0700  UDISK
+
+## 注意问题
+
+1,用 gparted 分区工具分区完后,当写入 uboot 固件后就会丧失校验区信息,会导致磁盘无法正常启动挂载.
+
+这是一个非常严重的问题.经过查找资料,目前可以使用 gdisk 来调整gpt分区的使用.
+
+使用方法是在 gdisk 中正常的新建分区,在保存之前,跳到专家模式,用 s "resize partition table" 命令调整分区大小,这样的话就不会影响引导区的使用了.
+
+expect示例方法:
+
+~~~ bash
+sudo expect << EOF
+spawn gdisk /dev/sdc
+expect "(? for help):" {send "o\r"}
+expect "Proceed*:" {send "y\r"}
+expect "(? for help):" {send "n\r"}
+expect "Partition number*:" {send "\r"}
+expect "First sector*:" {send "\r"}
+expect "Last sector*:" {send "+32M\r"}
+expect "Hex code or GUID*:" {send "\r"}
+expect "(? for help):" {send "n\r"}
+expect "Partition number*:" {send "\r"}
+expect "First sector*:" {send "\r"}
+expect "Last sector*:" {send "\r"}
+expect "Hex code or GUID*:" {send "\r"}
+expect "(? for help):" {send "x\r"}
+expect "(? for help):" {send "s\r"}
+expect "Enter new size*:" {send "4\r"}
+expect "(? for help):" {send "w\r"}
+expect "(Y/N):" {send "y\r"}
+expect
+
+EOF
+
+~~~
+

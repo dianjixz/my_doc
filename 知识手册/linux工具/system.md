@@ -80,6 +80,7 @@ $ sudo systemctl rescue
 
 ```
 #查看启动耗时
+systemd-analyze blame
 $ systemd-analyze                                                                                       
 
 #查看每个服务的启动耗时
@@ -598,7 +599,7 @@ WantedBy=multi-user.target
 ~~~ bash
 sudo chmod a+x /etc/rc.local
 然后执行
-~~~ bash
+​~~~ bash
 xugaoxiang@ubuntu:~$ sudo systemctl enable rc-local
 Created symlink /etc/systemd/system/multi-user.target.wants/rc-local.service → /etc/systemd/system/rc-local.service.
 接着启动这个服务并查看它的状态
