@@ -276,7 +276,7 @@ Platform_device_add和device_add最主要的区别是多了一步insert_resource
 
 本例比较简单，只用于测试platform_driver 和platform_device是否可以匹配成功。
 
-![](D:\work\git\my_doc\image\微信图片_20210607170731.png)
+![](../../../image/微信图片_20210607170731.png)
 
 左边是platform_device结构体注册的代码，右边是platform_driver结构体注册的代码。
 
@@ -443,7 +443,7 @@ sudo dmesg -c
 
 执行
 
-![微信图片_20210607181624](D:\work\git\my_doc\image\微信图片_20210607181624.png)
+![微信图片_20210607181624](../../../image/微信图片_20210607181624.png)
 
 由结果可知，probe函数正确读取到了硬件信息。
 
@@ -458,9 +458,9 @@ arch\arm\mach-s5pc100\Mach-smdkc100.c
 arch\arm\plat-samsung\
 ~~~
 
-![微信图片_20210607181709](D:\work\git\my_doc\image\微信图片_20210607181709.png)
+![微信图片_20210607181709](../../..\image\微信图片_20210607181709.png)
 
-![微信图片_20210607181722](D:\work\git\my_doc\image\微信图片_20210607181722.png)
+![微信图片_20210607181722](../../..\image\微信图片_20210607181722.png)
 
 该数组存放了，内核启动需要初始化的硬件的信息。
 
@@ -530,7 +530,7 @@ struct bus_type platform_bus_type = {
 > drivers\base\Platform.c
 > ```
 
-![微信图片_20210607181851](D:\work\git\my_doc\image\微信图片_20210607181851.png)
+![微信图片_20210607181851](../../..\image\微信图片_20210607181851.png)
 
 # 五、注册代码流程详解
 
@@ -542,7 +542,7 @@ struct bus_type platform_bus_type = {
 
 以下是上述两个问题代码的调用流程：
 
-![微信图片_20210607181928](D:\work\git\my_doc\image\微信图片_20210607181928.png)
+![微信图片_20210607181928](../../..\image\微信图片_20210607181928.png)
 
 后面我们会再详细介绍设备树。
 

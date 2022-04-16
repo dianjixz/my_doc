@@ -29,6 +29,27 @@ Linux - 使用V4L2（总结）
 https://blog.csdn.net/weixin_43707799/article/details/107821189
 V4L2驱动开发详解
 https://blog.csdn.net/huhaoxuan2010/article/details/81014420
+V4L2架构分析
+https://blog.csdn.net/tugouxp/article/details/118700967
+一文带你了解V4L2
+https://blog.csdn.net/weiqifa0/article/details/103501939
+参考：
+1. YellowMax2001 https://blog.csdn.net/u013904227/category_9277668.html
+2. linux Kernel source code: 4.4
+3. Documentation/zh_CN/video4linux/v4l2-framework.txt
+4. 杨柳 《Andorid 驱动开发权威指南》
+[Camera]v4l2框架内核空间解析
+https://zhuanlan.zhihu.com/p/105548113
+
+V4L2框架-videobuf2+
+https://yellowmax.blog.csdn.net/article/details/81054611
+v4l2的结构体之videobuf2(vb2)
+https://blog.csdn.net/u013836909/article/details/114996088
+
+
+
+v4l2典型的设备驱动 uvc
+https://blog.csdn.net/aprqe/article/details/109700984
 ~~~
 
  
