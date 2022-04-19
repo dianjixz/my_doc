@@ -549,6 +549,12 @@ ripgrep：文件内容全文检索。
 
 **[autojump](https://link.zhihu.com/?target=https%3A//github.com/wting/autojump)**   **�**� ⭐ （记忆进过的文件夹，下次可用 j + 文件夹名 直接跳进， 很方便）
 
+~~~ bash
+echo ""# autojump\nsource /usr/share/autojump/autojump.bash" >> ~/.bashrc
+~~~
+
+
+
 dtrx 有了这个工具你基本再也不用记住如何在linux上面解压各种后缀的文件了，什么tar.gz,tgz,xz,bz2,zip.rar等通通搞定，
 
 pydf 更加美观的显示磁盘占用情况
