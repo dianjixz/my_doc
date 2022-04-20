@@ -555,7 +555,7 @@ echo ""# autojump\nsource /usr/share/autojump/autojump.bash" >> ~/.bashrc
 
 
 
-dtrx 有了这个工具你基本再也不用记住如何在linux上面解压各种后缀的文件了，什么tar.gz,tgz,xz,bz2,zip.rar等通通搞定，
+[dtrx](https://github.com/dtrx-py/dtrx/) 有了这个工具你基本再也不用记住如何在linux上面解压各种后缀的文件了，什么tar.gz,tgz,xz,bz2,zip.rar等通通搞定，
 
 pydf 更加美观的显示磁盘占用情况
 

@@ -85,3 +85,12 @@ https://sspai.com/post/60414
 智能家居HomeAssistant（一）介绍概览
 https://blog.csdn.net/hanhui22/article/details/106187811?spm=1001.2101.3001.6650.9&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-9.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-9.pc_relevant_default&utm_relevant_index=14
 
+
+参与比较的开源库：
+
+    BoofCV (Ver. 0.33)：一种用Java实现的开源、实时的计算机视觉库； http://boofcv.org/
+    OpenCV (Ver. 4.0.1)：OpenCV 4.0后加入了QR码检测和解码功能，C++实现；   http://opencv.org/
+    Quirc (Feb 1, 2018. SHA 307473db)：一种专门面向QR码的检测和解码库，C语言实现；
+    ZBar (Ver. 0.10)：一种被广泛使用的包含各种条码检测识别的专门库，支持各种平台，支持Python, Perl, C++等语言；
+    ZXing (Ver. 3.3.3)：一种面向Java Android开发的各种条码检测识别库，用Java开发，支持多种语言；
+

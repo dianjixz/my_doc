@@ -1,0 +1,42 @@
+// FileName: tutorial.person.proto 
+// 通常文件名建议命名格式为 包名.消息名.proto 
+
+// 表示正在使用proto2命令
+syntax = "proto2"; 
+
+//包声明，tutorial 也可以声明为二级类型。
+//例如a.b，表示a类别下b子类别
+package tutorial; 
+
+//编译器将生成一个名为person的类
+//类的字段信息包括姓名name,编号id,邮箱email，
+//以及电话号码phones
+message Person { 
+
+  required string name = 1;  // (位置1)
+  required int32 id = 2;  
+  optional string email = 3;  // (位置2)
+
+  enum PhoneType {  //电话类型枚举值 
+    MOBILE = 0;  //手机号  
+    HOME = 1;    //家庭联系电话
+    WORK = 2;    //工作联系电话
+  } 
+  
+  //电话号码phone消息体
+  //组成包括号码number、电话类型 type
+  message PhoneNumber {
+    required string number = 1;    
+    optional PhoneType type = 
+          2 [default = HOME]; // (位置3)
+  }  
+  
+  repeated PhoneNumber phones = 4; // (位置4)
+} 
+
+
+// 通讯录消息体，包括一个Person类的people
+message AddressBook { 
+  repeated Person people = 1; 
+
+}

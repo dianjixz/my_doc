@@ -1,0 +1,9 @@
+syntax = "proto2";
+ 
+message Student
+{
+    required string name    = 1;
+    required uint32 num     = 2;
+    required uint32 c_score = 3;
+}
+//protoc -I=. --c_out=. student.proto
