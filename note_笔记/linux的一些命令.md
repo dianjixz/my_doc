@@ -334,59 +334,7 @@ chvt 7 即可。。
 
 
 
-**[bro](https://link.zhihu.com/?target=http%3A//bropages.org/)：以用例为主的帮助系统**
 
-**[multitail](https://link.zhihu.com/?target=https%3A//www.vanheusden.com/multitail/)：多重  tail**通常你不止一个日志文件要监控，怎么办？终端软件里开多个 tab 太占地方，可以试试这个工具：
-
-**[cheat](https://link.zhihu.com/?target=https%3A//github.com/chrisallenlane/cheat)：命令行笔记**就是各种 cheat sheet ，比如经常搞忘 redis 命令的话，你可以新建 ~/.cheat/redis 这个文件，写一些内容，比如：
-
-**[dstat](https://link.zhihu.com/?target=http%3A//dag.wiee.rs/home-made/dstat/)：vmstat 代替者**可能不少人都用过，但是本问题下好像没人提？
-
-**[ranger](https://link.zhihu.com/?target=https%3A//github.com/ranger/ranger)：内容浏览/预览**另一款内容预览软件，界面没有 mc 那么漂亮，标记拷贝也没它强，但是预览功能做的很不错，如果你习惯 vim 键位的话，你会发现ranger有些地方比 mc做的好不少：
-
-**[mc](https://link.zhihu.com/?target=https%3A//midnight-commander.org/) ：内容浏览/预览** 
-
-即便能舒适的呆在终端命令行里工作的人，有时候面对有些事情，也会感到烦躁，比如浏览一个目录的结构和里面文件内容，比如从源文件夹选择拷贝一批特定的文件到目标文件夹，这时候你需要 mc ，对就是前面 mcedit 的父项目 midnight commander ，安装方法同 mcedit：
-
-**[glances](https://link.zhihu.com/?target=https%3A//nicolargo.github.io/glances/)：更强大的 htop / top 代替者**htop 代替 top，glances 代替 htop：
-
-
-
-**[ncdu](https://link.zhihu.com/?target=https%3A//dev.yorhel.nl/ncdu)：可视化的空间分析程序**你发现有人把 /home 空间撑爆了，影响了大家的工作，你愤怒了一层层的 du，一层层的 cd，整个过程就像刨垃圾堆一样的恶心，后来发现了 ncdu 这个基于 ncurses 的空间分析程序：
-
-**[pm](https://link.zhihu.com/?target=https%3A//github.com/Angelmmiguel/pm)：在 bash / zsh 中迅速切换项目目录**
-
-**[owncloud](https://link.zhihu.com/?target=https%3A//owncloud.org/download/)：DropBox 的开源替代品，提供命令行客户端 owncloudcmd**
-
-**[mcedit](https://link.zhihu.com/?target=https%3A//midnight-commander.org/)：终端下面的 NotePad++**
-
-**[icdiff](https://link.zhihu.com/?target=https%3A//github.com/jeffkaufman/icdiff)：分屏显示 diff**
-
-**[cppman](https://link.zhihu.com/?target=https%3A//github.com/aitjcize/cppman)：C++ 98/11/14 手册查询 for Linux/MacOS**
-
-[tldr](https://link.zhihu.com/?target=https%3A//github.com/tldr-pages/tldr): 如果你经常不想详读man文档，那么你应该试试这个小工具。
-
-[figlet](https://link.zhihu.com/?target=http%3A//www.figlet.org): 将输入字符转换成艺术字体。
-
-[cloc](https://link.zhihu.com/?target=https%3A//github.com/cgag/loc): 用来统计代码行数，统计结果比较分类比较详细，支持大部分编程语言。
-
-1. [WordGrinder](https://link.zhihu.com/?target=https%3A//cowlark.com/wordgrinder/)：它是一款使用起来很简单，但拥有足够的编写和发布功能的文字编辑器。它支持基本的格式和样式，并且你可以将你的文字以 Markdown、ODT、LaTeX 或者 HTML 等格式导出；
-
-\2. [Proselint](https://link.zhihu.com/?target=http%3A//proselint.com/)：它是一款全能的实时检查工具。它会找出行话、大话、不正确日期和时间格式、滥用的术语[等等](https://link.zhihu.com/?target=http%3A//proselint.com/checks/)。它也很容易运行并忽略文本中的标记；
-
-\3. [GNU Aspell](https://link.zhihu.com/?target=http%3A//aspell.net/)：它能够交互式地检测文本文档，能高亮显示拼写错误，还能在拼写错误的上方提供正确的拼写建议。Aspell 在进行拼写检查的时候，同样能够忽略许多语法标记；
-
-[Alex](https://link.zhihu.com/?target=https%3A//github.com/get-alex/alex)：它是一个简单但很有用的小工具。适用于明文文本或者格式为 Markdown 或 HTML 的文档。Alex 会对“性别偏好、极端主义、种族相关、宗教，或者文章中其他不平等的措辞”产生警告。如果你想要试试看 Alex，这里有一个在线 [demo](https://link.zhihu.com/?target=https%3A//alexjs.com/%23demo)；
-
-nmon：它能够帮你进行电脑的性能监控，包括 CPU，内存，磁盘 IO，网络 IO，并且界面很炫酷，是不是很像黑客，快去试试吧 [nmon for Linux | Main](https://link.zhihu.com/?target=http%3A//nmon.sourceforge.net/pmwiki.php)
-
-axel：多线程断点下载工具，非常好用。例如下图中这样，指定了 8 个线程同时下载。
-
- [SpaceVim](https://link.zhihu.com/?target=https%3A//github.com/SpaceVim/SpaceVim)：这是一个 vim 插件，使你的 Vim 变成带代码自动补全等功能的更加强大的代码编辑器！
-
-\9. [thefuck](https://link.zhihu.com/?target=https%3A//github.com/nvbn/thefuck)：你 git branch 打成 branch 了，然后命令行报错，你是不是心里会冒出一句 fuck？那你就在命令行里输入 fuck 然后回车！咦，成功了！
-
-\9. [thefuck](https://link.zhihu.com/?target=https%3A//github.com/nvbn/thefuck)：你 git branch 打成 branch 了，然后命令行报错，你是不是心里会冒出一句 fuck？那你就在命令行里输入 fuck 然后回车！咦，成功了！
 
 昨天刚下了一个感觉很实用的工具：[PM2](https://link.zhihu.com/?target=http%3A//pm2.keymetrics.io/) **用以在后台运行和管理进程**
 
@@ -399,23 +347,7 @@ pm2 stop <id>
 pm2 monit
 ~~~
 
-[Httpie](https://link.zhihu.com/?target=https%3A//github.com/jakubroztocil/httpie)一个 HTTP 命令行客户端，使用起来比 curl 更为友好，并支持输出 JSON、语法高亮等特性，为开发者呈现更为直观的 UI，与服务器间的调试体验也更为人性化。
 
-[transfer.sh](https://link.zhihu.com/?target=https%3A//github.com/dutchcoders/transfer.sh)可通过简单的命令行来快速完成文件共享操作。
-
-[stegify](https://link.zhihu.com/?target=https%3A//github.com/DimitarPetrov/stegify)一款神奇的命令行工具，能将任意文件隐藏到图片里面。如下所示，第 3 张[图片](https://www.zhihu.com/search?q=图片&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra={"sourceType"%3A"answer"%2C"sourceId"%3A719555045})为 1、2 两张图片的合成品，但是单从视觉上却完全看不出来：
-
-strace，打印出进程调用了哪些系统调用。
-
-objdump，打印目标码和反汇编结果
-
-jq，命令行的json查询和格式化工具，适合查看rest接口的输出
-
-awk, grep, sed：文本处理神器。
-
-sort, uniq：排序去重。
-
-[history](https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Sed)非常简单，尤其是在你依赖于复制使用过的命令时，这个命令特别有用。
 
 - linux: [alebcay/awesome-shell](https://link.zhihu.com/?target=https%3A//github.com/alebcay/awesome-shell)
 - mac: [herrbischoff/awesome-osx-command-line](https://link.zhihu.com/?target=https%3A//github.com/herrbischoff/awesome-osx-command-line)
@@ -525,15 +457,9 @@ Virtualenv 解决了 Python 程序包管理中的许多问题，但是还有一�
 
 
 
-[ansi](https://link.zhihu.com/?target=https%3A//github.com/fidian/ansi) - 在纯bash中的ANSI转义码 - 更改文本颜色，定位光标，等等
 
-[bashful](https://link.zhihu.com/?target=https%3A//github.com/jmcantrell/bashful) - 一个库的集合，以简化编写Bash脚本
 
-[dispatch](https://link.zhihu.com/?target=https%3A//github.com/Mosai/workshop/blob/master/doc/dispatch.md) - 50行可移植shell脚本中的命令行参数解析器。
 
-[shutit](https://link.zhihu.com/?target=https%3A//ianmiell.github.io/shutit/) - 基于bash和pexpect的自动化框架
-
-[rebash](https://link.zhihu.com/?target=https%3A//github.com/jandob/rebash) - 脚本库/框架。特点：进口，例外，文件测试...
 
 [is.sh](https://link.zhihu.com/?target=https%3A//github.com/qzb/is.sh) - 内建测试命令的替代方法，它会让你的“if”语句变得非常漂亮
 

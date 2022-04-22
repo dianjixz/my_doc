@@ -29,7 +29,7 @@ shell中条件判断if中的-z到-d的意思
 [ -z STRING ] “STRING” 的长度为零则为真。  
 [ -n STRING ] or [ STRING ] “STRING” 的长度为非零 non-zero则为真。 
 
-~~~ 
+~~~
 
 数字判断 
 ~~~ 
@@ -40,13 +40,13 @@ shell中条件判断if中的-z到-d的意思
 -eq  等于
 -ge  大于等于
 -le  小于等于
-~~~ 
+~~~
 ~~~ 
 [ STRING1 == STRING2 ] 如果2个字符串相同。 “=” may be used instead of “==” for strict POSIX compliance则为真。  
 [ STRING1 != STRING2 ] 如果字符串不相等则为真。  
 [ STRING1 < STRING2 ] 如果 “STRING1” sorts before “STRING2” lexicographically in the current locale则为真。  
 [ STRING1 > STRING2 ] 如果 “STRING1” sorts after “STRING2” lexicographically in the current locale则为真。  
-~~~ 
+~~~
 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch path-to-your-remove-file' --prune-empty --tag-name-filter cat -- --all
 其中, path-to-your-remove-file 就是你要删除的文件的相对路径(相对于git仓库的跟目录), 替换成你要删除的文件即可. 注意一点，这里的文件或文件夹，都不能以 '/' 开头，否则文件或文件夹会被认为是从 git 的安装目录开始。
 
@@ -60,7 +60,7 @@ git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch path-
 
 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch projects/Moon.mp3' --prune-empty --tag-name-filter cat -- --all
 git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch sound/Music_*.mp3' --prune-empty --tag-name-filter cat -- --all
-~~~ 
+~~~
  如果你看到类似下面这样的, 就说明删除成功了:
 
 Rewrite 48dc599c80e20527ed902928085e7861e6b3cbe6 (266/266)
@@ -71,11 +71,11 @@ Rewrite 48dc599c80e20527ed902928085e7861e6b3cbe6 (266/266)
 以强制覆盖的方式推送你的repo, 命令如下:
 ~~~ 
 $ git push origin master --force --all
-~~~ 
+~~~
 为了能从打了 tag 的版本中也删除你所指定的文件或文件夹，您可以使用这样的命令来强制推送您的 Git tags：
 ~~~ 
 $ git push origin master --force --tags
-~~~ 
+~~~
 
 步骤三: 清理和回收空间
 虽然上面我们已经删除了文件, 但是我们的repo里面仍然保留了这些objects, 等待垃圾回收(GC), 所以我们要用命令彻底清除它, 并收回空间.
@@ -105,7 +105,7 @@ Counting objects: 2437, done.
 # Total 2437 (delta 1483), reused 0 (delta 0)
 复制代码
 注: 绿色字部分是命令执行后的结果.
-~~~ 
+~~~
 https://www.cnblogs.com/shines77/p/3460274.html
 
 
@@ -116,7 +116,7 @@ fc-cache -fv   刷新字体缓存
 /usr/share/fonts/truetype   字体目录
 
 bash-completion		tab补全插件
-~~~ 
+~~~
 
 
 
@@ -133,7 +133,7 @@ while true; do
 echo 'I am working!'
 sleep 1
 done
-~~~ 
+~~~
 ~~~ 
 
 Linux中shell脚本获取当前工作目录的方法：
@@ -144,69 +144,8 @@ workdir=$(cd $(dirname $0); pwd)
 
 
 shell 计数命令     wc -w
-~~~ 
-powerline
-地址：https://github.com/powerline/powerline
-终端本身是高效的，但有时也略显乏味，使用 powerline 可以为终端加上强大的 状态栏，比如在 vim 中显示当前状态，在打开 git 目录时显示当前分支等等。
+~~~
 
-
-
-ranger
-
-地址：https://github.com/ranger/ranger
-
-Ranger 使用 Python 编写，默认为使用 vim 风格的按键绑定，对于使用 vim 的用户来说几乎没有学习成本，能够快速上手使用。
-
-
-
-nnn
-
-地址：https://github.com/jarun/nnn
-
-nnn (n³) 是一个功能齐全的终端文件管理器，速度非常快且几乎 0 配置，也是一个非常不错的选择。
-
-
-
-exa
-
-地址：https://github.com/ogham/exa
-
-一句话点评：用来替换 ls 命令的现代化工具。
-
-
-fd
-
-地址：https://github.com/sharkdp/fd
-
-一句话点评：简单、快速、好用，用于替换 find 的搜索工具。
-
-
-fzf
-
-地址：https://github.com/junegunn/fzf
-
-fzf 是一款支持模糊搜索的交互式工具，可以用来查找任何列表内容，包括文件、Git 分支、进程等。
-
-tldr
-
-地址：https://github.com/tldr-pages/tldr
-
-tldr  是 Too long, Don't read 的缩写，可以帮助你快速查看常用命令的使用实例，比如 tar 命令，那后面一长串参数谁记得清呢？当然，linux 大佬除外。
-
-
-
-The Fuck
-
-地址：https://github.com/nvbn/thefuck
-
-在终端下是不是经常输错命令，搞得自己心烦意乱，The Fuck 是一款了不起的工具，帮你彻底解决这个问题，当你输错命令后，只要输入 fuck 命令，它会帮你自动纠正错误，精彩之极！ 
-
-
-w3m
-
-地址：https://github.com/tats/w3m
-
-真正的程序员就该使用命令行来浏览网页。
 
 linux bash shell:最方便的字符大小写转换
 注意,一定是需要bash
