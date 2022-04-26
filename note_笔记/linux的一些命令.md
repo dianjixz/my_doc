@@ -355,10 +355,6 @@ pm2 monit
 
 
 
-我个人重度使用的: [robbyrussell/oh-my-zsh](https://link.zhihu.com/?target=https%3A//github.com/robbyrussell/oh-my-zsh), [tmux/tmux](https://link.zhihu.com/?target=https%3A//github.com/tmux/tmux), [moby/moby](https://link.zhihu.com/?target=https%3A//github.com/moby/moby), [ansible/ansible](https://link.zhihu.com/?target=https%3A//github.com/ansible/ansible), 然后就是常用的命令行grep/sed/awk之类的了。
-
-BTW, 推荐[Idnan/bash-guide](https://link.zhihu.com/?target=https%3A//github.com/Idnan/bash-guide), 把bash搞熟了才能玩转"神器"嘛
-
 
 
 添一个http-server  [indexzero/http-server](https://link.zhihu.com/?target=https%3A//github.com/indexzero/http-server)
