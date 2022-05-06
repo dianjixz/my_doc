@@ -793,3 +793,11 @@ lv_label_set_text(label2, "It is a circularly scrolling text. ");
 lv_obj_align(label2, NULL, LV_ALIGN_CENTER, 0, 30);
 ~~~
 
+
+
+
+
+# 使用踩坑
+
+1,gui的风格,比如字体,字体大小等,都是由  lv_style_t 控制的. gui中,所有都是控件.
+

@@ -1,30 +1,114 @@
+
+
+CROSS = 
+CC = $(CROSS)gcc
+CXX = $(CROSS)g++
+
 VERSION  	=  1.00
-CC   		?=  gcc
-DEBUG   	?=  -DUSE_DEBUG
-CFLAGS  	+=  -Wall
-SOURCES   	+=  $(wildcard ./*.c)
-SOURCES   	+= $(wildcard ./src/*.c)
-INCLUDES   	+=  -I./include
-INCLUDES   	+= -I./
-LIB_NAMES  	+=
-LIB_PATH  	+=  -L./lib
-OBJ   		+=  $(patsubst %.c, %.o, $(SOURCES))
-TARGET  	?=  app
-LDFLAGS	    +=  
-#links
-$(TARGET):$(OBJ)
-	@mkdir -p output
-	$(CC) $(OBJ) $(LIB_PATH) $(LIB_NAMES) -o output/$(TARGET)$(VERSION) $(LDFLAGS)
-	@rm -rf $(OBJ)
- 
-#compile
-%.o: %.c
-	$(CC) $(INCLUDES) $(DEBUG) -c $(CFLAGS) $< -o $@
+DEBUG = 
+CFLAGS = $(DEBUG) -Wall -c -Wno-comment
+LDFLAGS = -fPIC 
 
-run: ./output/app1.00
-	./output/app1.00
+MV ?= mv -f
+RM ?= rm -rf
+LN ?= ln -sf
 
-.PHONY:clean
+ifeq (V,1)
+	V := @
+else
+	V :=
+endif
+
+TARGET = demo
+
+
+TOP_PATH = $(shell pwd)
+SRC_PATH += $(TOP_PATH)/
+SRC_PATH += $(TOP_PATH)/src
+
+INC_PATH += -I$(TOP_PATH)/
+INC_PATH += -I$(TOP_PATH)/include 
+
+
+
+MOD_PATH = $(TOP_PATH)/modules
+MOD_LIB_PATH = $(MOD_PATH)/lib
+MOD_INC_PATH = $(MOD_PATH)/include
+
+DIRS = $(shell find $(SRC_PATH) -maxdepth 3 -type d)
+FILES = $(foreach dir, $(DIRS), $(wildcard $(dir)/*.cpp))
+
+
+##########################################################
+# modules
+##########################################################
+modules = 
+MODULES_PATH = $(foreach m, $(modules), $(MOD_PATH)/$(m))
+
+
+##########################################################
+# srcs
+##########################################################
+SRCS_CPP += $(foreach dir, $(DIRS), $(wildcard $(dir)/*.cpp))
+SRCS_CC += $(foreach dir, $(DIRS), $(wildcard $(dir)/*.cc))
+SRCS_C += $(foreach dir, $(DIRS), $(wildcard $(dir)/*.c))
+
+
+##########################################################
+# objs
+##########################################################
+OBJS_CPP = $(patsubst %.cpp, %.o, $(SRCS_CPP))
+OBJS_CC = $(patsubst %.cc, %.o, $(SRCS_CC))
+OBJS_C = $(patsubst %.c, %.o, $(SRCS_C))
+
+##########################################################
+# paths
+##########################################################
+INC_PATH += -I$(MOD_INC_PATH)
+INC_PATH += -I$(MOD_PATH)
+LIB_PATH += -L$(TOP_PATH)/lib
+LIB_PATH += -L$(MOD_LIB_PATH)
+
+##########################################################
+# libs
+##########################################################
+
+##########################################################
+# building
+##########################################################
+all:$(TARGET) 
+
+$(TARGET) : $(OBJS_CPP) $(OBJS_CC) $(OBJS_C)
+	$(V) for i in $(MODULES_PATH); \
+	do \
+	make -C $$i; \
+	done
+
+	$(CXX) $^ -o $@ $(LIB_PATH) $(LIBS) $(LDFLAGS)
+	$(V) echo Create $(TARGET) ok...
+
+$(OBJS_CPP):%.o : %.cpp
+	$(V) $(CXX) $(CFLAGS) $< -o $@ $(INC_PATH)
+
+$(OBJS_CC):%.o : %.cc
+	$(V) $(CC) $(CFLAGS) $< -o $@ $(INC_PATH)
+
+$(OBJS_C):%.o : %.c
+	$(V) $(CC) $(CFLAGS) $< -o $@ $(INC_PATH)
+
+.PHONY : clean
 clean:
-	@echo "Remove linked and compiled files......"
-	rm -rf $(OBJ) $(TARGET) output 
+	$(V) $(RM) $(TARGET) $(OBJS_CPP) $(OBJS_CC) $(OBJS_C)
+	$(V) for i in $(MODULES_PATH); \
+	do \
+	make clean -C $$i; \
+	done
+	$(V) echo clean all...
+
+clean_o:
+	$(V) $(RM) $(OBJS_CPP) $(OBJS_CC) $(OBJS_C)
+	$(V) echo clean all...
+
+rebuild :
+	make clean
+	make

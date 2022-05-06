@@ -1,0 +1,13 @@
+# CMake 最低版本号要求
+cmake_minimum_required (VERSION 2.8)
+
+project(cmake-hello)
+
+# 查找当前目录下的所有源文件
+# 并将名称保存到 DIR_SRCS 变量
+# aux_source_directory(. DIR_SRCS)
+
+
+add_executable(demo demo.cpp) # 生成可执行文件
+# add_library(common STATIC util.cpp) # 生成静态库
+# add_library(common SHARED util.cpp) # 生成动态库或共享库
