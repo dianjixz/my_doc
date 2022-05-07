@@ -1,0 +1,84 @@
+import win.dlg.message;
+import win.ui;
+/*DSG{{*//*}}*/
+ 
+// 串口列表
+import sys.comPort;
+var comPorts = sys.comPort.list();
+mainForm.combobox.items = comPorts;
+mainForm.combobox.selIndex = 1; 
+ 
+import sio;
+var sioPort;
+ 
+// 打开串口
+mainForm.openBtn.oncommand = function(id,event){
+ if(sioPort){
+  sioPort.close();
+ }
+ 
+ var err;
+ sioPort,err = sio.port(mainForm.combobox.selText);
+ if(!sioPort){
+  return mainForm.msgErr(err);
+ }
+ 
+ sioPort.ioctl(eval(mainForm.baudrateEdit.text),8,1);
+ 
+ mainForm.msgOk("已打开端口",1000)
+}
+ 
+// 关闭串口
+mainForm.closeBtn.oncommand = function(id,event){
+ if(sioPort){
+  sioPort.close();
+  mainForm.msgOk("已关闭端口",1000);
+ }  
+}
+ 
+// 点灯
+mainForm.ledonBtn.oncommand = function(id,event){
+ if(!sioPort){
+  mainForm.openBtn.oncommand();
+ }
+ 
+ if( !sioPort.writeHex("01") ){
+  return mainForm.msgErr("发送失败");
+ }
+ else {
+  return mainForm.msgOk("发送ON成功",1000);
+ } 
+}
+ 
+// 灭灯
+mainForm.ledoffBtn.oncommand = function(id,event){
+ if(!sioPort){
+  mainForm.openBtn.oncommand();
+ }
+ 
+ if( !sioPort.writeHex("00") ){
+  return mainForm.msgErr("发送失败");
+ }
+ else {
+  return mainForm.msgOk("发送OFF成功",1000);
+ } 
+}
+ 
+if(_ARGV.opt){
+ mainForm.edit.print(_ARGV.opt,_ARGV[#_ARGV]);
+}
+ 
+mainForm.edit.oncommand = function(id,event){
+ 
+}
+ 
+mainForm.static.oncommand = function(id,event){
+ 
+}
+ 
+mainForm.static2.oncommand = function(id,event){
+ 
+}
+ 
+mainForm.show();
+return win.loopMessage();

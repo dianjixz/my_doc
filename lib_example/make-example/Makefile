@@ -84,7 +84,7 @@ $(TARGET) : $(OBJS_CPP) $(OBJS_CC) $(OBJS_C)
 	make -C $$i; \
 	done
 
-	$(CXX) $^ -o $@ $(LIB_PATH) $(LIBS) $(LDFLAGS)
+	$(V) $(CXX) $^ -o $@ $(LIB_PATH) $(LIBS) $(LDFLAGS)
 	$(V) echo Create $(TARGET) ok...
 
 $(OBJS_CPP):%.o : %.cpp
