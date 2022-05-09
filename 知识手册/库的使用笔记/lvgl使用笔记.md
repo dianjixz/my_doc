@@ -801,3 +801,11 @@ lv_obj_align(label2, NULL, LV_ALIGN_CENTER, 0, 30);
 
 1,gui的风格,比如字体,字体大小等,都是由  lv_style_t 控制的. gui中,所有都是控件.
 
+
+
+资源:
+
+
+(LVGL —— Ubuntu20环境建立vscode模拟器)[https://blog.csdn.net/weixin_45652444/article/details/119756079]
+
+(基于LVGL的手表UI架构设计)[https://blog.csdn.net/StarEmbedded/article/details/117631636]
