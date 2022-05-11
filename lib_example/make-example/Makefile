@@ -24,10 +24,10 @@ TARGET = demo
 
 TOP_PATH = $(shell pwd)
 SRC_PATH += $(TOP_PATH)/
-SRC_PATH += $(TOP_PATH)/src
+# SRC_PATH += $(TOP_PATH)/src
 
 INC_PATH += -I$(TOP_PATH)/
-INC_PATH += -I$(TOP_PATH)/include 
+# INC_PATH += -I$(TOP_PATH)/include 
 
 
 
