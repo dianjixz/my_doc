@@ -809,3 +809,107 @@ lv_obj_align(label2, NULL, LV_ALIGN_CENTER, 0, 30);
 (LVGL —— Ubuntu20环境建立vscode模拟器)[https://blog.csdn.net/weixin_45652444/article/details/119756079]
 
 (基于LVGL的手表UI架构设计)[https://blog.csdn.net/StarEmbedded/article/details/117631636]
+
+~~~ c
+// 移植参考指南
+lv_init();
+
+
+
+// 对接显示
+  uint32_t buf_size = width * height;
+  lv_color_t * buf = malloc(buf_size * sizeof(lv_color_t));
+  LV_ASSERT_MALLOC(buf);
+
+  /*Initialize and register a display driver*/
+  static lv_disp_drv_t disp_drv;
+  lv_disp_drv_init(&disp_drv);
+  disp_drv.draw_buf   = &buf;
+  disp_drv.flush_cb   = fbdev_flush;
+  disp_drv.hor_res    = width;
+  disp_drv.ver_res    = height;
+  lv_disp_drv_register(&disp_drv);
+
+
+// 对接输入
+  lv_indev_drv_init(&indev_drv);
+  indev_drv.type = LV_INDEV_TYPE_POINTER;
+  indev_drv.read_cb = evdev_read;
+  lv_indev_t * indev = lv_indev_drv_register(&indev_drv);
+
+...
+
+your code! todo!
+
+
+
+
+~~~
+
+lv_tabview_create 可以用来实现一个界面切换的效果。
+
+~~~ c
+void home_ui_create(int number)
+{
+    // lv_obj_clean(lv_scr_act()); 					// 确保屏幕无残留
+    // lv_obj_t * scr = lv_obj_create(NULL, NULL);
+    // lv_scr_load(scr);
+
+    tabview_desktop_id = number; 										// 默认为主页面位置
+    /* 创建三个页签作为菜单容器 */
+    tabview_desktop = lv_tabview_create(lv_scr_act(), NULL);    // 创建列表页面
+    lv_obj_set_style_local_bg_opa(tabview_desktop, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, LV_OPA_0);       // 设置背景透明度
+    lv_tabview_set_btns_pos(tabview_desktop, LV_TABVIEW_TAB_POS_NONE);  //  关闭顶层标签
+    lv_tabview_add_tab(tabview_desktop, "zhuye_1");  // 0
+    lv_tabview_add_tab(tabview_desktop, "zhuye_2");  // 1
+    lv_tabview_add_tab(tabview_desktop, "zhuye_3"); // 2
+    lv_tabview_add_tab(tabview_desktop, "zhuye_4");  // 3
+    lv_tabview_add_tab(tabview_desktop, "zhuye_5");  // 4
+    lv_tabview_add_tab(tabview_desktop, "zhuye_6"); // 5
+    lv_tabview_set_anim_time(tabview_desktop, 0);         // 动画时间
+    lv_tabview_set_tab_act(tabview_desktop, tabview_desktop_id, LV_ANIM_OFF); // 设定主页位置
+    // lv_obj_fade_in(tabview_desktop, 0 , delay);      // 应该是设定动画时间吧 不确定******
+    for (size_t i = 0; i < 6; i++)
+    {
+      lv_page_set_scrollbar_mode(lv_tabview_get_tab(tabview_desktop, i), LV_SCROLLBAR_MODE_OFF);// 关闭滑动栏
+    }
+
+    /* 创建led作为页面标识 */
+    uint8_t led_wh[6] = {80, 96, 112, 128, 144, 160};       // led位置
+    lv_obj_t * led1;                                        // led对象
+    for (size_t x = 0; x < 6; x++)
+    {
+      for (size_t i = 0; i < 6; i++)
+      {
+        led1  = lv_led_create(lv_tabview_get_tab(tabview_desktop, x), NULL);
+        lv_obj_align(led1, NULL, LV_ALIGN_IN_TOP_LEFT, led_wh[i], 223);
+        lv_obj_set_size(led1,5,5);
+        if(x == i)
+          lv_led_on(led1);
+        else
+          lv_led_off(led1);
+      }
+    }
+
+    lv_obj_t * obj_menu_item;	// 用于遍历初始化app图标的指针
+    for (int i = 0; i < 24; i++)
+    {
+    int yemian_num = i / 4;
+    int yemian_wh = i % 4;
+    // printf("1:%d, 2:%d\n", yemian_num, yemian_wh);
+    obj_menu_item = lv_img_create(lv_tabview_get_tab(tabview_desktop, yemian_num), NULL);          // 创建一个图片
+
+    if(i == tpppp)
+    {
+        _lvgl_ui__flush_self->zhongming_ui_data.fun_page[3] = obj_menu_item;
+    }
+    lv_obj_set_click(obj_menu_item, 1);            // 允许点击
+    lv_img_set_src(obj_menu_item, app_icon[i]);    // 使用数组文件,设定图片
+    lv_obj_align(obj_menu_item, NULL, LV_ALIGN_IN_TOP_LEFT, app_xy[yemian_wh][0], app_xy[yemian_wh][1]);
+    // lv_obj_fade_in(obj_menu_item, 0 , delay);
+    lv_obj_set_event_cb(obj_menu_item, lv_100ask_event_cb[i]);    /* 分配事件回调处理函数 */
+    lv_obj_set_drag_parent(obj_menu_item, 1);
+    }
+
+}
+~~~
