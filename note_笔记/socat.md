@@ -1989,3 +1989,16 @@ Open Group ( http://www.unix-systems.org/ ) 在Internet 上免费提供其标准
 Socat主页http://www.dest-unreach.org/socat/
 ~~~
 
+~~~bash
+socat TCP-LISTEN:8091,TCP-LISTEN:8092
+
+socat TCP:192.168.0.46:8091 TCP:127.0.0.1:22
+
+socat TCP:192.168.0.46:8091 TCP:127.0.0.1:22
+EXEC:/bin/bash
+
+
+
+socat tcp4-listen:8091 tcp4-listen:8092
+~~~
+
