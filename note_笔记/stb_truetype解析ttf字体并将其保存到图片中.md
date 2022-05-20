@@ -19,6 +19,9 @@
 
     注意：在包含stb_truetype.h头文件的时候需要定义STB_TRUETYPE_IMPLEMENTATION，否则将会无法使用。
 
+
+**值得注意的是，字符寻址编码是 unicode 类型，日常文件是 utf8 类型。所以使用中文时需要对其进行转换。
+
 ~~~ c
 #include <stdio.h>
 #include <stdlib.h>
@@ -141,3 +144,7 @@ int main(int argc, const char *argv[])
 版权声明：本文为CSDN博主「天上下橙雨」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/weixin_40026797/article/details/112755090
 
+
+https://blog.csdn.net/ithouse/article/details/70176215?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-70176215-blog-108066748.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-70176215-blog-108066748.pc_relevant_paycolumn_v3&utm_relevant_index=2
+
+https://blog.csdn.net/qq_37868757/article/details/108066748?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5-108066748-blog-23750999.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7Edefault-5-108066748-blog-23750999.pc_relevant_default&utm_relevant_index=9
