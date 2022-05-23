@@ -359,3 +359,6 @@ if __name__ == '__main__':
         jpg = _maix.rgb2jpg(img.convert("RGB").tobytes(), img.width, img.height)
         Queue.put(mjpg.BytesImage(jpg))
         print(len(jpg))
+
+
+
