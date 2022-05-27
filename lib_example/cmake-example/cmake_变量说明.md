@@ -705,3 +705,9 @@ CMAKE_<LANG>_PLATFORM_ID
 CMAKE_NOT_USING_CONFIG_FLAGS
 CMAKE_VS_INTEL_Fortran_PROJECT_VERSION
 ~~~
+
+
+
+
+CMAKE学习指南:
+https://blog.csdn.net/qq_40123329/article/details/121386843?spm=1001.2101.3001.6650.12&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12-121386843-blog-87972772.pc_relevant_paycolumn_v3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12-121386843-blog-87972772.pc_relevant_paycolumn_v3&utm_relevant_index=15
