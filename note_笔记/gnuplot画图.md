@@ -458,3 +458,6 @@ done
 https://www.cnblogs.com/zhangjing327/p/3524106.html
 
 基础教程
+
+
+http://www.gnuplot.info/docs_4.2/gnuplot.html#x1-5300013.1
