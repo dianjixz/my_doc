@@ -1,5 +1,5 @@
 Apt-clone：备份已安装的软件包并在新的Ubuntu系统上恢复它们
-
+相似的软件还有 aptik
 http://www.lanmon.net/Shownews.asp?ID=4452
 
 当我们在基于Ubuntu/Debian的系统上使用apt-clone时，包安装变得更加容易。如果您需要在少数系统上安装相同的软件包，apt-clone将适合您。
