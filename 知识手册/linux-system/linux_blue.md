@@ -137,3 +137,8 @@ https://www.cnblogs.com/wzh206/archive/2010/06/03/1750417.html
 # debian 连接 蓝牙键盘
 
 https://blog.csdn.net/qq_42345446/article/details/100532003
+
+
+hciattach /dev/ttyAMA0 bcm43xx 921600
+
+https://www.freesion.com/article/5015569567/

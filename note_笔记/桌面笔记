@@ -321,3 +321,4 @@ timedatectl set-timezone  Asia/Shanghai
 服务手册中文网址
 https://www.wenjiangs.com/doc/systemd-systemd-modules-load.service
 
+sudo dd if=./2023-02-21-raspios-bullseye-armhf-lite.img of=/dev/sda bs=1M status=progress oflag=dsync

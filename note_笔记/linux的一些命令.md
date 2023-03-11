@@ -77,7 +77,7 @@ root@lsgxbsd:~ # camcontrol devlist
 
 # sysctl kern.geom.debugflags=16
 # camcontrol devlist
-# dd if=FreeBSD-10.1-RELEASE-i386-memstick.img of=/dev/da0 bs=64k
+# dd if=FreeBSD-10.1-RELEASE-i386-memstick.img of=/dev/da0 bs=64k oflag=dsync
 
 # mdconfig -a -t vnode -f /tmp/bootable.iso -u 3
 # gnop create /dev/md3
