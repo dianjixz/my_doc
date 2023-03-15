@@ -9,7 +9,7 @@ docker stop $id
 
 
 
-
+docker run -d -p 6666:6666  -p 6667:6667  -v /home/nihao/work:/home/nihao/work  myubuntu:18.04 /usr/sbin/sshd -D
 
 
 
