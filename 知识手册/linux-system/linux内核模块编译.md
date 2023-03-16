@@ -1,0 +1,175 @@
+前言
+
+在开发和调试某个内核模块时，如果采用整体编译内核的方式，那效率就太低了。我们通常采用单独编译的方式进行。
+step 1
+
+拷贝内核模块到 workspace，以英特尔以太网卡驱动 drivers/net/ethernet/intel/ 为例
+```bash
+cp linux-5.13/drivers/net/ethernet/intel/ ./ -rf
+```
+改写 Makefile
+原始
+``` Makefile
+# SPDX-License-Identifier: GPL-2.0
+#
+# Makefile for the Intel network device drivers.
+#
+
+obj-$(CONFIG_E100) += e100.o
+obj-$(CONFIG_E1000) += e1000/
+obj-$(CONFIG_E1000E) += e1000e/
+obj-$(CONFIG_IGB) += igb/
+obj-$(CONFIG_IGC) += igc/
+obj-$(CONFIG_IGBVF) += igbvf/
+obj-$(CONFIG_IXGBE) += ixgbe/
+obj-$(CONFIG_IXGBEVF) += ixgbevf/
+obj-$(CONFIG_I40E) += i40e/
+obj-$(CONFIG_IXGB) += ixgb/
+obj-$(CONFIG_IAVF) += iavf/
+obj-$(CONFIG_FM10K) += fm10k/
+obj-$(CONFIG_ICE) += ice/
+```
+
+改写后
+``` Makefile
+# SPDX-License-Identifier: GPL-2.0
+#
+# Makefile for the Intel network device drivers.
+#
+
+obj-m += e100.o
+obj-m += e1000/
+#obj-$(CONFIG_E1000E) += e1000e/
+#obj-$(CONFIG_IGB) += igb/
+#obj-$(CONFIG_IGC) += igc/
+#obj-$(CONFIG_IGBVF) += igbvf/
+#obj-$(CONFIG_IXGBE) += ixgbe/
+#obj-$(CONFIG_IXGBEVF) += ixgbevf/
+#obj-$(CONFIG_I40E) += i40e/
+#obj-$(CONFIG_IXGB) += ixgb/
+#obj-$(CONFIG_IAVF) += iavf/
+#obj-$(CONFIG_FM10K) += fm10k/
+#obj-$(CONFIG_ICE) += ice/
+
+KDIR=/lib/modules/$(shell uname -r)/build
+DIRS := . $(shell find -type d)
+GARBAGE_PATTERNS := *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions *.mod *.order *.symvers
+GARBAGE := $(foreach DIR,$(DIRS),$(addprefix $(DIR)/,$(GARBAGE_PATTERNS)))
+
+all:
+	$(MAKE) -C $(KDIR) M=$(shell pwd) modules
+
+clean:
+	rm -rf $(GARBAGE)
+```
+
+
+注释掉不需要的模块，将需要的模块添加到 obj-m。
+OK
+————————————————
+版权声明：本文为CSDN博主「Li-Yongjun」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/lyndon_li/article/details/125610947
+
+
+
+交叉编译内核模块
+=============
+
+
+本实验在x86环境中交叉编译ARM64架构模块，然后qemu启动ARM64架构虚拟机，加载该模块运行。
+1. 创建ARM64虚拟机
+
+详见：Ubuntu18.04使用qemu搭建ARM64架构虚拟机（二）
+2. 设置主机与qemu虚拟机共享文件
+
+1、qemu 启动参数最后面需要添加 :
+
+-fsdev local,security_model=passthrough,id=fsdev0,path=./share -device virtio-9p-pci,id=fs0,fsdev=fsdev0,mount_tag=hostshare
+
+    1
+
+其中 path 为主机本地的共享目录（全局路径为：/home/XXX/new/linux-5.0.2/share）
+
+2、启动qemu虚拟机，在虚拟机中创建共享目录，并与主机连接
+
+mkdir /tmp/sharefiles
+
+    1
+
+其中/tmp/sharefiles为qemu虚拟机中创建的共享目录，你可以自行创建你想要的目录。接下来将刚刚创建的目录与主机共享目录链接：
+
+mount -t 9p -o trans=virtio,version=9p2000.L hostshare /tmp/sharefiles
+
+    1
+
+3、验证
+现在在主机的/home/XXX/new/linux-5.0.2/share目录中新建一个test.txt，然后查看虚拟机中的/tmp/sharefiles目录下是否有test.txt文件。如果有说明共享目录创建成功。
+3. 在x86主机上交叉编译内核模块
+
+需要重写Makefile文件：
+
+KERNELPATH ?= /home/XXX/new/linux-5.0.2
+
+mytest-objs := my_test.o
+obj-m  := mytest.o
+
+all : 
+      $(MAKE) -C $(KERNELPATH) M=$(PWD) modules;
+
+clean:
+      $(MAKE) -C $(KERNELPATH) M=$(PWD) clean;
+      rm -f *.ko;
+
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+    10
+    11
+
+与在本地编译本地加载的模块的Makefile的不同就是第1行的KERNELPATH需要指定到编译linux-5.0.2的内核目录，并且该内核目录需要提前编译完成。（KERNELPATH只是个变量名，你可以换成其他的）
+
+my_test是你的内核模块源码文件名，mytest时内核模块名。注意根据实际情况替换成你自己的。
+
+准备好Makefile和内核模块源文件（比如my_test.c）后，依次执行以下命令：
+
+export ARCH=arm64
+export CROSS_COMPILE=aarch64-linux-gnu-
+export BASEINCLUDE=/home/XXX/new/linux-5.0.2
+make
+
+    1
+    2
+    3
+    4
+
+编译完成之后就看到mytest.ko文件。用file命令检查编译的结果是否为ARM64架构的格式，只要能看到变成aarch64架构的ELF文件，就说明编译成功了。
+
+在这里插入图片描述
+4. 传递内核模块
+
+将交叉编译好的内核模块通过上面创建的共享目录，传递给qemu虚拟机。
+
+即将mytest.ko文件复制到主机/home/XXX/new/linux-5.0.2/share目录下。
+5. 启动qemu虚拟机，进入共享目录，加载模块
+
+cd /tmp/sharefiles
+insmod mytest.ko
+
+    1
+    2
+
+在这里插入图片描述
+可以看到模块加载完成，实现了模块代码中定义的打印my first kernel module init、module parameter=100信息。
+
+————————————
+参考链接：
+1、https://zhuanlan.zhihu.com/p/359573010
+————————————————
+版权声明：本文为CSDN博主「525小白菜」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_51760563/article/details/119982781
