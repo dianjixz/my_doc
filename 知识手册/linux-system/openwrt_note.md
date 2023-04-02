@@ -489,3 +489,338 @@ chmod +x /etc/init.d/hello
 ————————————————
 版权声明：本文为CSDN博主「董哥的黑板报」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/qq_41453285/article/details/102545618
+
+
+
+
+
+
+
+使用替换rootfs的方式给ARM平台移植OpenWrt系统
+
+
+
+为了让不在OpenWrt项目支持列表中的ARM机器快速使用OpenWrt，可以用替换rootfs的简易方法进行移植。
+
+首先，确保你的ARM盒子有能正常使用的Linux系统，并且最好有良好的社区支持，可以去armbian寻找有开源支持的开发板。
+以下SoC的开源支持比较良好，多数情况下可以用上主线内核：
+
+    Rockchip
+
+        RK3328/RK3368/RK3399 系列
+
+    amlogic
+
+        s905/s912/s922 系列
+
+    sunxi
+
+        h2/h3/h5 系列
+
+    marvell
+
+        armada a3700 系列
+
+移植OpenWrt的rootfs过程中，需要特别注意的是必须保证原有系统内与内核有关的东西（包括内核模块）不能有任何丢失。多数固件的Linux内核镜像、dtb和uboot的部分变量都是直接存放到rootfs里面的，在替换的时候一定要把这些文件完整保留。
+
+注意：替换rootfs后，机器实际使用的内核与openwrt中由opkg管理的内核（包含内核模块）没有任何关系，因此如果要增删内核模块的话不能使用opkg进行管理。
+
+具体流程：
+
+    准备好Linux环境，可以用虚拟机或实体机，不能用wsl
+
+    下载armvirt的通用rootfs，以OpenWrt 18.06.4为例
+
+        32位arm，适合于Cortex A7/A9/A15等：
+        https://downloads.openwrt.org/releases/18.06.4/targets/armvirt/32/openwrt-18.06.4-armvirt-32-default-rootfs.tar.gz
+
+        64位arm，适合于Cortex A53/A72等：
+        https://downloads.openwrt.org/releases/18.06.4/targets/armvirt/64/openwrt-18.06.4-armvirt-64-default-rootfs.tar.gz
+
+    判断固件的分区类型
+
+        对于amlogic的固件，一般有2个分区：第一分区为FAT32分区，用于存放内核镜像、dtb、uboot变量和脚本；第二分区为ext4分区，用作真正的rootfs。替换的时候必须保留FAT32分区的所有内容以及ext4分区内的/lib/modules和/lib/firmware
+
+        对于rockchip或sunxi的sd卡固件，一般只有1个ext4分区作为rootfs，此分区内使用/boot文件夹用于存放内核、dtb、uboot变量和脚本。在替换的时候，必须保留此分区内的/lib/modules、/lib/firmware以及/boot。此类固件的bootloader存放在ext4分区前未分配的空间中。
+
+    准备好你要修改的固件，注意修改的固件的rootfs分区必须是可写入的文件系统（如ext4），否则不能操作。
+
+        对于从SD卡启动的机器，将固件用etcher写入SD卡，然后在你的Linux环境下挂载好SD卡，继续下一步操作。
+
+        对于提供emmc刷机固件的机器，需要用loop挂载镜像，具体操作如下：
+
+# 创建挂载目录
+mkdir -p /mnt/rootfs
+
+# 查看固件的分区表
+sfdisk -J /path/to/firmware
+#
+# 以amlogic的双分区(FAT32+EXT4)固件为例：
+# {
+#    "partitiontable": {
+#       "label":"dos",
+#       "id":"0x1028b956",
+#       "device":"/path/to/firmware",
+#       "unit":"sectors",
+#       "partitions": [
+#          {"node":"/path/to/firmware1", "start":8192, "size":262144, "type":"e"},
+#          {"node":"/path/to/firmware2", "start":270336, "size":30694112, "type":"83"}
+#       ]
+#    }
+# }
+# 可以看到rootfs为第二分区，并且偏移量为270336 blocks，所以偏移的字节数为270336*512
+
+# 带偏移量挂载
+sudo mount -o loop,offset=$((270336*512)) /path/to/firmware /mnt/rootfs
+
+    处理/lib/modules
+    一般来说Linux发行版的/lib/modules目录结构都是这样的：
+
+/lib/modules/<内核版本号>/
+├── kernel
+│   ├── arch
+│   ├── crypto
+│   ├── drivers
+│   ├── fs
+│   ├── lib
+│   ├── mm
+│   ├── net
+│   ├── security
+│   ├── sound
+│   └── virt
+├── modules.alias
+├── modules.alias.bin
+├── modules.builtin
+├── modules.builtin.bin
+├── modules.dep
+├── modules.dep.bin
+├── modules.devname
+├── modules.order
+├── modules.softdep
+├── modules.symbols
+└── modules.symbols.bin
+
+而OpenWrt的/lib/modules/<内核版本号>下面直接存放kernel目录下的所有模块，所以需要我们手工移动一下，具体操作如下：
+
+# root挂载的目录一般需要root权限，可以用sudo或者切换成root用户操作
+# 进入rootfs的挂载点
+cd /path/to/rootfs
+
+# 进入内核模块目录
+cd ./lib/modules/<内核版本号>/
+
+# 删除当前目录下的所有文件，但不删除kernel目录
+sudo rm -f * 2>/dev/null
+
+# 找出kernel目录下面的所有ko并移动到当前目录下
+sudo mv $(find kernel -type f) .
+
+# 删除空的kernel文件夹
+sudo rm -r kernel
+
+    备份文件并解压OpenWrt的rootfs
+    如果该镜像的内核镜像、dtb或uboot脚本等文件在rootfs里面的话，需要先备份出来。对于不同板子和不同固件，这一步的操作都不同，下面以armbian为例：
+
+# 创建一个临时目录用于存放备份文件
+mkdir -p /tmp/backup
+
+# 进入rootfs的挂载点
+cd /path/to/rootfs
+
+# 对于把内核、dtb或uboot变量放在/boot目录的固件，例如sunxi和rockchip，需要将整个/boot目录备份出来
+cp -ra ./boot /tmp/backup/boot
+
+# 备份/lib/modules和/lib/firmware
+cp -ra ./lib/modules /tmp/backup/
+cp -ra ./lib/firmware /tmp/backup/
+
+# 备份后删除当前rootfs下的所有文件
+sudo rm -rf *
+
+# 将OpenWrt的rootfs解压出来
+sudo tar -xvf /path/to/openwrt/rootfs.tar.gz
+
+# 删除OpenWrt rootfs里自带的/boot目录
+sudo rm -rf ./boot
+
+# 恢复刚才备份的目录
+sudo mv -f /tmp/backup/boot .
+sudo mv -f /tmp/backup/modules/<内核版本号> ./lib/modules
+sudo mv -f /tmp/backup/firmware ./lib/firmware
+
+    修改rootfs
+
+    启用串口的getty：对于串口设备名是ttyS0的内核，/etc/inittab里已经包含，所以无需修改，而其它串口设备名就需要手动添加，具体如下：
+
+# 进入rootfs的挂载点
+cd /path/to/rootfs
+
+# 对于amlogic的内核，串口设备名为ttyAML0
+echo "ttyAML0::askfirst:/usr/libexec/login.sh" |sudo tee -a ./etc/inittab
+
+# 对于rockchip的bsp内核，串口设备名为ttyFIQ0
+echo "ttyFIQ0::askfirst:/usr/libexec/login.sh" |sudo tee -a ./etc/inittab
+
+# 对于marvell armada的bsp内核，串口设备名为ttyMV0
+echo "ttyMV0::askfirst:/usr/libexec/login.sh" |sudo tee -a ./etc/inittab
+
+    rootfs修改完成，卸载文件系统
+
+sync
+cd / && sudo umount /path/to/rootfs
+
+    启动修改后的固件，进入OpenWrt之后检查以下命令能否正常工作：
+
+iptables -L
+ip6tables -L
+ip route
+
+如果你的内核版本大于4.18，且iptables抛出以下错误：
+
+root@OpenWrt:~# iptables -Liptables v1.6.2: can't initialize iptables table `filter': No child process
+
+那么说明原内核启用了bpfilter，这可能需要重新编译整个内核，请参考这篇文章：https://www.jianshu.com/p/48e2f3e6caeb
+
+文章作者：https://www.jianshu.com/u/70c0d31e3717
+本文章由作者：佐须之男 整理编辑，原文地址: 使用替换rootfs的方式给ARM平台移植OpenWrt系统
+
+
+
+
+
+一、init进程介绍
+
+    init进程是所有系统进程的父进程，它被内核调用起来并负责调用所有其他的进程。 如果任何进程的父进程退出，init进程将成为它的父进程。但是init进程是如何将其他进程调用起来的呢？接下来介绍。
+
+二、OpenWrt软件启动机制
+
+
+    第一步
+
+        内核启动完成后读取/etc/inittab文件，然后执行inittab中的sysinit所指的脚本（/etc/init.d/rcS）。
+        OpenWrt的inittab文件内容如下：
+
+    从init进程逐步到/etc/init.d，整体分析Openwrt的软件启动机制_软件启动机制（init进程）
+
+
+
+    第二步
+
+        如果按照通常的简单做法：我们会将每一个待启动的程序启动命令按行放入rcS文件中，并顺序执行。这种实现方法在软件启动进程列表不变时工作得非常好，如果需要动态修改，则不容易以程序来控制（在OpenWrt下，使用ls命令查看不到/etc/init.d/rcS这个文件）。OpenWrt引入了一个便于控制的启动机制，这种机制是在/etc/rc.d目录下创建每个软件的软链接方式，由rcS脚本在该目录读取启动命令的软链接， 然后启动软链接所指向的程序，由于每一个软链接均包含一个数字，这样就可以按照数字顺序读取并进行启动了。
+        具体执行流程：执行/etc/init.d/rcS脚本时，给脚本传递两个参数（分别为S何boot），接着rcS脚本通过run_scripts函数来启动软件，将每一个以/etc/rc.d/S开头的脚本按照数字传递boot参数并调用。
+
+        S：表示软件启动模块，是和 K（软件关闭）相对应的。
+        boot：表示首次启动。
+
+    从init进程逐步到/etc/init.d，整体分析Openwrt的软件启动机制_/etc/init.d）_02
+
+        例如从/etc/rc.d目录下的脚本可以看出，就是先执行../init.d/sysfixtime，再执行../init.d/boot，以此类推......。几个比较重要的程序如下：
+
+        S10boot：调用uci_apply_defaults执行第1此开机时的UCI配置初始化，该函数执行/etc/uci-defaults/下的所有脚本，执行成功后就删除，因此该目录下的脚本只有第一次开机才会执行。
+        S10system：根据UCI配置文件/etc/config/system配置系统，具体可参考该配置文件。
+        S11sysctl：根据/etc/sysctl.conf配置系统（[-f  /etc/sysctl.conf]  && sysctl -p -e >&-）。
+        S19filewall：启动防火墙fw3，该工具来自openwrt软件包package/network/config/firewal。
+        S20network：根据UCI配置文件/etc/config/network，使用守护进程/sbin/netifd来配置网络。
+
+    从init进程逐步到/etc/init.d，整体分析Openwrt的软件启动机制_/etc/inittab_03
+
+
+三、“/etc/init.d/*”脚本分析
+
+    上面那些最终调用的软件启动shell脚本，包含变量定义和函数定义（start、stop和restart等函数）。
+    备注：因为/etc/rc.d/下面文件是/etc/int.d/下脚本的软链接，根据软链接的特性，我们查看软链接文件也就可以访问到/etc/int.d/下面的脚本文件。
+    另外使用 opkg 命令安装软件时一般均有执行权限，如果是自己手动新增脚本，不要忘记确认脚本是否有执行权限（通过运行 chmod +x /etc/init.d/hello命令来增加执行权限）。
+
+
+    脚本分析
+
+    从init进程逐步到/etc/init.d，整体分析Openwrt的软件启动机制_/etc/init.d）_04
+
+        /etc/rc.common：这个脚本没有解析自己的命令行参数，这是通过“/etc/rc.common”脚本回调来完成的。第一行是特殊的注释行，表示使用“/etc/rc.common”来提供一些基本函数，包含主函数及默认功能以及检查脚本执行等。
+        START、STOP变量：脚本的执行顺序通过START和 STOP变量来定义。
+
+        如果这两个变量被更改了，再次运行/etc/init.d/hello enable才会再次生效，并且这将删除以前创建的启动链接，然后再根据新的变量定义创建链接（创建的启动链接保存在“/etc/rc.d”目录下）。
+        如果多个初始化脚本有相同的启动优先值，则调用顺序取决于启动脚本名称的字母顺序（在上上张图中S10boot与S10system文件中的START变量值相同，但是他们按照脚本名称的字母排序启动）。
+
+        start()、stop()函数：脚本中最重要的函数是 start 和 stop，这两个函数决定如何启动和停止服务。
+
+
+
+    rc.common函数含义
+
+        备注：其中的start()、stop()函数实现为空，供应用软件重新实现，相当于C++语言中的虚函数。
+        enable、disable 和 enabled函数提供自启动状态的设置和查询。
+        help函数提供命令帮助信息，如果你不带参数运行软件命令，将会自动调用help函数输出帮助信息。
+        boot函数与start函数的关系：命令在启动时取代 start 函数而执行 boot 函数，如果 boot 函数没 有被重新定义，将执行 rc.common 中预定义的 boot 函数，boot 函数再次调用 start 函数。
+        详情见下表：
+
+    函 数
+    	
+
+    含 义
+
+    start
+    	
+
+    启动服务。相当于 C++语言中的虚函数，通常情况下每一个服务均需重写该函数
+
+    stop
+    	
+
+    关闭服务。相当于 C++语言中的虚函数，通常情况下每一个服务均需重写该函数
+
+    restart
+    	
+
+    重启服务。调用 stop 函数退出进程，然后再调用 start 函数启动进程
+
+    reload
+    	
+
+    重新读取配置，如果读取配置失败则调用 restart 函数重启进程
+
+    enable
+    	
+
+    打开服务自启动，即将启动脚本软链接文件放在/etc/rc.d 目录下
+
+    disable
+    	
+
+    关闭服务自启动，删除在/etc/rc.d 的软链接文件
+
+    enabled
+    	
+
+    提供服务自启动的状态查询
+
+    boot
+    	
+
+    调用 start 函数
+
+    shutdown
+    	
+
+    调用 stop 函数
+
+    help
+    	
+
+    输出帮助信息
+
+
+
+    软链接特性
+
+        ①当我们使用enable设置一个软件为开机自启动时，将自动在/etc/rc.d/目录下创建一个软链接指向/etc/init.d/目录下的软件。
+        ②当我们使用disable关闭一个软件开机自启动时，软件在/etc/rc.d/目录下的软链接将删除。
+
+
+四、自定义软件的启动脚本设计案例
+
+    可以参考相关文章：
+-----------------------------------
+©著作权归作者所有：来自51CTO博客作者董哥的黑板报的原创作品，请联系作者获取转载授权，否则将追究法律责任
+从init进程逐步到/etc/init.d，整体分析Openwrt的软件启动机制
+https://blog.51cto.com/u_15346415/5224097
