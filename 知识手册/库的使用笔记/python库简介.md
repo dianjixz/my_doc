@@ -1,314 +1,286 @@
  
 
-## **Python常用库**
+[Python常用库]
 
-Chardet字符编码探测器，可以自动检测文本、网页、xml的编码。
+Chardet : 字符编码探测器，可以自动检测文本、网页、xml的编码。
 
-colorama主要用来给文本添加各种颜色，并且非常简单易用。
+colorama : 主要用来给文本添加各种颜色，并且非常简单易用。
 
-Prettytable主要用于在终端或浏览器端构建格式化的输出。
+Prettytable : 主要用于在终端或浏览器端构建格式化的输出。
 
-difflib，[Python]标准库，计算文本差异
+difflib : [Python]标准库，计算文本差异
 
-Levenshtein，快速计算字符串相似度。
+Levenshtein : 快速计算字符串相似度。
 
-fuzzywuzzy,字符串模糊匹配。
+fuzzywuzzy : 字符串模糊匹配。
 
-esmre,正则表达式的加速器。
+esmre : 正则表达式的加速器。
 
-shortuuid,一组简洁URL/UUID函数库。
+shortuuid : 一组简洁URL/UUID函数库。
 
-ftfy，Unicode文本工具7
+ftfy : Unicode文本工具7
 
-unidecode，ascii和Unicode文本转换函数。
+unidecode : ascii和Unicode文本转换函数。
 
-xpinyin，将汉字转换为拼音的函数库
+xpinyin : 将汉字转换为拼音的函数库
 
-pangu.py，调整对中日韩文字当中的字母、数字间距。
+pangu.py : 调整对中日韩文字当中的字母、数字间距。
 
-pyfiglet，Python写的figlet程序，使用字符组成ASCII艺术图片
+pyfiglet : Python写的figlet程序，使用字符组成ASCII艺术图片
 
-uniout，提取字符串中可读写的字符
+uniout : 提取字符串中可读写的字符
 
-awesome slugify，一个Python slugify库，用于处理Unicode。
+awesome slugify : 一个Python slugify库，用于处理Unicode。
 
-python-slugify，转换Unicode为ASCII内码的slugify函数库。
+python-slugify : 转换Unicode为ASCII内码的slugify函数库。
 
-unicode-slugify，生成unicode内码，Django的依赖包。
+unicode-slugify : 生成unicode内码，Django的依赖包。
 
-ply，Python版的lex和yacc的解析工具
+ply : Python版的lex和yacc的解析工具
 
-phonenumbers，解析电话号码，格式，存储和验证的国际电话号码。
+phonenumbers : 解析电话号码，格式，存储和验证的国际电话号码。
 
-python-user-agents，浏览器的用户代理（user-agents）的解析器。
+python-user-agents : 浏览器的用户代理（user-agents）的解析器。
 
-sqlparse，SQL解析器。
+sqlparse : SQL解析器。
 
-pygments，一个通用的语法高亮工具。
+pygments : 一个通用的语法高亮工具。
 
-python-nameparser，解析人名，分解为单独的成分。
+python-nameparser : 解析人名，分解为单独的成分。
 
-pyparsing，通用解析器生成框架。
+pyparsing : 通用解析器生成框架。
 
-tablib，表格数据格式，包括，XLS、CSV，JSON，YAML。
+tablib : 表格数据格式，包括，XLS、CSV，JSON，YAML。
 
-python-docx，docx文档读取，查询和修改，微软Word 2007 / 2008的docx文件。
+python-docx : docx文档读取，查询和修改，微软Word 2007 / 2008的docx文件。
 
-xlwt/xlrd，读写Excel格式的数据文件。
+xlwt/xlrd : 读写Excel格式的数据文件。
 
-xlsxwriter，创建Excel格式的xlsx文件。
+xlsxwriter : 创建Excel格式的xlsx文件。
 
-xlwings，利用Python调用Excel
+xlwings : 利用Python调用Excel
 
-csvkit，CSV文件工具包。
+csvkit : CSV文件工具包。
 
-marmir，把Python[数据结构]，转化为电子表格。
+marmir : 把Python[数据结构]，转化为电子表格。
 
-pdfminer，从PDF文件中提取信息。
+pdfminer : 从PDF文件中提取信息。
 
-pypdf2， 合并和转换PDF页面的函数库。
+pypdf2 : 合并和转换PDF页面的函数库。
 
-Python-Markdown，轻量级标记语言Markdown的Python实现。
+Python-Markdown : 轻量级标记语言Markdown的Python实现。
 
-Mistune，快速、全功能的纯Python编写的Markdown解释器。
+Mistune : 快速、全功能的纯Python编写的Markdown解释器。
 
-dateutil，标准的Python官方datetime模块的扩展包，字符串日期工具，其中parser是根据字符串解析成datetime，而rrule是则是根据定义的规则来生成datetime。
+dateutil : 标准的Python官方datetime模块的扩展包，字符串日期工具，其中parser是根据字符串解析成datetime，而rrule是则是根据定义的规则来生成datetime。
 
-arrow,更好的日期和时间处理Python库
+arrow : 更好的日期和时间处理Python库
 
-chronyk，一个Python 3版函数库，用于解析人写的时间和日期。
+chronyk : 一个Python 3版函数库，用于解析人写的时间和日期。
 
-delorean，清理期时间的函数库。
+delorean : 清理期时间的函数库。
 
-when.py，为见的日期和时间，提供人性化的功能。
+when.py : 为见的日期和时间，提供人性化的功能。
 
-moment，类似Moment.js的日期/时间Python库
+moment : 类似Moment.js的日期/时间Python库
 
-pytz，世界时区，使用tz database时区信息[数据库]
+pytz : 世界时区，使用tz database时区信息[数据库]
 
-BeautifulSoup，基于Python的HTML/XML解析器，简单易用, 功能很强大,即使是有bug，有问题的html代码，也可以解析
+BeautifulSoup : 基于Python的HTML/XML解析器，简单易用, 功能很强大,即使是有bug，有问题的html代码，也可以解析
 
-lxml，快速，易用、灵活的HTML和XML处理库，功能超强，在遇到有缺陷、不规范的xml时，Python自带的xml处理器可能无法解析。报错时，程序会尝试再用lxml的修复模式解析。
+lxml : 快速，易用、灵活的HTML和XML处理库，功能超强，在遇到有缺陷、不规范的xml时，Python自带的xml处理器可能无法解析。报错时，程序会尝试再用lxml的修复模式解析。
 
-htmlparser，官方版解析HTML DOM树，偶尔搞搞命令行自动表单提交用得上。
+htmlparser : 官方版解析HTML DOM树，偶尔搞搞命令行自动表单提交用得上。
 
-pyyaml，Python版本的YAML解释器。
+pyyaml : Python版本的YAML解释器。
 
-html5lib，-标准库，解析和序列化HTML文档和片段。
+html5lib : -标准库，解析和序列化HTML文档和片段。
 
-pyquery，类似[jQuery]的的HTML解释器函数库。
+pyquery : 类似[jQuery]的的HTML解释器函数库。
 
-cssutils，Python CSS库。
+cssutils : Python CSS库。
 
-MarkupSafe，XML或HTML / XHTML安全字符串标记工具。
+MarkupSafe : XML或HTML / XHTML安全字符串标记工具。
 
-cssutils - ACSS library for Python., MarkupSafe - Implements a XML/HTML/XHTML
+cssutils : ACSS library for Python., MarkupSafe - Implements a XML/HTML/XHTML
 
-bleach，漂白，基于HTML的白名单函数库。
+bleach : 漂白，基于HTML的白名单函数库。
 
-xmltodict，类似JSON的XML工具包。
+xmltodict : 类似JSON的XML工具包。
 
-xhtml2pdf，HTML / CSS格式转换器，生成pdf文档。
+xhtml2pdf : HTML / CSS格式转换器，生成pdf文档。
 
-untangle，把XML文档，转换为Python对象，方便访问。
+untangle : 把XML文档，转换为Python对象，方便访问。
 
-## **文件处理**
+[文件处理]
 
-Mimetypes，Python标准库，映射文件名到MIME类型。
+Mimetypes : Python标准库，映射文件名到MIME类型。
 
-imghdr，Python标准库，确定图像类型。python-magic，libmagic文件类型识别库，Python接口格式。path.py，os.path模块的二次封装。
+imghdr : Python标准库，确定图像类型。python-magic，libmagic文件类型识别库，Python接口格式。path.py，os.path模块的二次封装。
 
-watchdog，一组API和shell实用程序，用于监视文件系统事件。
+watchdog : 一组API和shell实用程序，用于监视文件系统事件。
 
-Unipath，面向对象的文件/目录的操作工具包。pathlib，-（Python 3.4版已经作为Python标准库），一个跨平台，面向path的函数库。
+Unipath : 面向对象的文件/目录的操作工具包。pathlib，-（Python 3.4版已经作为Python标准库），一个跨平台，面向path的函数库。
 
-pickle/cPickle,python的pickle模块实现了基本的数据序列和反序列化。通过pickle模块的序列化操作我们能够将程序中运行的对象信息保存到文件中去，永久存储；通过pickle模块的反序列化操作，我们能够从文件中创建上一次程序保存的对象。
+pickle/cPickle : python的pickle模块实现了基本的数据序列和反序列化。通过pickle模块的序列化操作我们能够将程序中运行的对象信息保存到文件中去，永久存储；通过pickle模块的反序列化操作，我们能够从文件中创建上一次程序保存的对象。
 
-cPickle是[C语言]实现的版本，速度更快。
+cPickle : 是[C语言]实现的版本，速度更快。
 
-ConfigParser，Python标准库，INI文件解析器。
+ConfigParser : Python标准库，INI文件解析器。
 
-configobj，INI文件解析器。config，分层次配置，logging作者编写。
+configobj : INI文件解析器。config，分层次配置，logging作者编写。
 
-profig，多格式配置转换工具。
+profig : 多格式配置转换工具。
 
-logging，Python标准库，日志文件生成管理函数库。
+logging : Python标准库，日志文件生成管理函数库。
 
-logbook，logging的替换品。
+logbook : logging的替换品。
 
-Sentry，实时log服务器。Raven，哨兵Sentry的Python客户端。
+Sentry : 实时log服务器。Raven，哨兵Sentry的Python客户端。
 
-Sphinx，斯芬克斯（狮身人面像），Python文档生成器。
+Sphinx : 斯芬克斯（狮身人面像），Python文档生成器。
 
-reStructuredText，标记语法和解析工具，Docutils组件。mkdocs，Markdown格式文档生成器。
+reStructuredText : 标记语法和解析工具，Docutils组件。mkdocs，Markdown格式文档生成器。
 
-pycco，简单快速、编程风格的文档生成器。
+pycco : 简单快速、编程风格的文档生成器。
 
-pdoc，自动生成的Python库API文档epydoc，从源码注释中生成各种格式文档的工具
+pdoc : 自动生成的Python库API文档epydoc，从源码注释中生成各种格式文档的工具
 
-## **图像处理**
+[图像处理]
 
-PIL（Python Image  Library），基于Python的图像处理库，功能强大，对图形文件的格式支持广泛，内置许多图像处理函数，如图像增强、滤波[算法]等Pillow，图像处理库，PIL图像库的分支和升级替代产品。Matplotlib，著名的绘图库，提供了整套和matlab相似的命令API，用以绘制一些高质量的数学二维图形，十分适合交互式地进行制图。brewer2mpl，有一个专业的python配色工具包，提供了从美术角度来讲的精美配色。
+PIL : （Python Image  Library），基于Python的图像处理库，功能强大，对图形文件的格式支持广泛，内置许多图像处理函数，如图像增强、滤波[算法]等Pillow，图像处理库，PIL图像库的分支和升级替代产品。Matplotlib，著名的绘图库，提供了整套和matlab相似的命令API，用以绘制一些高质量的数学二维图形，十分适合交互式地进行制图。brewer2mpl，有一个专业的python配色工具包，提供了从美术角度来讲的精美配色。
 
-PyGame基于Python的多媒体开发和游戏软件开发模块，包含大量游戏和图像处理功能Box2d，开源的2d物理引擎，愤怒的小鸟就是使用了这款物理引擎进行开发的，Box2d物理引擎内部模拟了一个世界，你可以设置这个世界里的重力，然后往这个世界里添加各种物体，以及他们的一些物理特性，比如质量，摩擦，阻尼等等。
+PyGame : 基于Python的多媒体开发和游戏软件开发模块，包含大量游戏和图像处理功能Box2d，开源的2d物理引擎，愤怒的小鸟就是使用了这款物理引擎进行开发的，Box2d物理引擎内部模拟了一个世界，你可以设置这个世界里的重力，然后往这个世界里添加各种物体，以及他们的一些物理特性，比如质量，摩擦，阻尼等等。
 
-Pymunk，类似box2d的开源物理图形模拟库OpenCV,  目前最好的开源图像/视觉库，包括图像处理和计算机视觉方面、[机器学习]的很多通用算法。SimpleCV，计算机视觉开源框架，类似opencv。VTK，视觉化工具函式库（VTK， Visualization  Toolkit）是一个开放源码，跨平台、支援平行处理（VTK曾用于处理大小近乎1个Petabyte的资料，其平台为美国Los  Alamos国家实验室所有的具1024个处理器之大型系统）的图形应用函式库。
+Pymunk : 类似box2d的开源物理图形模拟库OpenCV,  目前最好的开源图像/视觉库，包括图像处理和计算机视觉方面、[机器学习]的很多通用算法。SimpleCV，计算机视觉开源框架，类似opencv。VTK，视觉化工具函式库（VTK， Visualization  Toolkit）是一个开放源码，跨平台、支援平行处理（VTK曾用于处理大小近乎1个Petabyte的资料，其平台为美国Los  Alamos国家实验室所有的具1024个处理器之大型系统）的图形应用函式库。2005年时曾被美国陆军研究实验室用于即时模拟俄罗斯制反导弹战车ZSU23-4受到平面波攻击的情形，其计算节点高达2.5兆个之多。cgkit,Python Computer Graphics Kit,其module 主要分两个部分，1、与3d相关的一些python module 例如the vector, matrix and quaternion types, the RenderMan  bindings, noise functions 这些模块可以在maya houdini nuke blender  等有Python扩展的程序中直接用;2、提供完整的场景操作的module， 他类似其他三维软件，在内存中保留完整的描述场景的信息。不能直接用于maya 等CGAL，
 
-2005年时曾被美国陆军研究实验室用于即时模拟俄罗斯制反导弹战车ZSU23-4受到平面波攻击的情形，其计算节点高达2.5兆个之多。cgkit,Python Computer Graphics Kit,其module 主要分两个部分，
+Computational : Geometry Algorithms Library，计算几何算法库，提供计算几何相关的数据结构和算法，诸如三角剖分（2D约束三角剖分及二维和三维Delaunay三角剖分），
 
-1、与3d相关的一些python module 例如the vector, matrix and quaternion types, the RenderMan  bindings, noise functions 这些模块可以在maya houdini nuke blender  等有Python扩展的程序中直接用;2、提供完整的场景操作的module， 他类似其他三维软件，在内存中保留完整的描述场景的信息。
+Voronoi : 图（二维和三维的点，2D加权Voronoi图，分割Voronoi图等），多边形（布尔操作，偏置），多面体（布尔运算），曲线整理及其应用，网格生成（二维Delaunay网格生成和三维表面和体积网格生成等），几何处理（表面网格简化，细分和参数化等），凸壳算法（2D，3D和dD），搜索结构（近邻搜索，kd树等），插值，形状分析，拟合，距离等。
 
-不能直接用于maya 等CGAL，
+Aggdraw : 开源图像库，几乎涵盖了2d image操作的所有功能，使用起来非常灵活Pycairo,开源矢量绘图库Cairo开罗的python接口，
 
-Computational Geometry Algorithms Library，计算几何算法库，提供计算几何相关的数据结构和算法，诸如三角剖分（2D约束三角剖分及二维和三维Delaunay三角剖分），
+cairo : 提供在多个背景下做2-D的绘图，高级的更可以使用硬件加速功能。wand，Python绑定魔杖工具（MagickWand），C语言API接口。
 
-Voronoi图（二维和三维的点，2D加权Voronoi图，分割Voronoi图等），
+thumbor : -智能成像工具，可调整大小和翻转图像。
 
-多边形（布尔操作，偏置），多面体（布尔运算），曲线整理及其应用，
+imgSeek : 查询相似的图像。
 
-网格生成（二维Delaunay网格生成和三维表面和体积网格生成等），几何处理（表面网格简化，细分和参数化等），
+python-qrcode : 纯Python的二维码（QR码）生成器。
 
-凸壳算法（2D，3D和dD），搜索结构（近邻搜索，kd树等），插值，形状分析，拟合，距离等。
+pyBarcode : 创建条码，无需PIL模块。
 
-Aggdraw，开源图像库，几乎涵盖了2d image操作的所有功能，使用起来非常灵活Pycairo,开源矢量绘图库Cairo开罗的python接口，
+pygram : Instagram像图像过滤器。
 
-cairo提供在多个背景下做2-D的绘图，高级的更可以使用硬件加速功能。wand，Python绑定魔杖工具（MagickWand），C语言API接口。
+Quads : 基于四叉树的计算机艺术。
 
-thumbor， -智能成像工具，可调整大小和翻转图像。
+nude.py : 裸体检测函数。
 
-imgSeek，查询相似的图像。
+scikit-image : scikit工具箱的图像处理库。
 
-python-qrcode，纯Python的二维码（QR码）生成器。
+hmap : 图像直方图工具。
 
-pyBarcode，创建条码，无需PIL模块。
+bokeh : 交互的Web绘图。
 
-pygram，Instagram像图像过滤器。
+plotly : Web协同的Python和Matplotlib绘制。
 
-Quads，基于四叉树的计算机艺术。
+vincent : 文森特，Python Vega的函数库。
 
-nude.py，裸体检测函数。
+d3py : Python绘图库，基于D3.JS, ggplot -API兼容R语言的ggplot2.Kartograph.py，在Python绘制漂亮的SVG地图。pygal， SVG图表的创造者。
 
-scikit-image，scikit工具箱的图像处理库。
+pygraphviz : Graphviz的Python接口。
 
-hmap，图像直方图工具。
+Fonttlools : ttf字体工具函数包，用于fontforge、ttx等字体软件。
 
-bokeh，交互的Web绘图。
+[游戏和多媒体]
 
-plotly，Web协同的Python和Matplotlib绘制。
+audiolazy : 数字信号处理（DSP）的Python工具包。
 
-vincent，文森特，Python Vega的函数库。
+audioread : 跨平台（GStreamer + Core Audio + MAD + FFmpeg）音频解码库。
 
-d3py，Python绘图库，基于D3.JS, ggplot -API兼容R语言的ggplot2.Kartograph.py，在Python绘制漂亮的SVG地图。pygal， SVG图表的创造者。
+beets : 音乐库管理。
 
-pygraphviz，Graphviz的Python接口。
+dejavu : 音频指纹识别算法。
 
-Fonttlools，ttf字体工具函数包，用于fontforge、ttx等字体软件。
+Dejavu : 听一次音频后就会记录该音频的指纹信息，然后可通过麦克风对输入的音频进行识别是否同一首歌。django-elastic-transcoder,Django +亚马逊elastic转码。eyeD3,音频文件工具，特别是MP3文件包含的ID3元数据。
 
-## **游戏和多媒体**
+id3reader : 用于读取MP3的元数据。
 
-audiolazy，数字信号处理（DSP）的Python工具包。
+mutagen : 处理音频元数据。
 
-audioread，跨平台（GStreamer + Core Audio + MAD + FFmpeg）音频解码库。
+pydub : 操纵音频和简单的高层次的接口。
 
-beets，音乐库管理。
+pyechonest : Echo Nest API客户端。talkbox，语音和信号处理的Python库。
 
-dejavu，音频指纹识别算法。
+TimeSide : 开放的网络音频处理框架。
 
-Dejavu  听一次音频后就会记录该音频的指纹信息，然后可通过麦克风对输入的音频进行识别是否同一首歌。django-elastic-transcoder,Django +亚马逊elastic转码。eyeD3,音频文件工具，特别是MP3文件包含的ID3元数据。
+tinytag : 读取音乐文件元数据，包括的MP3，OGG，FLAC和wave文件。
 
-id3reader，用于读取MP3的元数据。
+m3u8 : 用于解析m3u8文件。
 
-mutagen，处理音频元数据。
+moviepy : 多格式视频编辑脚本模块，包括GIF动画。[http://shorten.tv](https://link.zhihu.com/?target=http%3A//shorten.tv)，视频摘要。
 
-pydub，-操纵音频和简单的高层次的接口。
+scikit : 视频，SciPy视频处理例程。
 
-pyechonest，Echo Nest API客户端。talkbox，语音和信号处理的Python库。
+GeoDjango : 一个世界级的地理Web框架。
 
-TimeSide，开放的网络音频处理框架。
+geopy : Geo地理编码的工具箱。
 
-tinytag，读取音乐文件元数据，包括的MP3，OGG，FLAC和wave文件。
+pygeoip : 纯Python写的GeoIP API。
 
-m3u8，用于解析m3u8文件。
+GeoIP : Python API接口，使用高精度GeoIP Legacy Database数据库。
 
-moviepy，多格式视频编辑脚本模块，包括GIF动画。
+geojson : GeoJSON函数库django-countries，一个Django程序，提供国家选择，国旗图标的静态文件，和一个国家的地域模型。
 
-[http://shorten.tv](https://link.zhihu.com/?target=http%3A//shorten.tv)，视频摘要。
+Pygame : Python游戏设计模块。
 
-scikit视频，SciPy视频处理例程。
+Cocos2d : 2D游戏框架，演示，和其他的图形/交互应用，基于pyglet。Cocos2d- cocos2d is a framework for building 2D games, demos, and other  graphical/interactive applications. It is based on  pyglet.,PySDL2，SDL2的封装库。
 
-GeoDjango,一个世界级的地理Web框架。
+Panda3D : 3D游戏引擎，迪士尼开发。用C++写的，完全兼容Python。PyOgre，OGRE 3D渲染引擎，可用于游戏，模拟，任何3D。
 
-geopy,Geo地理编码的工具箱。
+PyOpenGL : 绑定OpenGL和它相关的API。
 
-pygeoip，纯Python写的GeoIP API。
+PySFML : Python绑定SFMLRenPy，视觉小说引擎。
 
-GeoIP，Python API接口，使用高精度GeoIP Legacy Database数据库。
+[大数据与科学计算]
 
-geojson，GeoJSON函数库django-countries，一个Django程序，提供国家选择，国旗图标的静态文件，和一个国家的地域模型。
+pycuda/opencl : GPU高性能并发计算Pandas，python实现的类似R语言的数据统计、分析平台。基于NumPy和Matplotlib开发的，主要用于数据分析和数据可视化，它的数据结构DataFrame和R语言里的data.frame很像，特别是对于时间序列数据有自己的一套分析机制，非常不错。
 
-Pygame，Python游戏设计模块。
+Open Mining : 商业智能（BI），Pandas的Web界面。blaze，NumPy和Pandas大数据界面。
 
-Cocos2d，2D游戏框架，演示，和其他的图形/交互应用，基于pyglet。Cocos2d- cocos2d is a framework for building 2D games, demos, and other  graphical/interactive applications. It is based on  pyglet.,PySDL2，SDL2的封装库。
+SciPy : 开源的Python算法库和数学工具包，SciPy包含的模块有最优化、线性代数、积分、插值、特殊函数、快速傅里叶变换、信号处理和图像处理、常微分方程求解和其他科学与工程中常用的计算。其功能与软件MATLAB、Scilab和GNU Octave类似。Numpy和Scipy常常结合着使用，Python大多数机器学习库都依赖于这两个模块。
 
-Panda3D- 3D游戏引擎，迪士尼开发。用C++写的，完全兼容Python。PyOgre，OGRE 3D渲染引擎，可用于游戏，模拟，任何3D。
+ScientificPython : 一组经过挑选的Python程序模块，用于科学计算，包括几何学（矢量、张量、变换、矢量和张量场），四元数，自动求导数，（线性）插值，多项式，基础统计学，非线性最小二乘拟合，单位计算，Fortran兼容的文本格式，通过VRML的3D显示，以及两个Tk小工具，分别用于绘制线图和3D网格模型。此外还具有到netCDF，MPI和BSPlib库的接口。
 
-PyOpenGL，绑定OpenGL和它相关的API。
+NumPy : 科学计算库，提供了矩阵，线性代数，傅立叶变换等等的解决方案, 最常用的是它的N维数组对象. NumPy提供了两种基本的对象：ndarray（N-dimensional array object）和 ufunc（universal function object）。ndarray是存储单一数据类型的多维数组，而ufunc则是能够对数组进行处理的函数。
 
-PySFML，Python绑定SFMLRenPy，视觉小说引擎。
+Cvxopt : 最优化计算包，可进行线性规划、二次规划、半正定规划等的计算。
 
-## **大数据与科学计算**
+Numba : 科学计算速度优化编译器。pymvpa2，是为大数据集提供统计学习分析的Python工具包，它提供了一个灵活可扩展的框架。它提供的功能有分类、回归、特征选择、数据导入导出、可视化等NetworkX，复杂网络的优化软件包。zipline，交易算法的函数库。
 
-pycuda/opencl，GPU高性能并发计算Pandas，python实现的类似R语言的数据统计、分析平台。基于NumPy和Matplotlib开发的，主要用于数据分析和数据可视化，它的数据结构DataFrame和R语言里的data.frame很像，特别是对于时间序列数据有自己的一套分析机制，非常不错。
+PyDy :  Python动态建模函数库。
 
-Open Mining，商业智能（BI），Pandas的Web界面。blaze，NumPy和Pandas大数据界面。
+SymPy : 符号数学的Python库。statsmodels,Python的统计建模和计量经济学。
 
-SciPy，开源的Python算法库和数学工具包，SciPy包含的模块有最优化、线性代数、积分、插值、特殊函数、快速傅里叶变换、信号处理和图像处理、常微分方程求解和其他科学与工程中常用的计算。
+astropy : 天文学界的Python库。
 
-其功能与软件MATLAB、Scilab和GNU Octave类似。
+orange : 橙色，数据挖掘，数据可视化，通过可视化编程或Python脚本学习机分析。
 
-Numpy和Scipy常常结合着使用，Python大多数机器学习库都依赖于这两个模块。
+RDKit : 化学信息学和机器学习的软件。
 
-ScientificPython，一组经过挑选的Python程序模块，用于科学计算，包括几何学（矢量、张量、变换、矢量和张量场），四元数，自动求导数，（线性）插值，多项式，基础统计学，非线性最小二乘拟合，单位计算，Fortran兼容的文本格式，通过VRML的3D显示，以及两个Tk小工具，分别用于绘制线图和3D网格模型。
+Open Babel : 巴贝尔，开放的化学工具箱。
 
-此外还具有到netCDF，MPI和BSPlib库的接口。
+cclib ： 化学软件包的计算函数库。
 
-NumPy科学计算库，提供了矩阵，线性代数，傅立叶变换等等的解决方案, 最常用的是它的N维数组对象. NumPy提供了两种基本的对象：
+Biopython ： 免费的生物计算工具包。
 
-ndarray（N-dimensional array object）和 ufunc（universal function object）。
+bccb ： 生物分析相关的代码集。bcbio-nextgen，提供完全自动化、高通量、测序分析的工具包。
 
-ndarray是存储单一数据类型的多维数组，而ufunc则是能够对数组进行处理的函数。
+visvis ： 可视化计算模块库，可进行一维到四维数据的可视化。
 
-Cvxopt，最优化计算包，可进行线性规划、二次规划、半正定规划等的计算。
+MapReduce ： 是Google提出的一个软件[架构]，用于大规模数据集（大于1TB）的并行运算。概念“Map（映射）”和“Reduce（归纳）”，及他们的主要思想，都是从函数式编程语言借来的MapReduce函数库。Framworks and libraries for MapReduce.,PySpark，[Spark]的Python  API。dpark，Spark的Python克隆，Python中的MapReduce框架。luigi，为批量工作，建立复杂的管道。mrjob，运行在[Hadoop]，或亚马逊网络服务的，MapReduce工作。
 
-Numba，科学计算速度优化编译器。pymvpa2，是为大数据集提供统计学习分析的Python工具包，它提供了一个灵活可扩展的框架。
-
-它提供的功能有分类、回归、特征选择、数据导入导出、可视化等NetworkX，复杂网络的优化软件包。zipline，交易算法的函数库。
-
-PyDy， Python动态建模函数库。
-
-SymPy,符号数学的Python库。statsmodels,Python的统计建模和计量经济学。
-
-astropy,天文学界的Python库。
-
-orange，橙色，数据挖掘，数据可视化，通过可视化编程或Python脚本学习机分析。
-
-RDKit,化学信息学和机器学习的软件。
-
-Open Babel，巴贝尔，开放的化学工具箱。
-
-cclib，化学软件包的计算函数库。
-
-Biopython，免费的生物计算工具包。
-
-bccb，生物分析相关的代码集。bcbio-nextgen，提供完全自动化、高通量、测序分析的工具包。
-
-visvis, 可视化计算模块库，可进行一维到四维数据的可视化。
-
-MapReduce是Google提出的一个软件[架构]，用于大规模数据集（大于1TB）的并行运算。
-
-概念“Map（映射）”和“Reduce（归纳）”，及他们的主要思想，都是从函数式编程语言借来的MapReduce函数库。Framworks and libraries for MapReduce.,PySpark，[Spark]的Python  API。dpark，Spark的Python克隆，Python中的MapReduce框架。luigi，为批量工作，建立复杂的管道。mrjob，运行在[Hadoop]，或亚马逊网络服务的，MapReduce工作。
-
-## **人工智能与机器学习**
+[人工智能与机器学习**
 
 NLTK（natural language toolkit)，是python的自然语言处理工具包。2001年推出，包括了大量的词料库，以及自然语言处理方面的算法实现：
 

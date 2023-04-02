@@ -322,3 +322,18 @@ timedatectl set-timezone  Asia/Shanghai
 https://www.wenjiangs.com/doc/systemd-systemd-modules-load.service
 
 sudo dd if=./2023-02-21-raspios-bullseye-armhf-lite.img of=/dev/sda bs=1M status=progress oflag=dsync
+
+
+https://www.shuzhiduo.com/A/n2d9W0GQJD/
+
+树莓派配置文档 config.txt 说明
+https://shumeipai.nxez.com/2015/11/23/raspberry-pi-configuration-file-config-txt-nstructions.html
+
+
+树梅派设置屏幕参数:
+vi /boot/config.txt
+hdmi_group=2
+hdmi_mode=1
+hdmi_mode=87
+hdmi_drive=1
+hdmi_cvt 1024 600 60 6 0 0 0
