@@ -267,3 +267,114 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
  参数四 ：一般置为0。
 
 返回读到的字节
+
+
+
+demo  
+demo_sereve  
+===========
+``` c++
+#include <arpa/inet.h>
+#include <cstring>
+#include <unistd.h>
+int main(){
+//创建socket，网络文件描述符
+        int sockfd = socket(AF_INET,SOCK_STREAM,0);
+//绑定ip和port【需要用结构体完成】
+        struct sockaddr_in ser;//创建结构体
+        bzero(&ser,sizeof(ser));
+        ser.sin_family = AF_INET;
+        ser.sin_addr.s_addr = inet_addr("127.0.0.1");
+        ser.sin_port = htons(10000);
+        //把储存在结构体里的ip和port和套接字进行绑定
+        bind(sockfd,(sockaddr*)&ser,sizeof(ser));
+//监听端口[后者是同时进去的最大数量，如果大于就要进行等待]
+        listen(sockfd,100);
+//接受       
+         struct sockaddr_in cli;//创建结构体
+         socklen_t len = sizeof(cli);
+         bzero(&cli,sizeof(cli));
+         int clifd = accept(sockfd,(sockaddr*)&cli,&len);
+        /*
+         cout<<"new Client fd :" <<clifd<<",IP:"<<inet_ntoa(cli.sin_addr)<<",PORT:"<<ntohs(cli.sin_port)<<endl;
+        */
+//读写数据
+        while(1){
+ char buf[1024];
+                bzero(&buf,sizeof(buf));
+                ssize_t size = read(clifd,buf,sizeof(buf));
+                if(size > 0 ){
+                cout<<"客户机"<<clifd<<"号说话了:"<<buf<<endl;
+                        bzero(&buf,sizeof(buf));
+                        cin>>buf;
+                        write(clifd,buf,sizeof(buf));
+                }
+                else if(size == 0 ){
+cout<<"客户机没有连接"<<endl;
+                close(clifd);
+                }
+                else if(size == -1 ){
+                cout<<"socket出错"<<endl;
+                close(clifd);
+                }
+        }
+        close(sockfd);
+        return 0;
+}
+
+
+```
+
+demo_client  
+===========
+
+``` c
+#include <iostream>
+using namespace std;
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <cstring>
+#include <unistd.h>
+int main(){
+
+        int sockfd = socket(AF_INET,SOCK_STREAM,0);
+
+        struct sockaddr_in cli;//创建结构体
+        bzero(&cli,sizeof(cli));
+        cli.sin_family = AF_INET;
+        cli.sin_addr.s_addr = inet_addr("127.0.0.1");
+        cli.sin_port = htons(10000);
+
+        connect(sockfd,(sockaddr*)&cli,sizeof(cli));
+
+        while(1){
+                //string str="";
+                char buf[1024];
+                bzero(&buf,sizeof(buf));
+                cin>>buf;
+                ssize_t size = write(sockfd,buf,sizeof(buf));
+                //cout<<"客户机说:"<<buf<<endl;
+                if(size == -1 ){
+                cout<<"写程序出错"<<endl;
+                }
+                bzero(&buf,sizeof(buf));
+
+                ssize_t read_size = read(sockfd,buf,sizeof(buf));
+
+                if(size > 0 ){
+                cout<<"服务器说:"<<buf<<endl;
+                }
+                else if(size == 0){
+                cout<<"服务器没有连接"<<endl;
+                break;
+                }
+                else if(size == -1){
+                cout<<"socket出错"<<endl;
+                close(sockfd);
+                }
+        }
+        close(sockfd);
+        return 0;
+}
+
+```
