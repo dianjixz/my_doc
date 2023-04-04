@@ -41,6 +41,33 @@ UUID=11263962-9715-473f-9421-0b604e895aaa /data ext4 defaults 0 1
 <fs freq>：磁盘检查，默认为0
 <fs passno>：磁盘检查，默认为0，不需要检查
 
+2.options参数解释
+
+1、auto 开机时自动挂载或使用mount –a命令时自动挂载
+2、noauto 取消开机自动挂载
+3、exec 允许执行此分区的二进制文件
+4、noexec 不允许执行此分区的二进制文件
+5、ro/rw只读或读写挂载文件系统
+6、user允许任意用户挂载，如果没有显示定义，隐含启用noexec、nosuid、nodev
+7、users允许所有users组中的用户挂载
+8、owner允许设备所有者挂载
+9、sync I/o同步
+10、async I/o异步
+11、dev解析文件系统上的块特殊设备
+12、nodev 不解析文件系统上的块特殊设备
+13、suid允许suid和sgid位，该参数通常用于特殊任务，使一般用户运行程序时临时获取权限
+14、nosuid 禁止suid操作和设定sgid位
+15、noatime不更新文件系统上的inode访问记录，可提升性能
+16、nodiratime不更新文件系统上的目录的inode访问记录，可提升性能
+17、relatime实时更新inode访问记录
+18、flush-（vfat的选项）频繁刷新数据，复制对话框或进度条在全部数据写入之后才消失
+19、defaults 默认的挂载参数
+（例如ext4默认参数：rw,suid,dev,exec,auto,nouser,async）
+————————————————
+版权声明：本文为CSDN博主「河 静」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_44839276/article/details/106969821
+
+
 7、重启系统
 
 修改完/etc/fstab文件后，运行

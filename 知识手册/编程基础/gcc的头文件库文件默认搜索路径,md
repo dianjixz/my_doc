@@ -1,0 +1,66 @@
+1．头文件（编译时）
+
+gcc在编译时如何去寻找所需要的头文件：
+
+1、先搜索-I指定的目录
+
+2、然后找gcc的环境变量C_INCLUDE_PATH，CPLUS_INCLUDE_PATH，OBJC_INCLUDE_PATH可以通过设置这些环境变量来添加系统include的路径
+
+3、最后搜索gcc的内定目录(编译时可以通过-nostdinc++选项屏蔽对内定目录搜索头文件)
+
+/usr/include
+
+/usr/local/include
+
+/usr/lib/gcc/x86_64-linux-gnu/4.8/include
+
+在安装g++时，指定了prefix，那么内定搜索目录就是：
+
+prefix/include
+
+prefix/local/include
+
+prefix/lib/gcc/--host/--version/include
+
+2．库文件（分为：编译时+运行时）
+
+(1) 编译时(gcc的选项-print-search-dirs，显示编译器的搜索路径)
+
+1、gcc会去找-L
+
+2、再找gcc的环境变量LIBRARY_PATH
+
+LIBRARY_PATH和LD_LIBRARY_PATH是Linux下的两个环境变量，区别：LIBRARY_PATH环境变量用于在程序编译期间查找动态链接库时指定查找共享库的路径，而LD_LIBRARY_PATH环境变量用于在程序加载运行期间查找动态链接库时指定除了系统默认路径之外的其他路径
+
+3、再找内定目录/lib:/usr/lib:/usr/local/lib这是当初compile gcc时写在程序内的
+
+(2)  运行时
+
+Linux动态库的默认搜索路径是/lib和/usr/lib，动态库被创建后，一般都复制到这两个目录中。在Linux 中，动态库的搜索路径除了默认的搜索路径外，还可以通过以下三种方法来指定。
+
+方法一：在配置文件/etc/ld.so.conf中指定动态库搜索路径。但是每次编辑完该文件后，都必须运行命令ldconfig以达到刷新 /etc/ld.so.cache的效果，使修改后的配置生效。
+
+注：ldconfig是一个动态链接库管理命令，为了让动态链接库为系统所共享,还需运行动态链接库的管理命令--ldconfig。 ldconfig 命令的用途,主要是在默认搜寻目录(/lib和/usr/lib)以及动态库配置文件/etc/ld.so.conf内所列的目录下,搜索出可共享的动态链接库(格式如前介绍,lib*.so*)，进而创建出动态装入程序(ld.so)所需的连接和缓存文件，缓存文件默认为 /etc/ld.so.cache，此文件保存已排好序的动态链接库名字列表。ldconfig做的这些东西都与运行程序时有关，跟编译时一点关系都没有。编译的时候还是该加-L就得加，不要混淆了；
+
+方法二：通过环境变量LD_LIBRARY_PATH指定动态库搜索路径。
+
+方法三：在编译目标代码时指定该程序的动态库搜索路径。
+
+五种动态库运行时搜索路径搜索的先后顺序是：
+
+1、在编译目标代码时指定该程序的动态库搜索路径
+
+这是通过gcc的参数"-Wl，-rpath，"指定（-L只是编译时使用的搜索路径，而-Wl,-rpath=your_lib_dir是为程序添加一个运行时库文件搜索路径的命令，在使用gcc编译链接时添加即可）。当指定多个动态库搜索路径时，路径之间用冒号"："分隔
+
+2、通过环境变量LD_LIBRARY_PATH指定动态库搜索路径。当通过该环境变量指定多个动态库搜索路径时，路径之间用冒号"："分隔
+
+3、在配置文件/etc/ld.so.conf中指定动态库搜索路径
+
+4、默认的动态库搜索路径/lib
+
+5、默认的动态库搜索路径/usr/lib
+
+
+-----------------------------------
+gcc的头文件、库文件默认搜索路径
+https://blog.51cto.com/u_13913090/2155979

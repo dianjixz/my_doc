@@ -251,4 +251,45 @@ add_link_option 宏在cmake 3.13版本以后才支持的
 原文链接：https://blog.csdn.net/zvvzxzko2006/article/details/110467542
 
 
+介绍GCC在编译阶段和程序运行阶段用到的环境变量。
+GCC编译时用到的环境变量
 
+GCC编译时用到的变量。
+C_INCLUDE_PATH  
+
+GCC编译时查找头文件的目录列表。比如:
+
+echo $C_INCLUDE_PATH
+# outputs
+## /usr/include:/usr/local/include
+
+CPLUS_INCLUDE_PATH
+
+类似C_INCLUDE_PATH，适用于g++。
+LIBRARY_PATH
+
+gcc和g++在编译的链接(link)阶段查找库文件的目录列表，比如:
+
+echo $LIBRARY_PATH
+# outputs
+## /usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64
+
+程序运行时用到的环境变量
+
+程序运行阶段用到的变量。
+LD_LIBRARY_PATH
+
+程序运行时查找动态链接库(.so文件)的目录列表。比如:
+
+echo $LD_LIBRARY_PATH
+# outputs
+## /usr/lib:/usr/lib64:/usr/local/lib:/usr/local/lib64
+
+LD_PRELOAD
+
+在LD_PRELOAD(参考man ld.so的LD_PRELOAD部分)中定义的动态链接库会在其他动态链接库之前被加载，因此会覆盖其他链接库里定义的同名符号（函数变量等），完整的例子可参考test-ld-preload。需要注意的是，在C++中覆盖C函数库中的函数时，应使用extern "C"阻止Name Mangling。
+
+su
+LD_PRELOAD=/usr/lib/libtsocks.so apt-get update
+
+注意，LD_PRELOAD无法在sudo命令里使用。1
