@@ -824,3 +824,335 @@ root@OpenWrt:~# iptables -Liptables v1.6.2: can't initialize iptables table `fil
 ©著作权归作者所有：来自51CTO博客作者董哥的黑板报的原创作品，请联系作者获取转载授权，否则将追究法律责任
 从init进程逐步到/etc/init.d，整体分析Openwrt的软件启动机制
 https://blog.51cto.com/u_15346415/5224097
+
+
+
+
+
+ [OpenWRT网络配置](https://www.cnblogs.com/kevinjen/p/16489944.html)
+
+原文连接：Network configuration [Old OpenWrt Wiki]
+网络设置
+
+OpenWrt的网络配置文件是/etc/config/network，它负责交换芯片VLAN、网络接口和路由的配置。
+
+此文件在编辑和保存之后需要执行
+
+/etc/init.d/network reload
+
+命令，目的是为了在变更生效前，停止和重启网络。但是，路由器没必要执行重启操作。
+
+    https://dev.openwrt.org/browser/branches/attitude_adjustment/package/base-files/files/etc/config/network
+    https://dev.openwrt.org/browser/trunk/package/base-files/files/etc/config/network
+
+可以参考netifd
+节
+
+下面是网络配置需要定义的节类型。通常情况下，一台路由器的最简网络配置包括至少2个interfaces(lan和wan)，如果硬件支持，还包括一个switch。
+switch
+
+switch节负责交换芯片VLAN的划分。在OpenWrt系统内部，每个VLAN都会有一个独立的interface与它对应，即便它们实际上属于同一个硬件。需要注意的是，不是所有被OpenWrt系统支持的设备都含有可编程的交换芯片，因此这个节在某些平台上不会出现。
+
+现在有2个不同的配置格式在使用，一个是/proc/switch/的API，另一个是新的基于swconfig的switch架构。
+/proc/switch
+
+这个变种只出现在Broadcom设备上，比如WRT54GL。
+
+一个典型的配置就像这样：
+
+config 'switch' 'eth0'
+        option 'vlan0' '0 1 2 3 5*'
+        option 'vlan1' '4 5'
+
+其中，eth0标识符指明这个节对应的交换芯片。VLAN的定义方法是显然的，一般来说，0、1、2、3是路由器LAN口，4是路由器WAN口，5表示CPU，而5*表示这个接口是trunk。更多的信息请参考 switch documentation。
+swconfig
+
+新的swconfig框架将取代老式switch配置。现在它正被一些设备如D-Link DIR-300使用。
+
+基于Swconfig的配置是一种全新的格式，即每个VLAN都使用一个节。下面的例子说明了运行在D-Link DIR-300设备上的Kamikaze 8.09分支所使用的标准配置：
+
+config 'switch' 'eth0'
+        option 'reset' '1'
+        option 'enable_vlan' '1'
+
+config 'switch_vlan' 'eth0_1'
+        option 'device' 'eth0'
+        option 'vlan' '1'
+        option 'ports' '0 1 2 3 5t'
+
+config 'switch_vlan' 'eth0_2'
+        option 'device' 'eth0'
+        option 'vlan' '2'
+        option 'ports' '4 5t'
+
+通用的属性仍然在switch节定义，各VLAN相关属性定义在各自的switch_vlan节中，它们通过指定device属性使系统得悉它使用的交换芯片。完整的格式请参看switch documentation。
+Interfaces
+
+interface类型的节声明了逻辑网络接口，可以为这些接口指定IP地址、别名、物理网络接口名称、路由规则及防火墙规则。
+
+一个最简的interface节包含以下行：
+
+config 'interface' 'wan'
+        option 'proto' 'dhcp'
+        option 'ifname' 'eth0.1'
+
+    wan 是唯一的 逻辑网络接口名称
+    dhcp 指定接口协议，这里是dhcp
+    eth0.1 是相关联的物理网络接口名称(用ifconfig可看到)
+
+接口协议可以是以下之一：
+协议 	描述
+static 	静态ip
+dhcp 	动态ip
+ppp 	PPP 协议 - 拨号MODEM连接
+pppoe 	以太网上的PPP协议 - DSL宽带连接
+pppoa 	ATM上的PPP协议 - 使用内建MODEM的DSL连接
+3g 	使用3G上网卡的CDMA, UMTS 或 GPRS 连接
+pptp 	通过PPtP VPN的连接
+none 	不指定任何协议
+
+针对指定协议的类型，还需要额外的选项,参看下表。在Required字段标记"yes"的选项必须在interface节中定义，标记"no"选项的可以省略。
+所有协议类型的有效选项
+名称 	类型 	必需性 	默认 	描述
+ifname 	interface name(s) 	yes(*) 	(none) 	物理接口名称。如果type选项被设为bridge，需要指定一个接口列表.\ (*) This option may be empty or missing if only a wireless interface references this network
+type 	string 	no 	(none) 	如果设置为"bridge"，将建立一个包含ifname所述接口的网桥
+stp 	boolean 	no 	0 	启用生成树协议，只对网桥有效
+macaddr 	mac address 	no 	(none) 	指定接口MAC地址
+mtu 	number 	no 	(none) 	指定接口最大传输单元(MTU)
+auto 	boolean 	no 	0 for proto none, else 1 	指定是否在引导成功后打开这个接口
+"static"协议
+名称 	类型 	必需性 	默认 	描述
+ipaddr 	ip address 	yes, if no ip6addr is set 	(none) 	IP地址
+netmask 	netmask 	yes, if no ip6addr is set 	(none) 	子网掩码
+gateway 	ip address 	no 	(none) 	默认路由
+bcast 	ip address 	no 	(none) 	广播地址 (不设置会自动生成)
+ip6addr 	ipv6 address 	yes, if no ipaddr is set 	(none) 	为接口指派给定的IPv6 地址 (CIDR notation)
+ip6gw 	ipv6 address 	no 	(none) 	为接口指派给定的IPv6默认网关
+dns 	list of ip addresses 	no 	(none) 	DNS服务器（1个或多个）
+"dhcp"协议
+名称 	类型 	必需性 	默认 	描述
+gateway 	string 	no 	(none) 	如果设置为0.0.0.0，将设置DHCP协议获取的默认网关
+dns 	list of ip addresses 	no 	(none) 	指定DNS服务器（1个或多个）
+"ppp" (Modem上的PPP)协议
+
+要使用PPP，必须安装ppp软件包。
+名称 	类型 	必需性 	默认 	描述
+device 	file path 	yes 	(none) 	MODEM设备节点
+username 	string 	no(?) 	(none) 	用于PAP/CHAP认证的用户名
+password 	string 	no(?) 	(none) 	用于PAP/CHAP authentication的密码
+connect 	file path 	no 	(none) 	自定义PPP连接脚本路径
+disconnect 	file path 	no 	(none) 	自定义PPP断开连接脚本路径
+keepalive 	number 	no 	(none) 	Number of connection failures before reconnect
+demand 	number 	no 	(none) 	Number of seconds to wait before closing the connection due to inactivity
+defaultroute 	boolean 	no 	1 	Replace existing default route on PPP connect
+peerdns 	boolean 	no 	1 	Use peer-assigned DNS server(s)
+dns 	list of ip addresses 	no 	(none) 	Override peer-assigned DNS server(s)
+ipv6 	boolean 	no 	0 	为PPP连接启用IPv6
+pppd_options 	string 	no 	(none) 	传递给pppd守护进程的额外命令行参数
+"pppoe" (以太网的PPP)协议
+
+要使用PPPoE，必须安装ppp-mod-pppoe软件包.
+名称 	类型 	必需性 	默认 	描述
+username 	string 	no(?) 	(none) 	用于PAP/CHAP认证的用户名
+password 	string 	no(?) 	(none) 	用于PAP/CHAP认证的密码
+connect 	file path 	no 	(none) 	自定义PPP连接脚本路径
+disconnect 	file path 	no 	(none) 	自定义PPP断开连接脚本路径
+keepalive 	number 	no 	(none) 	Number of connection failures before reconnect
+demand 	number 	no 	(none) 	Number of seconds to wait before closing the connection due to inactivity
+defaultroute 	boolean 	no 	1 	Replace existing default route on PPP connect
+peerdns 	boolean 	no 	1 	Use peer-assigned DNS server(s)
+dns 	list of ip addresses 	no 	(none) 	Override peer-assigned DNS server(s)
+ipv6 	boolean 	no 	0 	为PPP连接启用IPv6
+pppd_options 	string 	no 	(none) 	传递给pppd守护进程的额外命令行参数
+"pppoa" (ATM上的PPP)协议
+
+要使用PPPoA，必须安装 ppp-mod-pppoa 软件包.
+名称 	类型 	必需性 	默认 	描述
+unit 	number 	yes 	(none) 	br2684 interface number
+vci 	number 	no 	35 	PPPoA VCI
+vpi 	number 	no 	8 	PPPoA VPI
+atmdev 	number 	no 	(none) 	ATM PVC number
+encaps 	string 	no 	llc 	PPPoA encapsulation mode: 'llc' (LLC) or 'vc' (VC)
+payload 	string 	no 	bridged 	PPPoA forwarding mode: 'routed' or 'bridged'
+username 	string 	no(?) 	(none) 	用于PAP/CHAP认证的用户名
+password 	string 	no(?) 	(none) 	用于PAP/CHAP认证的密码
+connect 	file path 	no 	(none) 	自定义PPP连接脚本路径
+disconnect 	file path 	no 	(none) 	自定义PPP断开连接脚本路径
+keepalive 	number 	no 	(none) 	Number of connection failures before reconnect
+demand 	number 	no 	(none) 	Number of seconds to wait before closing the connection due to inactivity
+defaultroute 	boolean 	no 	1 	Replace existing default route on PPP connect
+peerdns 	boolean 	no 	1 	Use peer-assigned DNS server(s)
+dns 	list of ip addresses 	no 	(none) 	Override peer-assigned DNS server(s)
+ipv6 	boolean 	no 	0 	为PPP连接启用IPv6
+pppd_options 	string 	no 	(none) 	传递给pppd守护进程的额外命令行参数
+"3g" (PPP over EV-DO, CDMA, UMTS or GRPS)协议
+
+要使用3G，必须安装 comgt 软件包.
+名称 	类型 	必需性 	默认 	描述
+device 	file path 	yes 	(none) 	Modem设备节点
+service 	string 	yes 	gprs 	3G设备类型: evdo, cdma, umts 或 gprs
+apn 	string 	yes 	(none) 	Used APN
+pincode 	number 	no 	(none) 	解锁SIM卡的PIN码
+maxwait 	number 	no 	20 	等待Modem就绪的时间（秒）
+username 	string 	no(?) 	(none) 	用于PAP/CHAP认证的用户名
+password 	string 	no(?) 	(none) 	用于PAP/CHAP认证的密码
+keepalive 	number 	no 	(none) 	Number of connection failures before reconnect
+demand 	number 	no 	(none) 	Number of seconds to wait before closing the connection due to inactivity
+defaultroute 	boolean 	no 	1 	Replace existing default route on PPP connect
+peerdns 	boolean 	no 	1 	Use peer-assigned DNS server(s)
+dns 	list of ip addresses 	no 	(none) 	Override peer-assigned DNS server(s)
+ipv6 	boolean 	no 	0 	为PPP连接启用IPv6
+"pptp" (Point-to-Point Tunneling Protocol)协议
+
+要使用PPtP，必须安装 pptp 软件包.
+名称 	类型 	必需性 	默认 	默认
+server 	ip address 	yes 	(none) 	远程PPtP服务器
+ipproto 	string 	no 	dhcp 	建立PPtP隧道前用来获取IP连通性的协议
+username 	string 	no(?) 	(none) 	用于PAP/CHAP认证的用户名
+password 	string 	no(?) 	(none) 	用于PAP/CHAP认证的密码
+Additionally all options defined for the corresponding ipproto can be specified
+别名
+
+Alias sections can be used to define further IPv4 and IPv6 addresses for interfaces.
+They also allow combinations like DHCP on the main interface and a static IPv6 address in the alias,
+for example to deploy IPv6 on wan while keeping normal internet connectivity.
+Each interface can have multiple aliases attached to it.
+
+别名最小的声明包含以下行：
+
+config 'alias'
+        option 'interface' 'lan'
+        option 'proto' 'static'
+        option 'ipaddr' '10.0.0.1'
+        option 'netmask' '255.255.255.0'
+
+    lan is the logical interface name of the parent interface
+    static is the alias interface protocol
+    10.0.0.1 specifies the alias ip address
+    255.255.255.0 specifies the alias netmask
+
+At the time of writing, only the static protocol type is allowed for aliases.
+Defined options for alias sections are listed below.
+名称 	类型 	必需性 	默认 	描述
+interface 	string 	yes 	(none) 	Specifies the logical interface name of the parent (or master) interface this alias is belonging to, must refer to one of the defined interface sections
+proto 	string 	yes 	(none) 	Specifies the alias interface protocol
+ipaddr 	ip address 	yes, if no ip6addr is set 	(none) 	IP address
+netmask 	netmask 	yes, if no ip6addr is set 	(none) 	Netmask
+gateway 	ip address 	no 	(none) 	Default gateway
+bcast 	ip address 	no 	(none) 	Broadcast address (autogenerated if not set)
+ip6addr 	ipv6 address 	yes, if no ipaddr is set 	(none) 	IPv6 address (CIDR notation)
+ip6gw 	ipv6 address 	no 	(none) 	IPv6 default gateway
+dns 	list of ip addresses 	no 	(none) 	DNS server(s)
+IPv4 Routes
+
+It is possible to define arbitary IPv4 routes on specific interfaces using route sections. As for aliases, multiple sections can be attached to an interface.
+
+一个minimial的例子类似如下:
+
+config 'route'
+        option 'interface' 'lan'
+        option 'target' '172.16.123.0'
+        option 'netmask' '255.255.255.0'
+
+    lan is the logical interface name of the parent interface
+    172.16.123.0 is the network address of the route
+    255.255.255.0 specifies the route netmask
+
+Legal options for IPv4 routes are:
+名称 	类型 	必需 	默认 	描述
+interface 	string 	yes 	(none) 	Specifies the logical interface name of the parent (or master) interface this route is belonging to, must refer to one of the defined interface sections
+target 	ip address 	yes 	(none) 	Network address
+netmask 	netmask 	no 	(none) 	Route netmask. If ommitted, 255.255.255.255 is assumed which makes target a host address
+gateway 	ip address 	no 	(none) 	Network gateway. If ommitted, the gateway from the parent interface is taken, if set to 0.0.0.0 no gateway will be specified for the route
+metric 	number 	no 	0 	Specifies the route metric to use
+IPv6路由
+
+IPv6 routes可指定定义一个或多个route6的sections.
+
+一个minimial的例子类似如下:
+
+config 'route6'
+        option 'interface' 'lan'
+        option 'target' '2001:0DB8:100:F00:BA3::1/64'
+        option 'gateway' '2001:0DB8:99::1'
+
+    lan is the logical interface name of the parent interface
+    2001:0DB8:100:F00:BA3::1/64 is the routed IPv6 subnet in CIDR notation
+    2001:0DB8:99::1 specifies the IPv6 gateway for this route
+
+Legal options for IPv6 routes are:
+名称 	类型 	必要 	默认 	描述
+interface 	string 	yes 	(none) 	Specifies the logical interface name of the parent (or master) interface this route is belonging to, must refer to one of the defined interface sections
+target 	ipv6 address 	yes 	(none) 	IPv6 network address
+gateway 	ipv6 address 	no 	(none) 	IPv6 gateway. If ommitted, the gateway from the parent interface is taken
+metric 	number 	no 	0 	Specifies the route metric to use
+例子
+
+下面是特殊的，非标准接口配置的几个例子。
+Bridge without IP
+
+config 'interface' 'example'
+        option 'type'    'bridge'
+        option 'proto'   'none'
+        option 'ifname'  'eth0 eth1'
+        option 'auto'    '1'
+
+DHCP without default gateway
+
+config 'interface' 'example'
+        option 'proto'   'dhcp'
+        option 'ifname'  'eth0'
+        option 'gateway' '0.0.0.0'
+
+DHCP及IPv6
+
+config 'interface' 'example'
+        option 'proto'     'dhcp'
+        option 'ifname'    'eth0'
+
+config 'alias'
+        option 'interface' 'example'
+        option 'proto'     'static'
+        option 'ip6addr'   '2001:0DB8:100:F00:BA3::1'
+
+静态IP配置和默认网关与非零十进制
+
+config 'interface' 'example'
+        option 'proto'     'static'
+        option 'ifname'    'eth0'
+        option 'ipaddr'    '192.168.1.200'
+        option 'netmask'   '255.255.255.0'
+        option 'dns'       '192.168.1.1'
+
+config 'route'
+        option 'interface' 'example'
+        option 'target'    '0.0.0.0'
+        option 'netmask'   '0.0.0.0'
+        option 'gateway'   '192.168.1.1'
+        option 'metric'    '100'
+
+PPtP-over-PPPoE internet connection
+
+config 'interface' 'wan'
+        option 'proto'     'pppoe'
+        option 'ifname'    'eth1'
+        option 'username'  'user'
+        option 'password'  'pass'
+        option 'timeout'   '10'
+
+config 'interface' 'vpn'
+        option 'proto'     'pptp'
+        option 'ifname'    'vpn'
+        option 'username'  'vpnuser'
+        option 'password'  'vpnpass'
+        option 'server'    'vpn.example.org' 
+
+Additionally the "wan" firewall zone must include both interfaces in /etc/config/firewall:
+
+config 'zone'
+        option 'name'      'wan'
+        option 'network'   'wan vpn'
+        option 'input'     'REJECT'
+        option 'forward'   'REJECT'
+        option 'output'    'ACCEPT'
+        option 'masq'      '1' 

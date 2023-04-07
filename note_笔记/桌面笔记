@@ -337,3 +337,20 @@ hdmi_mode=1
 hdmi_mode=87
 hdmi_drive=1
 hdmi_cvt 1024 600 60 6 0 0 0
+
+aarch64-linux-gnu-
+./configure -prefix=$(pwd)/arm-tslib --host=arm-linux-gnueabihf --cache-file=arm-linux.cache ac_cv_func_malloc_0_nonnull=yes 
+————————————————
+版权声明：本文为CSDN博主「苏轼圈」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_41867145/article/details/122654497
+
+
+export TSLIB_ROOT=$(pwd)
+export LD_LIBRARY_PATH=$TSLIB_ROOT/lib:$LD_LIBRARY_PATH
+export TSLIB_CONSOLEDEVICE=none
+export TSLIB_FBDEVICE=/dev/fb$(cat /proc/fb | grep fb_st7789v | awk '{print $1}')
+export TSLIB_TSDEVICE=/dev/input/event$(cat /proc/bus/input/devices | grep fe205000.i2c | tail -c 2)
+export TSLIB_TSEVENTTYPE=INPUT
+export TSLIB_CALIBFILE=$TSLIB_ROOT/pointercal
+export TSLIB_CONFFILE=$TSLIB_ROOT/etc/ts.conf
+export TSLIB_PLUGINDIR=$TSLIB_ROOT/lib/ts
