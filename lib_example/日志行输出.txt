@@ -1,4 +1,4 @@
- int Debug_s;
+int Debug_s = 1;
 
 #define LOG_PRINT(fmt, ...) do{\
 	if(Debug_s)\

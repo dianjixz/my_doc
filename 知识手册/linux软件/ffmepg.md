@@ -15,4 +15,6 @@ ffmpeg -re -i a.mp4 -c copy -f flv tcp://127.0.0.1:1234/live/stream
 
 ffplay -listen 1 -i tcp://127.0.0.1:1234/live/stream -fflags nobuffer
 
+ffmpeg.exe -listen 1 -i tcp://127.0.0.1:1234/live/stream -c copy -f flv output.flv -y
+
 https://blog.csdn.net/u012117034/article/details/123470123

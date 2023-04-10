@@ -274,9 +274,12 @@ demo
 demo_sereve  
 ===========
 ``` c++
+#include <iostream>
+#include <sys/socket.h>
 #include <arpa/inet.h>
 #include <cstring>
 #include <unistd.h>
+using namespace std;
 int main(){
 //创建socket，网络文件描述符
         int sockfd = socket(AF_INET,SOCK_STREAM,0);
@@ -330,11 +333,11 @@ demo_client
 
 ``` c
 #include <iostream>
-using namespace std;
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <cstring>
 #include <unistd.h>
+using namespace std;
 int main(){
 
         int sockfd = socket(AF_INET,SOCK_STREAM,0);

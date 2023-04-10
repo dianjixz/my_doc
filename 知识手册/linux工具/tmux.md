@@ -1,7 +1,7 @@
 ~~~ bash
 
 # 设置Shell
-set-option -g default-shell /bin/zsh
+set-option -g default-shell /bin/bash
 
 # 设置复制模式，空格开始选，Enter结束复制
 setw -g mode-keys vi 
