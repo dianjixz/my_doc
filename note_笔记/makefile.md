@@ -289,24 +289,24 @@ main.c为主文件，依赖foo.h  bar.h  common.h
 **makefile**：
 
 ```text
-1 SRC = ${wildcard *.c}
-2 
-3 MAIN_SRC = main.c
-4 
-5 TARGET = main
-6 
-7 RAW_OBJ = ${patsubst %.c,%.o,${SRC}}
-8 
-9 OBJ = ${filter-out main% ,${RAW_OBJ}}
-10 
-11 ${TARGET}:${OBJ}
-12     cc $^ ${MAIN_SRC} -o ${TARGET}
-13 
-14 ${OBJ}:%.o : %.c %.h common.h
-15     cc -c $^
-16 
-17 clean:
-18     rm -rf *.o ${TARGET}
+SRC = ${wildcard *.c}
+
+MAIN_SRC = main.c
+
+TARGET = main
+
+RAW_OBJ = ${patsubst %.c,%.o,${SRC}}
+
+OBJ = ${filter-out main% ,${RAW_OBJ}}
+ 
+ ${TARGET}:${OBJ}
+     cc $^ ${MAIN_SRC} -o ${TARGET}
+ 
+ ${OBJ}:%.o : %.c %.h common.h
+     cc -c $^
+ 
+ clean:
+     rm -rf *.o ${TARGET}
 ```
 
 键入以下指令就可以开始工程的编译：

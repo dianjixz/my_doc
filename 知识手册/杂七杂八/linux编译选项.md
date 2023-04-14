@@ -1,0 +1,1 @@
+构建的所有模块自动生成srcversion    MODULE_SRCVERSION

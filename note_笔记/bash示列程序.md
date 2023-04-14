@@ -827,3 +827,7 @@ while getopts ":d:f:bh" OPT; do
 done
 
 ```
+
+
+
+modprobe --dump-modversions new.ko 显示内核模块符号表

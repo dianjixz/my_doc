@@ -2389,3 +2389,11 @@ cmake 允许为项目增加编译选项，从而可以根据用户的环境和�
 ————————————————
 版权声明：本文为CSDN博主「阿飞__」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/afei__/article/details/81201039
+
+
+
+
+
+让cmake显示gcc/g++的编译信息    make VERBOSE=1   &&   set(CMAKE_VERBOSE_MAKEFILE ON)
+
+

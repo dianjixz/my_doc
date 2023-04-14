@@ -2,7 +2,11 @@
 #define _FBTOOLS_H_
 
 #include <linux/fb.h>
-
+#include <stdio.h>
+#if __cplusplus
+extern "C"
+{
+#endif
 /* a framebuffer device structure */
 typedef struct fbdev{
 int fb;
@@ -29,5 +33,7 @@ int get_display_depth(PFBDEV pFbdev);
 
 /*full screen clear */
 void fb_memset(void *addr, int c, size_t len);
-
+#if __cplusplus
+}
+#endif
 #endif

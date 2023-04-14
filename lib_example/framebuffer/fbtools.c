@@ -1,120 +1,94 @@
-#include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <fcntl.h>
-#include <linux/fb.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/ioctl.h>
 #include <sys/mman.h>
-inline static unsigned short int make16color(unsigned char r, unsigned char g, unsigned char b)
+#define PAGE_SHIFT  12
+#define PAGE_MASK       (~((1 << PAGE_SHIFT) - 1)) 
+
+#include "fbtools.h"
+
+#define TRUE 1
+#define FALSE 0
+#define MAX (x, y)((x) > (y) ? (x) : (y))
+#define MIN (x, y)((x) < (y) ? (x) : (y))
+
+/* open & init a frame buffer */
+int fb_open(PFBDEV pFbdev)
 {
-    return (
-        (((r >> 3) & 31) << 11) |
-        (((g >> 2) & 63) << 5) |
-        ((b >> 3) & 31));
+    pFbdev->fb = open(pFbdev-> dev, O_RDWR);
+    if (pFbdev->fb < 0)
+    {
+        printf("Error opening %s: %m. Check kernel config/n", pFbdev->dev);
+        return FALSE;
+    }
+    if (-1 == ioctl(pFbdev->fb, FBIOGET_VSCREENINFO, &(pFbdev->fb_var)))
+    {
+        printf("ioctl FBIOGET_VSCREENINFO/n");
+        return FALSE;
+    }
+    if (-1 == ioctl(pFbdev->fb, FBIOGET_FSCREENINFO, &(pFbdev->fb_fix)))
+    {
+        printf("ioctl FBIOGET_FSCREENINFO/n");
+        return FALSE;
+    }
+
+    /*map physics address to virtual address */
+    pFbdev->fb_mem_offset = (unsigned long)(pFbdev->fb_fix.smem_start) & (~PAGE_MASK);
+    pFbdev->fb_mem = (unsigned long int)mmap(NULL, pFbdev->fb_fix.smem_len + pFbdev->fb_mem_offset,
+                                                PROT_READ | PROT_WRITE, MAP_SHARED, pFbdev->fb, 0);
+    if (-1L == (long)pFbdev->fb_mem)
+    {
+        printf("mmap error! mem:%d offset:%d/n", pFbdev->fb_mem,
+               pFbdev->fb_mem_offset);
+        return FALSE;
+    }
+
+    return TRUE;
 }
-int main()
+
+/* close frame buffer */
+int fb_close(PFBDEV pFbdev)
 {
-    int fbfd = 0;
-    struct fb_var_screeninfo vinfo;
-    struct fb_fix_screeninfo finfo;
-    long int screensize = 0;
-    char *fbp = 0;
-    int x = 0, y = 0;
-    int guage_height = 20, step = 10;
-    long int location = 0;
-    // Open the file for reading and writing
-    fbfd = open("/dev/fb0", O_RDWR);
-    if (!fbfd)
-    {
-        printf("Error: cannot open framebuffer device.\n");
-        exit(1);
-    }
-    printf("The framebuffer device was opened successfully.\n");
-    // Get fixed screen information
-    if (ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo))
-    {
-        printf("Error reading fixed information.\n");
-        exit(2);
-    }
-    // Get variable screen information
-    if (ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo))
-    {
-        printf("Error reading variable information.\n");
-        exit(3);
-    }
-    printf("sizeof(unsigned short) = %d\n", sizeof(unsigned short));
-    printf("%dx%d, %dbpp\n", vinfo.xres, vinfo.yres, vinfo.bits_per_pixel);
-    printf("xoffset:%d, yoffset:%d, line_length: %d\n", vinfo.xoffset, vinfo.yoffset, finfo.line_length);
-    // Figure out the size of the screen in bytes
-    screensize = vinfo.xres * vinfo.yres * vinfo.bits_per_pixel / 8;
-    ;
-    // Map the device to memory
-    fbp = (char *)mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED,
-                       fbfd, 0);
-    if ((int)fbp == -1)
-    {
-        printf("Error: failed to map framebuffer device to memory.\n");
-        exit(4);
-    }
-    printf("The framebuffer device was mapped to memory successfully.\n");
-    //set to black color first
-    memset(fbp, 0, screensize);
-    //draw rectangle
-    y = (vinfo.yres - guage_height) / 2 - 2; // Where we are going to put the pixel
-    for (x = step - 2; x < vinfo.xres - step + 2; x++)
-    {
-        location = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
-                   (y + vinfo.yoffset) * finfo.line_length;
-        *((unsigned short int *)(fbp + location)) = 255;
-    }
-    y = (vinfo.yres + guage_height) / 2 + 2; // Where we are going to put the pixel
-    for (x = step - 2; x < vinfo.xres - step + 2; x++)
-    {
-        location = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
-                   (y + vinfo.yoffset) * finfo.line_length;
-        *((unsigned short int *)(fbp + location)) = 255;
-    }
-    x = step - 2;
-    for (y = (vinfo.yres - guage_height) / 2 - 2; y < (vinfo.yres + guage_height) / 2 + 2; y++)
-    {
-        location = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
-                   (y + vinfo.yoffset) * finfo.line_length;
-        *((unsigned short int *)(fbp + location)) = 255;
-    }
-    x = vinfo.xres - step + 2;
-    for (y = (vinfo.yres - guage_height) / 2 - 2; y < (vinfo.yres + guage_height) / 2 + 2; y++)
-    {
-        location = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
-                   (y + vinfo.yoffset) * finfo.line_length;
-        *((unsigned short int *)(fbp + location)) = 255;
-    }
-    // Figure out where in memory to put the pixel
-    for (x = step; x < vinfo.xres - step; x++)
-    {
-        for (y = (vinfo.yres - guage_height) / 2; y < (vinfo.yres + guage_height) / 2; y++)
-        {
-            location = (x + vinfo.xoffset) * (vinfo.bits_per_pixel / 8) +
-                       (y + vinfo.yoffset) * finfo.line_length;
-            if (vinfo.bits_per_pixel == 32)
-            {
-                *(fbp + location) = 100;                     // Some blue
-                *(fbp + location + 1) = 15 + (x - 100) / 2;  // A little green
-                *(fbp + location + 2) = 200 - (y - 100) / 5; // A lot of red
-                *(fbp + location + 3) = 0;                   // No transparency
-            }
-            else
-            { //assume 16bpp
-                unsigned char b = 255 * x / (vinfo.xres - step);
-                unsigned char g = 255; // (x - 100)/6 A little green
-                unsigned char r = 255; // A lot of red
-                unsigned short int t = make16color(255, 0, 0);
-                *((unsigned short int *)(fbp + location)) = t;
-            }
-        }
-        //printf("x = %d, temp = %d\n", x, temp);
-        //sleep to see it
-        usleep(200);
-    }
-    //clean framebuffer
-    munmap(fbp, screensize);
-    close(fbfd);
-    return 0;
+    close(pFbdev->fb);
+    pFbdev->fb = -1;
 }
+
+/* get display depth */
+int get_display_depth(PFBDEV pFbdev)
+{
+    if (pFbdev->fb <= 0)
+    {
+        printf("fb device not open, open it first/n");
+        return FALSE;
+    }
+    return pFbdev->fb_var.bits_per_pixel;
+}
+
+/* full screen clear */
+void fb_memset(void *addr, int c, size_t len)
+{
+    memset(addr, c, len);
+}
+
+/* use by test */
+// #define DEBUG
+#ifdef DEBUG
+main()
+{
+    FBDEV fbdev;
+    memset(&fbdev, 0, sizeof(FBDEV));
+    strcpy(fbdev.dev, "/dev/fb0");
+    if (fb_open(&fbdev) == FALSE)
+    {
+        printf("open frame buffer error/n");
+        return;
+    }
+
+    fb_memset(fbdev.fb_mem + fbdev.fb_mem_offset, 0, fbdev.fb_fix.smem_len);
+
+    fb_close(&fbdev);
+}
+#endif
