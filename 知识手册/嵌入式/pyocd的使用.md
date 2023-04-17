@@ -49,3 +49,5 @@ pyocd pack -s
 
 只要你拥有 keil 的 pack，就能拥有 pyocd 的调试功能。
 
+keil pack：  
+https://www.keil.com/dd2/pack/
