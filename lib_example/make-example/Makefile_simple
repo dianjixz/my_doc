@@ -1,28 +1,38 @@
-VERSION  	=  1.00
-CC   		?=  gcc
+TARGET  	?=  app
+VERSION  	?=  1.00
+CROSS 		?= 
+CC   		?=  $(CROSS)gcc
+CXX   		?=  $(CROSS)g++
 DEBUG   	?=  -DUSE_DEBUG
-CFLAGS  	+=  -Wall
-SOURCES   	+=  $(wildcard ./*.c)
-SOURCES   	+= $(wildcard ./src/*.c)
+# SOURCES   	+=  $(wildcard ./*.c)
+CSRCPATH	?= ./src
+CXXSRCPATH	?= ./src
+CSOURCES   	+= $(foreach dir, $(CSRCPATH), $(wildcard $(dir)/*.c))
+CXXSOURCES	+= $(foreach dir, $(CXXSRCPATH), $(wildcard $(dir)/*.cpp))
 INCLUDES   	+=  -I./include
-INCLUDES   	+= -I./
+# INCLUDES   	+= -I./
 LIB_NAMES  	+=
 LIB_PATH  	+=  -L./lib
-OBJ   		+=  $(patsubst %.c, %.o, $(SOURCES))
-TARGET  	?=  app
+OBJ   		+=  $(patsubst %.c, %.cc.o, $(CSOURCES))
+OBJ   		+=  $(patsubst %.cpp, %.cxx.o, $(CXXSOURCES))
+CFLAGS  	+=  -Wall
+CXXFLAGS  	+=  -Wall
 LDFLAGS	    +=  
+
 #links
 $(TARGET):$(OBJ)
 	@mkdir -p output
-	$(CC) $(OBJ) $(LIB_PATH) $(LIB_NAMES) -o output/$(TARGET)$(VERSION) $(LDFLAGS)
-	@rm -rf $(OBJ)
+	$(CXX) $(OBJ) $(LIB_PATH) $(LIB_NAMES) -o output/$(TARGET)$(VERSION) $(LDFLAGS)
  
 #compile
-%.o: %.c
+%.cc.o: %.c
 	$(CC) $(INCLUDES) $(DEBUG) -c $(CFLAGS) $< -o $@
+%.cxx.o: %.cpp
+	$(CXX) $(INCLUDES) $(DEBUG) -c $(CXXFLAGS) $< -o $@
 
-run: ./output/app1.00
-	./output/app1.00
+run:
+	@ echo run output/$(TARGET)$(VERSION)
+	@ ./output/$(TARGET)$(VERSION)
 
 .PHONY:clean
 clean:

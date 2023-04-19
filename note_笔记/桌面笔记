@@ -354,3 +354,7 @@ export TSLIB_TSEVENTTYPE=INPUT
 export TSLIB_CALIBFILE=$TSLIB_ROOT/pointercal
 export TSLIB_CONFFILE=$TSLIB_ROOT/etc/ts.conf
 export TSLIB_PLUGINDIR=$TSLIB_ROOT/lib/ts
+
+
+
+export DISPLAY=:0.0   将gui显示到本地界面上
