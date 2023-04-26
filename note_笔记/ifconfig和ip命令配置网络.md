@@ -60,3 +60,22 @@ ip route delete 192.168.1.0/24 dev eth0 # 删除路由
 ————————————————
 版权声明：本文为CSDN博主「黄瓜炒肉」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/m0_72838865/article/details/126284744
+
+
+
+ifconfig工具源码分析
+https://blog.csdn.net/weixin_34357887/article/details/89748665?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-89748665-blog-98210117.235%5Ev30%5Epc_relevant_default_base3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-1-89748665-blog-98210117.235%5Ev30%5Epc_relevant_default_base3&utm_relevant_index=2
+
+
+
+ifconfig是linux中用于显示或配置网络设备（网络接口卡）的命令，英文全称是network interfaces configuring。
+
+同netstat一样，ifconfig源码也位于net-tools中。
+
+源码位于net-tools工具包中，这是linux网络的基本工具包，此外还有arp,hostname,route等命令。
+
+　　项目链接：http://net-tools.sourceforge.net/
+
+       下载地址：https://sourceforge.net/projects/net-tools/files/latest/download
+
+       下面一起来看下ifconfig的源码。

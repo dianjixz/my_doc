@@ -52,7 +52,11 @@ PYBIND11_MODULE(example, m)
 ~~~
 PYBIND11_MODULE()宏函数将会创建一个函数，在由Python发起import语句时该函数将会被调用。模块名字“example”，由宏的第一个参数指定（千万不能出现引号）。第二个参数"m"，定义了一个py::module的变量。函数py::module::def()生成绑定代码，将add()函数暴露给Python。
 `简单编译:`
+
 > c++ -O3 -Wall -shared -std=c++11 -fPIC `python3 -m pybind11 --includes` example.cpp -o example `python3-config --extension-suffix`   
+> g++ -O3 -Wall -shared -std=c++11 -fPIC `python3 -m pybind11 --includes` example.cpp -o example`python3-config --extension-suffix`
+
+
 
 python简单使用
 ~~~ python
@@ -675,6 +679,7 @@ link_libraries(/home/wangzq/anaconda/ anaconda3/pkgs/python-3.7.4-h265db76_1/lib
 link_libraries(${CMAKE_CURRENT_SOURCE_DIR}/lib/pybind11_cross_ _module_tests.cpython-37m-x86_64-1inux-gnu.so)
 link_libraries(${CMAKE_CURRENT_SOURCE_DIR}/1ib/pybind11_tests. cpython-37m-x86_64-1inux-gnu.so)
 add_executable(pf_test main.cpp calc.py)
+#  g++ `python3 -m pybind11 --includes` `python3-config --cflags` `python3-config --ldflags` main.cpp -o example -lpython3.10
 ~~~
 ### c++ 扩展demo9 c++调用python类
 ~~~ c++

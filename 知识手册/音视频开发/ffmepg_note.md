@@ -43,7 +43,6 @@ https://github.com/wlxklyh/FFMpegStudy
 
 
 
-
 最简单的基于FFmpeg的解码器-纯净版（不包含libavformat）
 https://blog.csdn.net/leixiaohua1020/article/details/42181571
 
@@ -53,22 +52,6 @@ https://blog.csdn.net/leixiaohua1020/article/details/42181571
 
 最简单的基于FFMPEG的Helloworld程序
 https://blog.csdn.net/leixiaohua1020/article/details/46889849
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -430,3 +413,96 @@ int main(int argc,char* argv[]){
 ————————————————
 版权声明：本文为CSDN博主「^_^ 小小码nong」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/qq_29924041/article/details/104485400/
+
+
+
+
+
+FFmpeg命令：几种常见场景下的FFmpeg命令（摄像头采集推流，桌面屏幕录制推流、转流，拉流等等）
+eguid	2022-11-05 原文
+
+前提：
+
+首先你得有FFmpeg（ffmpeg官网快捷通道：http://ffmpeg.org/）
+
+再者，推流你得有个流媒体服务，个人测试用小水管：rtmp://eguid.cc:1935/rtmp/test（小水管，请尽量错开时间使用，另切记推流视频码率不要太高，避免占用太多带宽）
+
+一、摄像头信息采集和录制推流
+
+摄像头名称要通过这个命令拿到，然后替换掉下面的“Integrated Camera”这个名称即可推流或者录制成文件
+
+    ffmpeg -list_devices true -f dshow -i dummy
+
+    ffmpeg -f dshow -i video="Integrated Camera" -vcodec libx264 -acodec copy -preset:v ultrafast -tune:v zerolatency -f flv rtmp://eguid.cc:1935/rtmp/eguid
+
+二、桌面屏幕录制
+
+1、屏幕录制并保存成文件
+
+    ffmpeg -f gdigrab -i desktop eguid.mp4
+
+2、屏幕录制并推流
+
+    ffmpeg -f gdigrab -i desktop -vcodec libx264 -preset:v ultrafast -tune:v zerolatency -f flv rtmp://eguid.cc:1935/rtmp/destop
+
+三、视频文件推流
+
+    ffmpeg -re -i eguid.flv -vcodec copy -acodec copy -f flv -y rtmp://eguid.cc:1935/rtmp/eguid
+
+四、转流（rtsp转rtmp为例）
+
+    ffmpeg -i rtsp://184.72.239.149/vod/mp4://BigBuckBunny_175k.mov -rtsp_transport tcp -vcodec h264 -acodec aac -f flv rtmp://eguid.cc:1935/rtmp/eguid
+
+五、拉流
+
+    ffmpeg -i rtmp://eguid.cc:1935/rtmp/eguid -vcodec h264 -f flv -acodec aac -ac 2 eguid.flv
+
+支持eguid原创
+
+
+ffmpeg -f pulse -i alsa_output.xxxxxxxxxxxxx.0.analog-stereo.monitor -f x11grab -s 1920x1080 -framerate 15 -i :0.0 -preset ultrafast -pix_fmt yuv420p -s 1280x720 -threads 0 -f flv "rtmp://balabala"
+其中 1920x1080 是原始的分辨率，1280x720 是缩放后的输出。
+
+-f pulse -i alsa_output
+
+是指设置输出系统内部声音的设备。
+
+至于怎么获得那一段
+
+ alsa_output.xxxxxxxxxxxxx.0.analog-stereo.monitor
+
+，是这样获得的：
+
+pactl list | grep -A2 'monitor'
+// 能看到像这样的输出
+        监视器信源：alsa_output.pci-0000_00_1b.0.analog-stereo.monitor
+        延迟：24504 微秒，设置为 24988 微秒
+        标记：HARDWARE HW_MUTE_CTRL HW_VOLUME_CTRL DECIBEL_VOLUME LATENCY 
+--
+        名称：alsa_output.pci-0000_00_1b.0.analog-stereo.monitor
+        描述：Monitor of 内置音频 模拟立体声
+        驱动程序：module-alsa-card.c
+--
+                device.class = "monitor"
+                alsa.card = "1"
+                alsa.card_name = "HDA Intel PCH"
+
+现在就能看到了（
+
+执行即可
+https://m13253.blogspot.com/2014/01/screencast-fluently-on-linux.html
+
+
+ffmpeg -f pulse -i alsa_output.platform-snd_aloop.0.analog-stereo.monitor -f x11grab -s 1920x1080 -framerate 15 -i :0.0 -preset ultrafast -pix_fmt yuv420p -s 1280x720 -threads 0 -f flv rtmp://192.168.2.21:1935/live/test110
+
+
+
+
+
+
+
+
+ffmpeg -f pulse -i alsa_output.platform-snd_aloop.0.analog-stereo.monitor -f x11grab -s 2880x1800 -framerate 15 -i :0.0 -preset ultrafast -pix_fmt yuv420p -s 1920x1080 -threads 0 -f flv rtmp://192.168.2.21:1935/live/test110
+
+
+ffmpeg -re -stream_loop -1 -i file.ts -c copy -f rtsp rtsp://localhost:8554/mystream

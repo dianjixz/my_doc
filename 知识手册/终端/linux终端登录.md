@@ -177,3 +177,4 @@ https://wiki.archlinux.org/title/getty
 
 getty -L ttyS3 115200 vt100
 
+sudo bash -c "while [ 1 ] ; do getty -L ttyAMA1 115200 vt100 >> /dev/null 2>&1 ; done" &
