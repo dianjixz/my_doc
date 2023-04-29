@@ -248,6 +248,9 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 
 调用connect函数连接服务端(connect)。
 
+int connect(int sockfd, const struct sockaddr* server_addr, socklen_t addrlen)
+返回：0──成功， -1──失败。
+
 调用write/read或send/recv进行数据的读写。
 
 关闭socket(close)。
@@ -313,7 +316,7 @@ int main(){
                         write(clifd,buf,sizeof(buf));
                 }
                 else if(size == 0 ){
-cout<<"客户机没有连接"<<endl;
+                        cout<<"客户机没有连接"<<endl;
                 close(clifd);
                 }
                 else if(size == -1 ){
@@ -378,6 +381,22 @@ int main(){
         }
         close(sockfd);
         return 0;
+}
+
+```
+
+
+
+
+tcp 开启立刻发包，提高 tcp 实时性。
+``` c
+#include <sys/socket.h>
+#include <arpa/inet.h>
+#include <netinet/tcp.h>
+void tcp_no_delay(int sockfd)
+{
+        int tcp_flag_ = 1;
+        setsockopt(sockfd, IPPROTO_TCP, TCP_NODELAY, &tcp_flag_, sizeof(tcp_flag_));
 }
 
 ```

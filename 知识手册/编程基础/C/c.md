@@ -5,7 +5,8 @@ https://blog.csdn.net/weixin_29421565/article/details/117010880
 
 ~~~ c
 
-操作函数pthread_mutex_t lock; /* 互斥锁定义 */
+// 操作函数
+pthread_mutex_t lock; /* 互斥锁定义 */ // 线程锁 互斥锁
 
 pthread_mutex_init(&lock, NULL); /* 动态初始化，成功返回0，失败返回非0 */
 
@@ -13,9 +14,9 @@ pthread_mutex_t thread_mutex = PTHREAD_MUTEX_INITIALIZER； /* 静态初始化 *
 
 pthread_mutex_lock(&lock); /* 阻塞的锁定互斥锁 */
 
-pthread_mutex_trylock(&thread_mutex)；/* 非阻塞的锁定互斥锁，成功获得互斥锁返回0，如果未能获得互斥锁，立即返回一个错误码 */
+pthread_mutex_trylock(&thread_mutex);/* 非阻塞的锁定互斥锁，成功获得互斥锁返回0，如果未能获得互斥锁，立即返回一个错误码 */
 
-pthread_mutex_unlock(&lock)； /* 解锁互斥锁 */
+pthread_mutex_unlock(&lock); /* 解锁互斥锁 */
 
 pthread_mutex_destroy(&lock) /* 销毁互斥锁 */
 
