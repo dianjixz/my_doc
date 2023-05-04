@@ -64,7 +64,8 @@ AllowUsers *                                                    设定允许的�
 
 
 
-
+ssh令牌
+ssh免密
 
 ### 开启密登陆
 

@@ -442,6 +442,17 @@ Runlevel 4           |    runlevel4.target -> multi-user.target
 Runlevel 5           |    runlevel5.target -> graphical.target
 Runlevel 6           |    runlevel6.target -> reboot.target
 ```
+``` bash
+# 删除原来的模式
+rm /etc/systemd/system/default.target
+# 启动到文本模式 命令行模式
+ln -sf /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
+# 启动到图形模式
+ln -sf /lib/systemd/system/graphical.target /etc/systemd/system/default.target
+```
+
+
+
 
 **它与init进程的主要差别如下。**
 （1）默认的RunLevel（在/etc/inittab文件设置）现在被默认的Target取代，位置是/etc/systemd/system/default.target，通常符号链接到graphical.target（图形界面）或者multi-user.target（多用户命令行）。
