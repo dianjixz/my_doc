@@ -193,3 +193,36 @@ ffmpeg -i blue.webm -vf "pad=ceil(iw/2)*2:ceil(ih/2)*2" blue.mp4
 ```
 
 ffmpeg -re -stream_loop -1 -i file.ts -c copy -f rtsp -rtsp_transport tcp rtsp://localhost:8554/mystream
+
+
+ffmpeg查看图像颜色空间   ffmpeg -pix_fmts
+
+1. 单图像jpg转yuv
+
+倘若当前目录下有个jpg文件，名为000001_353x500.jpg，可用如下语句将其转换为yuv格式，并将新yuv文件命名为000001_353x500.yuv.
+
+ffmpeg -pix_fmt yuv420p -s 353x500 -i 000001_353x500.jpg 000001_353x500.yuv
+
+这里，-pix_fmt表示pixel format，指定像素格式，这里指定为yuv420p格式；
+-s表示size，后以宽x高格式指定图像的宽高大小；
+-i表示input，后接输入文件的url；
+
+最后，指定output输出文件的url.
+
+
+2. 单图像yuv转jpg
+
+倘若当前目录下有个yuv文件，名为000001_353x500.yuv，可用如下命令将其转换为jpg格式，并将新jpg文件命名为000001_353x500.jpg.
+
+ffmpeg  -s 353x500 -i 000001.yuv 000001.jpg -y
+
+这里，-s表示size，后接了输入yuv文件的图像大小；
+-i表示input文件的url；
+然后接output输出文件的url；
+最后，-y是一个通用选项，表示当前目录下倘若存在相同输出文件名，则直接替代它。
+
+如果不加-y，遇到输出url已存在一个相同输出文件名文件，命令行会中断当前程序，询问是否覆盖文件：
+
+File '000001_353x500.yuv' already exists. Overwrite? [y/N]
+
+y覆盖，N不覆盖。

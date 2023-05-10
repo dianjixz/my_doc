@@ -116,6 +116,7 @@ fc-cache -fv   刷新字体缓存
 /usr/share/fonts/truetype   字体目录
 
 bash-completion		tab补全插件
+#Ubuntu也可以进行命令补全 apt install -y bash-completion
 ~~~
 
 

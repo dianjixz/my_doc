@@ -178,7 +178,21 @@ char* my_strncpy(char* des, const char* sor, int n)
 }
 
 
-
+// 利用 neon 寄存器快速内存复制
+#ifdef  __ARM__
+static void neon_memcpy(volatile unsigned char *dst, volatile unsigned char *src, int sz)
+{
+    if (sz & 63)
+        sz = (sz & -64) + 64;
+    asm volatile (
+    "NEONCopyPLD: \n"
+            " VLDM %[src]!,{d0-d7} \n"
+            " VSTM %[dst]!,{d0-d7} \n"
+            " SUBS %[sz],%[sz],#0x40 \n"
+            " BGT NEONCopyPLD \n"
+    : [dst]"+r"(dst), [src]"+r"(src), [sz]"+r"(sz) : : "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "cc", "memory");
+}
+#endif
 
 
 

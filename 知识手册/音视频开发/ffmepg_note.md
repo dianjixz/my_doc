@@ -506,3 +506,11 @@ ffmpeg -f pulse -i alsa_output.platform-snd_aloop.0.analog-stereo.monitor -f x11
 
 
 ffmpeg -re -stream_loop -1 -i file.ts -c copy -f rtsp rtsp://localhost:8554/mystream
+
+
+
+
+
+python小工具------将H264/H265码流文件转为一帧一帧的JPEG文件
+https://blog.csdn.net/baidu_41191295/article/details/124102833?spm=1001.2101.3001.6650.5&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-5-124102833-blog-88887180.235%5Ev32%5Epc_relevant_default_base3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-5-124102833-blog-88887180.235%5Ev32%5Epc_relevant_default_base3&utm_relevant_index=6
+

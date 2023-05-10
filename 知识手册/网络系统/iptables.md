@@ -398,4 +398,331 @@ nat 转发
     iptables -I INPUT -p tcp --syn --dport 80 -m connlimit --connlimit-above 100 -j REJECT # 限制并发连接访问数
     iptables -I INPUT -m limit --limit 3/hour --limit-burst 10 -j ACCEPT # limit模块; --limit-burst 默认为5
 
- 
+ ![](https://pic1.zhimg.com/80/v2-6adb13bedd61341b7db5126c63d43a74_720w.webp)
+
+
+
+
+
+
+局域网共享上网
+==============
+``` bash
+实验环境：
+m01:   共享上网网关出口                ip地址：10.0.0.32    20.0.0.9
+web01: 只有内网地址，网关指向m01       ip地址：20.0.0.10
+
+
+在m01：
+iptables -F
+iptables -X
+iptables -Z
+
+iptables -t nat -A POSTROUTING -s 20.0.0.0/8 -j SNAT --to-source 10.0.0.32
+
+echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf  # 配置内核转发
+sysctl -p # 刷新生效
+
+iptables -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT  #放行80 443
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT   # 放行22号端口
+iptables -A INPUT -s 20.0.0.0/8 -j ACCEPT
+iptables -A INPUT -s 10.0.0.0/8 -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT   # 配置允许本地回环
+iptables -P INPUT DROP        # 修改默认规则为拒绝
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+iptables -A FORWARD -i eth1 -s 20.0.0.0/8 -j ACCEPT
+iptables -A FORWARD -o eth0 -s 20.0.0.0/8 -j ACCEPT
+iptables -A FORWARD -i eth0 -d 20.0.0.0/8 -j ACCEPT
+iptables -A FORWARD -o eth1 -d 20.0.0.0/8 -j ACCEPT
+
+# 查看nat表规则
+[root@m01]# iptables -t nat -nL
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+SNAT       all  --  20.0.0.0/8           0.0.0.0/0            to:10.0.0.32
+
+
+web01操作：
+[root@web01 ~]# cat /etc/sysconfig/network-scripts/ifcfg-eth0
+TYPE=Ethernet
+BOOTPROTO=none
+DEFROUTE=yes
+NAME=eth0
+DEVICE=eth0
+ONBOOT=no
+IPADDR=20.0.0.10
+PREFIX=8
+GATEWAY=20.0.0.9
+
+[root@web01 ~]# systemctl restart network
+
+[root@web01]  # ping www.baidu.com 
+```
+
+
+
+三.iptables四表五链
+
+4表伍链 (小写表，大写链)
+
+4 表 filter表 nat表 raw表 mangle表 核心是filter表和nat表 ，后两个几乎不用
+
+1 filter表 防火墙：屏蔽或准许端口，ip地址
+filter表	主要和主机自身有关，真正负责主机防火墙功能的(过滤流入流出主机的数据包)，filter表示iptables默认使用的表，这个表定义了三个链(chains)， 企业工作场景:主机防火墙
+INPUT	负责过滤所有目标地址是本机地址的数据包，通俗来说:就是过滤进入主机的数据包
+FORWARD	负责转发流经主机的数据包。起转发作用，和NAT关系很大，LVS NAT模式 net.ipv4.ip_forward=0
+OUTPUT	处理所有源地址是本机地址的数据包 通俗的讲:就是处理从主机发出去的数据包
+nat表	负责网络地址转换的，即来源与目的ip地址和port的转换
+应用:和主机本身无关，一般用于局域网共享上网或者特殊的端口转换服务相关工作场景:1 用于企业路由或者网关(iptables)，共享上网（postrouting）2 做内部外部IP地址一对一映射，硬件防火墙映射ip到内部服务器，ftp服务3 web，单个端口的映射，直接映射80端口，这个表定义了三个链，nat功能相当于网络的acl控制和网络交换机ACL类似
+OUTPUT	和主机放出的数据包有关，改变主机发出数据包的目的地址
+PREROUTING	在数据到达防火墙时，进行路由判断之前执行的规则，作用是改变数据包的目的地址、目的端口等
+就是收信时，根据规则重写收件人的地址
+POSTROUTING	在数据包离开防火墙时进行路由判断之后执行的规则，作用改变数据包的源地址，源端口等
+写好收件人的地址，要让家人回信时能够有地址可回生产应用: 局域网共享上网
+
+![](https://pic2.zhimg.com/80/v2-a2002a05adce8a167d1226bfdf81f315_720w.webp)
+
+1、目的地址是本地，则发送到INPUT，让INPUT决定是否接收下来送到用户空间，流程为①--->②;
+
+2、若满足PREROUTING的nat表上的转发规则，则发送给FORWARD，然后再经过POSTROUTING发送出去，流程为： ①--->③--->④--->⑥
+
+主机发送数据包时，流程则是⑤--->⑥
+
+![](https://pic3.zhimg.com/80/v2-43722677337a622644ed3013f3601f32_720w.webp)
+
+四、环境准备
+
+``` bash
+yum install -y iptables-services
+[root@mytest-main ~ 11:05:08]# rpm -ql iptables-services
+/etc/sysconfig/ip6tables
+/etc/sysconfig/iptables   # 防火墙的配置文件
+/usr/lib/systemd/system/ip6tables.service
+/usr/lib/systemd/system/iptables.service  # 防火墙服务配置文件(命令)
+/usr/libexec/initscripts/legacy-actions/ip6tables
+/usr/libexec/initscripts/legacy-actions/ip6tables/panic
+/usr/libexec/initscripts/legacy-actions/ip6tables/save
+/usr/libexec/initscripts/legacy-actions/iptables
+/usr/libexec/initscripts/legacy-actions/iptables/panic
+/usr/libexec/initscripts/legacy-actions/iptables/save
+/usr/libexec/iptables
+/usr/libexec/iptables/ip6tables.init
+/usr/libexec/iptables/iptables.init
+# 防火墙配相关模块，加载到内核中
+# 临时加载
+modprobe  ip_tables
+modprobe  iptable_filter
+modprobe  iptable_nat
+modprobe  ip_conntrack
+modprobe  ip_conntrack_ftp
+modprobe  ip_nat_ftp
+modprobe  ipt_state
+
+# 永久加载
+cat >> /etc/rc.local <<EOF
+modprobe  ip_tables
+modprobe  iptable_filter
+modprobe  iptable_nat
+modprobe  ip_conntrack
+modprobe  ip_conntrack_ftp
+modprobe  ip_nat_ftp
+modprobe  ipt_state
+EOF
+
+[root@mytest-main ~ 11:09:38]# lsmod|egrep 'filter|nat|ipt'
+nf_nat_ftp             12809  0 
+nf_conntrack_ftp       18478  1 nf_nat_ftp
+iptable_nat            12875  0 
+nf_nat_ipv4            14115  1 iptable_nat
+nf_nat                 26583  2 nf_nat_ftp,nf_nat_ipv4
+nf_conntrack          139264  6 nf_nat_ftp,nf_nat,xt_state,nf_nat_ipv4,nf_conntrack_ftp,nf_conntrack_ipv4
+iptable_filter         12810  0 
+ip_tables              27126  2 iptable_filter,iptable_nat
+libcrc32c              12644  3 xfs,nf_nat,nf_conntrack
+
+# 关闭防火墙
+systemctl stop firewalld
+systemctl disable firewalld
+
+# 开启iptables服务
+[root@mytest-main ~ 11:09:54]# systemctl start iptables
+[root@mytest-main ~ 11:11:13]# systemctl enable iptables
+Created symlink from /etc/systemd/system/basic.target.wants/iptables.service to /usr/lib/systemd/system/iptables.service.
+
+# 查看iptables规则 ---默认是filter表
+[root@mytest-main ~ 11:13:42]# iptables -nL
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            state RELATED,ESTABLISHED
+ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0           
+ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
+ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            state NEW tcp dpt:22
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+REJECT     all  --  0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination 
+
+[root@mytest-main ~ 11:15:57]# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+ACCEPT     all  --  anywhere             anywhere             state RELATED,ESTABLISHED
+ACCEPT     icmp --  anywhere             anywhere            
+ACCEPT     all  --  anywhere             anywhere            
+ACCEPT     tcp  --  anywhere             anywhere             state NEW tcp dpt:ssh
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+REJECT     all  --  anywhere             anywhere             reject-with icmp-host-prohibited
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+```
+
+
+iptables命令参数
+参数	含义
+-L/S	列出指定链或所有链的规则
+-n	ip地址和端口号以数字方式显示[例：iptables -nL]
+-t	指定表 不指定默认为filter表
+-A	在指定链尾部添加规则;append追加准许ACCEPT 一般加入准许类规则，使用-A
+-D	从规则链中删除一条规则，要么输入完整的规则，或者指定规则编号加以删除
+-I	在指定位置插入规则(例：iptables -I INPUT 1 --dport 80 -j ACCEPT（将规则插入到filter表INPUT链中的第一位上）;insert 拒绝的规则放在所有规则最上面 拒绝类的-I
+-R	替换某条规则，规则替换不会改变顺序，而且必须指定编号
+-P	为指定链设置默认规则策略，对自定义链不起作用
+
+
+参数	含义
+-p	protocal协议tcp/udp/icmp/all
+--dport	目标端口 destination 指定端口 加上协议 -p tcp(常用)
+--sport	源端口
+-s	--source源IP
+-d	--destination 目标IP
+-m	指定模块 如 multiport多端口选择
+	input输入的时候从哪个网卡进来
+-o	output输出的时候从哪个网卡出去
+
+
+参数	含义
+-j	满足条件后的动作:
+DROP/ACCEPT/REJECTDROP和REJECT都是拒绝DROP把数据丢弃，不会返回信息给用户REJECT拒绝，返回拒绝信息
+
+
+参数	含义
+-F flush	清除所有规则，不会处理默认的规则
+-X	删除用户自定义的链
+-Z	链的计数器清零(数据包计数器与数据包字节计数器)
+
+iptables命令选项输入顺序：
+
+iptables -t 表名 <-A/I/D/R> 规则链名 [规则号] <-i/o 网卡名> -p 协议名 <-s 源IP/源子网> --sport 源端口 <-d 目标IP/目标子网> --dport 目标端口 -j 动作
+
+表名包括：
+
+    raw：高级功能，如：网址过滤。mangle：数据包修改（QOS），用于实现服务质量。net：地址转换，用于网关路由器。filter：包过滤，用于防火墙规则。
+
+规则链名包括：
+
+    INPUT链：处理输入数据包。OUTPUT链：处理输出数据包。PORWARD链：处理转发数据包。PREROUTING链：用于目标地址转换（DNAT）。POSTOUTING链：用于源地址转换（SNAT）。
+
+动作包括：
+
+    accept：接收数据包。DROP：丢弃数据包。REDIRECT：重定向、映射、透明代理。SNAT：源地址转换。DNAT：目标地址转换。MASQUERADE：IP伪装（NAT），用于ADSL。LOG：日志记录
+
+配置filter表规则
+
+注意: 正式配置之前，先备份，再清空规则
+
+iptables规则保存
+
+iptables-save > iptables_m01              #将防火墙规则保存到文件中,只显示重启不生效
+iptables-save > /etc/sysconfig/iptables   #将防火墙规则保存到配置文件中，重启也会生效
+iptables-restore < iptables_m01           #从配置文件里载入防火墙配置
+
+
+开放指定的端口
+
+iptables -A INPUT -s 127.0.0.1 -d 127.0.0.1 -j ACCEPT               #允许本地回环接口(即运行本机访问本机)
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT    #允许已建立的或相关连的通行
+iptables -A OUTPUT -j ACCEPT         #允许所有本机向外的访问
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT    #允许访问22端口
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT    #允许访问80端口
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT    #允许访问443端口
+iptables -A INPUT -p tcp --dport 21 -j ACCEPT    #允许ftp服务的21端口
+iptables -A INPUT -p tcp --dport 20 -j ACCEPT    #允许FTP服务的20端口
+iptables -A INPUT -j reject       #禁止其他未允许的规则访问
+iptables -A FORWARD -j REJECT     #禁止其他未允许的规则访问
+
+
+禁止访问22号端口
+
+# [root@mytest-main ~ 11:34:41]# iptables -A INPUT -s 10.0.0.0/24 -j ACCEPT  # 先设置特定网段或者IP允许访问，否则自己会连不上主机
+[root@mytest-main ~ 11:34:41]# iptables -A INPUT -p tcp --dport 22 -j DROP
+
+删除指定规则
+
+# 查看规则编号
+[root@mytest-main ~ 11:36:41] # iptables -nL --line-number
+# 根据规则编号删除指定规则
+[root@mytest-main ~ 11:38:23]# iptables -D  INPUT 1
+
+屏蔽多个端口
+
+# 屏蔽非连续端口
+iptables -I INPUT -p tcp -m multiport --dport 8888,4999,10562 -j DROP
+# 屏蔽连续端口
+iptables -I INPUT -p tcp -m multiport --dport 1024:2024 -j DROP
+
+# !号的使用
+# iptables -I INPUT -p tcp -m multiport ! --dport 80,443 -j DROP
+
+
+[root@mytest-main /opt 12:34:43]# iptables -I INPUT -p tcp -m multiport --dport 2025:3025 -j DROP
+[root@mytest-main /opt 12:35:18]# iptables -nL
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            multiport dports 2025:3025
+DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            multiport dports 1024:2024
+DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            multiport dports 8888,4999,10562
+ACCEPT     all  --  10.0.0.0/24          0.0.0.0/0           
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+
+通过防火墙规则，控制是否可以ping
+
+iptables -I INPUT -p icmp --icmp-type 8 -j DROP
+
+[root@mytest-main /opt 17:36:45]# iptables -nL
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 8
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+
+# 禁止所有主机ping
+iptables -A INPUT -p icmp --icmp-type 8 -j DROP
+
+# 只要不是10.0.0.7就不允许ping
+iptables -I INPUT -p icmp --icmp-type 8 ! -s 10.0.0.7 -j DROP
