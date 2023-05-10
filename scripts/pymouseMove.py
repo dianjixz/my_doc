@@ -10,7 +10,7 @@ while True:
     time.sleep(10)
 
 
-
+# pip install pyuserinput  -i https://pypi.mirrors.ustc.edu.cn/simple/
 #m.position()#获取当前坐标的位置
 #m.move(x,y)#鼠标移动到xy位置
 #m.click(x,y)#移动并且在xy位置点击
