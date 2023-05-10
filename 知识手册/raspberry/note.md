@@ -23,3 +23,29 @@ https://blog.csdn.net/xukai871105/article/details/38349209
 可以设置watch实时观看：
 
  watch -n 0.1 echo CPU: $[$(cat /sys/class/thermal/thermal_zone0/temp)/1000]°
+
+
+
+
+ 树莓派共享 WiFi 在线配置工具
+
+ ``` bash
+ #复制如下代码到树莓派终端执行：
+
+wget -qO- https://tech.biko.pub/resource/rpi-share-wifi-setup.sh | \
+sudo R_SSID="dian-qi-guan-tou" \
+ R_PWD="12345678" \
+ R_HOST_IP="192.168.2.1" \
+ R_MASK="255.255.255.0" \
+ R_CLIENT_IP_RANGE="192.168.2.10,192.168.2.20" \
+ bash
+
+#执行成功后，搜索 WiFi 名称 dian-qi-guan-tou 连接即可上网。
+```
+
+
+``` bash
+# 停止共享 WiFi
+wget -qO- https://tech.biko.pub/resource/rpi-share-wifi-stop.sh | sudo bash
+
+```
