@@ -2397,3 +2397,12 @@ cmake 允许为项目增加编译选项，从而可以根据用户的环境和�
 让cmake显示gcc/g++的编译信息    make VERBOSE=1   &&   set(CMAKE_VERBOSE_MAKEFILE ON)
 
 
+CMakeList.txt中增加rpath选项
+1 CMakeList.txt增加rpath的方法
+
+某项目中，想用make install生成一个install安装包，把可执行程序、依赖库、算法模型文件、配置文件统一放到一个安装包里面，这样后期运维部署人员直接用install安装包就可以到新机器上部署，然后想在编译安装可执行程序的时候把依赖库的路径加到可执行程序里面，这样运维人员就不用export设置环境变量了。在CMakeLists.txt中增加rapth设置的方法如下(下面的两种方法都可以，任选一种)：
+
+set_target_properties(tcnstream  PROPERTIES LINK_FLAGS "-Wl,--disable-new-dtags,-rpath,./lib:../lib:/usr/local/neuware/lib64")
+————————————————
+版权声明：本文为CSDN博主「陈 洪 伟」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/u013171226/article/details/122047692
