@@ -1,6 +1,10 @@
 #!/bin/env python3
-from pymouse import PyMouse
 import time
+from pymouse import PyMouse			# 模拟鼠标
+from pykeyboard import PyKeyboard	# 模拟键盘
+    
+# 定义实例
+k = PyKeyboard()
 m = PyMouse()
 
 while True:

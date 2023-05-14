@@ -82,7 +82,7 @@ HostKey /etc/ssh/ssh_host_rsa_key
 PasswordAuthentication no 禁止使用密码验证登录（自己添加）
 
 
-
+编辑 authorized_keys 文件
 
 
 
