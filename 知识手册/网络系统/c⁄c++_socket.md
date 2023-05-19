@@ -5,8 +5,26 @@
 头文件：#include <sys/types.h>  #include <sys/socket.h>
 
 
+在C语言中，shutdown()函数用于关闭一个打开的socket连接。当一个连接被关闭，双方的socket都将不再能够读取或写入数据，但它们仍然存在并继续占用系统资源。
 
+shutdown()函数的原型为：
 
+c
+
+#include <sys/socket.h>
+
+int shutdown(int sockfd, int how);
+
+其中，sockfd是要关闭的socket的文件描述符，how是指定如何关闭连接的选项。how可以取以下两个值之一：
+
+    SHUT_RD：关闭socket的读取功能
+    SHUT_WR：关闭socket的写入功能
+
+如果成功，shutdown()函数将返回0。否则，将返回-1并设置errno来指示错误的类型。
+
+使用shutdown()函数可以用于优雅地关闭socket连接。在使用这个函数之前，我们需要先停止向socket中写入数据，并读取对端传来的所有数据，然后再调用shutdown()函数来关闭连接。这样可以确保在关闭连接之前，所有的数据都已经被正确处理了，而不会丢失或被截断。
+
+该函数可用于关闭多线程阻塞在读的线程。
 
 ### 定义函数：int socket(int domain, int type, int protocol);
 

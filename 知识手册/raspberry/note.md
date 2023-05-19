@@ -28,6 +28,7 @@ https://blog.csdn.net/xukai871105/article/details/38349209
 
 
  树莓派共享 WiFi 在线配置工具
+ https://tech.biko.pub/tool#/rpi-share-wifi
 
  ``` bash
  #复制如下代码到树莓派终端执行：
@@ -49,3 +50,18 @@ sudo R_SSID="dian-qi-guan-tou" \
 wget -qO- https://tech.biko.pub/resource/rpi-share-wifi-stop.sh | sudo bash
 
 ```
+
+
+``` bash
+# 将系统事件写入硬件时钟
+sudo hwclock -w 
+
+#查看硬件时钟时间
+sudo hwclock -r
+
+
+```
+
+树梅派设置静态 ip
+
+
