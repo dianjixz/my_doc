@@ -469,7 +469,7 @@ fzf/fasd/fd: 快速查找文件，也能模糊搜索命令行历史。
 
 ripgrep：文件内容全文检索。
 
-**[autojump](https://link.zhihu.com/?target=https%3A//github.com/wting/autojump)**   **�**� ⭐ （记忆进过的文件夹，下次可用 j + 文件夹名 直接跳进， 很方便）
+**[autojump](https://link.zhihu.com/?target=https%3A//github.com/wting/autojump)**   （记忆进过的文件夹，下次可用 j + 文件夹名 直接跳进， 很方便）
 
 ~~~ bash
 echo ""# autojump\nsource /usr/share/autojump/autojump.bash" >> ~/.bashrc
@@ -528,3 +528,7 @@ pydf 更加美观的显示磁盘占用情况
 链接：https://www.zhihu.com/question/59227720/answer/286665684
 来源：知乎
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+pip 设置中科大源  pip config set global.index-url https://pypi.mirrors.ustc.edu.cn/simple
+
+apt 设置中科大源  sudo sed -i 's@//.*archive.ubuntu.com@//mirrors.ustc.edu.cn@g' /etc/apt/sources.list
