@@ -18,7 +18,7 @@ https://www.cnblogs.com/zongfanstudy/articles/13920114.html
 modetest示例：
 
 modetest的运行需要root权限。
-
+modetest -M stm -s 32@39:#0
  
 
 首先这里给出一组显示示例，命令参数如下：

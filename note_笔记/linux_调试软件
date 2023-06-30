@@ -1,3 +1,18 @@
 一般是临时的修改，重启后失效，如：ifconfig、route、ip addr等。
 向屏幕输出图片：fbviewer
 		fbv-tset
+
+用fbi查看图片，用jfbterm能正常显示中文，用w3m能查看网页中的图片
+
+
+
+zhcon（Debian）—一个用户空间虚拟终端，其处理CJK I / O的能力远远优于内核子系统。它的特殊优势在于处理ISO 2022非UTF编码。它的特别弱点是UTF编码。
+fbterm（Debian）-一个用户空间虚拟终端，已经产生了包括jfbterm在内的多个fork 。它有一堆CJK输入法插件。
+bogl-bterm（Debian）—一个用户空间虚拟终端，已经产生了例如niterm的fork。
+Ali Gholami Rudi的fbpad —一个极简的用户空间虚拟终端，不依赖X库。
+nosh中的console-terminal-emulatorand console-fb-realizer工具-一个用于复制Linux和FreeBSD / PC-BSD内核虚拟终端的用户空间虚拟终端。它也不依赖于X库。
+kmscon —一个用户空间虚拟终端，与logindsystemd中的服务器及其“座”的概念紧密链接。
+
+
+特别是Ali Gholami Rudi不仅为帧缓冲工作提供了终端仿真器。 他还编写了直接到帧缓冲区的PDF查看器，VNC查看器，媒体播放器和Quran阅读器。
+https://github.com/aligrudi

@@ -64,3 +64,9 @@ echo -e "\033[?25l" > /dev/tty1
 
 > echo 0 > /sys/class/graphics/fbcon/cursor_blink
 > #关光标
+
+切换控制台
+sudo chvt 2
+
+屏蔽内核所有打印
+echo 0 4 0 7 > /proc/sys/kernel/printk

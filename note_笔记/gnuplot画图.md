@@ -461,3 +461,82 @@ https://www.cnblogs.com/zhangjing327/p/3524106.html
 
 
 http://www.gnuplot.info/docs_4.2/gnuplot.html#x1-5300013.1
+
+
+
+
+若要在gnuplot中非交互方式执行脚本，可以使用以下命令：
+
+```bash
+gnuplot -p -e "load 'script.gp'"
+```
+
+其中，`-p` 参数表示绘图结束后保持gnuplot会话打开，而 `-e` 参数用于指定要执行的命令或脚本。在这里，我们使用 `load 'script.gp'` 命令加载并执行名为 `script.gp` 的脚本文件。
+
+这样，gnuplot 将执行脚本文件中的命令，并在完成后保持会话打开，以便进一步交互或进行其他操作。
+
+
+要在gnuplot中画平滑曲线，可以使用`smooth`选项来应用平滑算法。以下是一个简单的示例：
+
+```gnuplot
+# 创建示例数据
+set print "data.txt"
+do for [i=0:10] {
+  x = i
+  y = sin(x)
+  print x, y
+}
+set print
+
+# 绘制平滑曲线
+set title "Smooth Curve"
+set xlabel "X"
+set ylabel "Y"
+plot "data.txt" with lines smooth csplines
+```
+
+在上面的示例中，首先我们创建了一个名为"data.txt"的文件，其中包含了一些示例数据。然后，在绘图部分，我们设置了标题、X轴和Y轴的标签，最后使用`plot`命令绘制曲线。通过`with lines`选项指定使用线条来连接数据点，并使用`smooth csplines`选项应用样条插值算法来平滑曲线。
+
+你可以根据需要修改数据的生成方式和绘图设置来适应你的需求。同时，gnuplot还支持其他平滑算法，如`smooth bezier`和`smooth unique`，你可以根据需要选择适合的算法来获得想要的平滑曲线效果。
+
+
+
+
+
+要在gnuplot脚本中将图像直接输出为PNG图片，你可以使用以下方法：
+
+1. 设置输出格式和输出文件：
+   在gnuplot脚本中使用`set terminal`命令来指定输出格式为PNG，并使用`set output`命令来指定输出文件的名称。例如：
+   ```
+   set terminal pngcairo
+   set output 'output.png'
+   ```
+
+2. 绘制图形：
+   在脚本中使用`plot`命令绘制图形，可以包括多条曲线、数据集等。
+
+3. 保存并退出：
+   在绘制完成后，使用`unset output`命令来关闭输出文件，然后退出gnuplot。例如：
+   ```
+   unset output
+   quit
+   ```
+
+完整的示例脚本如下所示：
+
+```gnuplot
+# 设置输出格式和输出文件
+set terminal pngcairo
+set output 'output.png'
+
+# 绘制图形
+plot sin(x) with lines
+
+# 保存并退出
+unset output
+quit
+```
+
+在运行该脚本时，gnuplot将会直接将图形输出为PNG图片，并将其保存为指定的文件名（此处为`output.png`）。
+
+请确保你的系统中已经安装了相应的gnuplot绘图软件包，并且你的脚本中的命令语法正确无误。

@@ -226,3 +226,6 @@ ffmpeg  -s 353x500 -i 000001.yuv 000001.jpg -y
 File '000001_353x500.yuv' already exists. Overwrite? [y/N]
 
 y覆盖，N不覆盖。
+
+
+ffmpeg -listen 1 -i tcp://0.0.0.0:10000 -c copy -f rtsp rtsp://192.168.2.21:8554/nihao

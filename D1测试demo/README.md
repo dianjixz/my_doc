@@ -79,5 +79,8 @@ exit 0
 
 > fbviewer test.jpg
 
+
+fbviewer 源码：https://github.com/godspeed1989/fbv.git
+
 test.jpg可由paizhao程序生成。
 ## debian测试，目前debian系统属于外挂，待内置后再提供测试

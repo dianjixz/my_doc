@@ -105,3 +105,21 @@ udhcpc -b -i wlan0 -q
 ————————————————
 版权声明：本文为CSDN博主「Ruler.」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/qq_24835087/article/details/104783990
+
+
+
+使用以下命令设置静态IP地址：
+``` bash
+# sudo ifconfig <interface_name> <ip_address> netmask <netmask>
+sudo ifconfig eth0 192.168.0.100 netmask 255.255.255.0
+```
+
+可选）设置默认网关（路由器）：
+``` bash
+sudo route add default gw <gateway_ip>
+```
+
+可选）设置DNS服务器：
+``` bash
+nameserver <dns_server_ip>
+```

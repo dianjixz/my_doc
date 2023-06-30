@@ -278,6 +278,9 @@ echo $LIBRARY_PATH
 
 程序运行阶段用到的变量。
 LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=`pwd`
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:`pwd`
+
 
 程序运行时查找动态链接库(.so文件)的目录列表。比如:
 
