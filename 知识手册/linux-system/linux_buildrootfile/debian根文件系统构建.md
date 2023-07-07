@@ -28,6 +28,9 @@ debootstrap --foreign --arch armhf stretch . http://ftp.cn.debian.org/debian
 
 #debootstrap --foreign --arch amd64 xenial .  https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
 
+#debootstrap --foreign --arch armhf bookworm .  https://mirrors.ustc.edu.cn/debian/
+
+
 cp qemu到usr/bin
 
 cp /usr/bin/qemu-arm-static usr/bin/

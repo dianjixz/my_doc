@@ -358,3 +358,10 @@ export TSLIB_PLUGINDIR=$TSLIB_ROOT/lib/ts
 
 
 export DISPLAY=:0.0   将gui显示到本地界面上
+
+
+
+
+
+
+

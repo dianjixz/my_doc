@@ -41,7 +41,7 @@
         keyboard.tap_key('H', n=2, interval=5) 		# 点击H键2次，每次间隔5秒
         keyboard.tap_key(keyboard.numpad_keys[5])   # 点击小键盘5
         keyboard.tap_key(keyboard.function_keys[5]) # 点击功能键F5
-
+		keyboard.tap_key(keyboard.enter_key)
     联合点击：
 
         # 同时按 Alt + Tab 键

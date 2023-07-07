@@ -28,6 +28,19 @@ network={
     ssid="****"
     psk="*****"
 }
+
+
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+
+
+
+ctrl_interface=/var/run/wpa_supplicant
+update_config=1
+p2p_disabled=1
+ap_scan=1
+
+
 ~~~
 
 

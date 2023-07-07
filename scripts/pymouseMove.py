@@ -38,6 +38,16 @@ while True:
 #print(dir(keyboard))
 # 内容太多，就不展示了
 
+# from pykeyboard import PyKeyboard
+
+# k = PyKeyboard()
+
+# #按向下的方向键
+# k.press_key(k.down_key)
+
+# #按回车键
+# k.press_key(k.enter_key)
+
 
 
 

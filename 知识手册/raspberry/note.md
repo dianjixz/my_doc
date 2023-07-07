@@ -65,3 +65,15 @@ sudo hwclock -r
 树梅派设置静态 ip
 
 
+树梅派自动扩容：
+``` bash
+if [ -f "/etc/resize.init" ] ; then
+	rm /etc/resize.init
+	raspi-config nonint do_expand_rootfs
+	sync
+	reboot
+fi
+
+
+
+```
