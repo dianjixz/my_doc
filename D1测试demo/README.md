@@ -82,5 +82,13 @@ exit 0
 
 fbviewer 源码：https://github.com/godspeed1989/fbv.git
 
+
+使用 ffmpeg 将 MP4 视频转换为 PPM 图像序列,然后使用fbv播放。
+``` bash
+ffmpeg -i input.mp4 -vf "format=rgb24" -f image2pipe -vcodec ppm - | fbv -d /dev/fb0 -n -
+```
+
+
+
 test.jpg可由paizhao程序生成。
 ## debian测试，目前debian系统属于外挂，待内置后再提供测试

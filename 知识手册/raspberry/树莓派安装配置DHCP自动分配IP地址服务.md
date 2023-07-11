@@ -39,6 +39,30 @@ fixed-address 207.175.42.254;
 根据自己的具体情况，只需要修改上面的配置信息即可。
 
 
+sudo vim /etc/dhcpcd.conf
+
+
+interface eth0    # 或 wlan0，根据你的网络接口选择
+static ip_address=<静态 IP 地址>/24
+static routers=<网关 IP 地址>
+static domain_name_servers=<DNS 服务器 IP 地址>
+
+
+
+interface eth0
+static ip_address=192.168.1.100/24
+static routers=192.168.1.1
+static domain_name_servers=8.8.8.8
+
+
+
+
+
+
+
+
+
+
 总结
 Top
 

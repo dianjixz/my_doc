@@ -27,6 +27,9 @@
    执行make dtbs
 2、dtc -I dts -O dtb  *.dts > my.dtb
 
+dtc -I dts -O dtb -o output.dtb file1.dts file2.dts file3.dts
+
+
 二、设备树反编译
 dtc -I dtb -O dts *.dtb > my.dts
 ————————————————
