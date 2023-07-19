@@ -51,48 +51,8 @@ https://www.jianshu.com/p/e7e84f48b653
 
 
 
-
-
-
 ``` c
-codec_ext: max98357a@0 {
-    compatible = "maxim,max98357a";
-    #sound-dai-cells = <0>;
-};
 
-sound {
-    compatible = "simple-audio-card";
-    status = "okay";
-    simple-audio-card,name = "max98357a";
-
-    simple-audio-card,format = "i2s";
-    simple-audio-card,bitclock-master = <&dailink_master_cpu>;
-    simple-audio-card,frame-master = <&dailink_master_cpu>;
-
-    simple-audio-card,codec {
-        sound-dai = <&codec_ext>;
-    };
-
-    dailink_master_cpu: simple-audio-card,cpu {
-        sound-dai = <&sai2>;
-    };
-
-};
-
-
-&sai2 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_sai2>;
-
-    assigned-clocks = <&clks IMX6UL_CLK_SAI2_SEL>,
-              <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
-    assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
-    assigned-clock-rates = <2>, <196608000>;
-
-    fsl,sai-asynchronous;
-    /*fsl,sai-mclk-direction-output;*/
-    status = "okay";
-};
 
 
 ```
@@ -221,14 +181,228 @@ sound: sound {
 
 
 
+stm32mp135调试成功了，由于不熟悉linux的驱动着一块，所以调试起来的时候比较费劲。
+记录一下成功的操作。
+
+音频驱动分为三大块
+声卡，解码器，硬件端口。
+
+在音频系统中，解码器主要有两种，一种是不需要控制的，直接对其输出音频数据就能播放。另一种是需要进行控制（寄存器写入）
+音频通信总线一般是 i2s。
+
+其中配置也要分三部分，三部分联合才能完成声音系统的匹配。
+下面是stm32mp135直接输出i2s音频的设备树配置
+``` c
+	sound {
+		compatible = "audio-graph-card";
+		label = "STM32MP135F-DK";
+		//routing =
+		//	"Playback" , "MCLK",
+		//	"Capture" , "MCLK",
+		//	"MICL" , "Mic Bias";
+		
+		dais = <&sai1a_port &sai1b_port>;
+		status = "okay";
+	};
+	OutToPins_codec: OutToPins_codec@0 {
+		compatible = "OutToPins_codec";
+		#reg = <0>;
+		#sound-dai-cells = <0>;
+		clocks = <&sai1a>;
+		clock-names = "MCLK";
+		status = "okay";
+
+		OutToPins_port: port {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			OutToPins_tx0_endpoint: endpoint@0 {
+							reg = <0>;
+							remote-endpoint = <&sai1a_endpoint>;
+							//frame-master;
+							//bitclock-master;
+			};
+
+			OutToPins_tx1_endpoint: endpoint@1 {
+							reg = <1>;
+							remote-endpoint = <&sai1b_endpoint>;
+							//frame-master;
+							//bitclock-master;
+			};
+		};
+    };
+&sai1 {
+	clocks = <&rcc SAI1>, <&scmi_clk CK_SCMI_PLL3_Q>, <&scmi_clk CK_SCMI_PLL3_R>;
+	clock-names = "pclk", "x8k", "x11k";
+
+    pinctrl-names = "default", "sleep";
+	pinctrl-0 = <&sai1a_pins_mx>, <&sai1b_pins_mx>;
+	pinctrl-1 = <&sai1a_sleep_pins_mx>, <&sai1b_sleep_pins_mx>;
+    // pinctrl-0 = <&sai2a_pins_a>, <&sai2b_pins_b>;
+    // pinctrl-1 = <&sai2a_sleep_pins_a>, <&sai2b_sleep_pins_b>;
+    status = "okay";
+};
+
+&sai1a{
+	#clock-cells = <0>;
+	dma-names = "tx";
+	status = "okay";
+
+	sai1a_port: port {
+		sai1a_endpoint: endpoint {
+			remote-endpoint = <&OutToPins_tx0_endpoint>;
+			format = "i2s";
+			//format = "lsb";
+			//mclk-fs = <128>;
+			dai-tdm-slot-num = <4>;
+			dai-tdm-slot-width = <32>;
+		};
+	};
+};
+ 
+	&sai1b{
+		dma-names = "tx";
+		// st,sync = <&sai1a 1>;
+		// clocks = <&rcc SAI1_K>, <&sai1a>;
+		// clock-names = "sai_ck", "MCLK";
+		status = "okay";
+
+		sai1b_port: port {
+			sai1b_endpoint: endpoint {
+				remote-endpoint = <&OutToPins_tx1_endpoint>;
+				format = "i2s";
+				//format = "lsb";
+				//mclk-fs = <128>;
+				dai-tdm-slot-num = <4>;
+				dai-tdm-slot-width = <32>;
+			};
+		};
+	};
+
+```
+上面的配置主要分为三部分：
+
+sound 是用来配置声卡的，其中也包含了声音路由（虽然这个真的很烦人）。
+这里面有一个比较大的坑就是 routing 。这个就是声音路由（万恶来源！）。
+关于这个路由没有明确的说法。但是在135上不用填写这个。
 
 
+OutToPins_codec 是用来配置解码器的，在这一块不同的芯片有不同的写法，不过主要分为两类，一类是挂载在i2c总线上的，一类是单独存在的，
+着一块没什么坑的，不过比较烦的在 linux 的 5.15 版本中没有针对 i2s 直接输出的驱动了。在这里有点想骂写音频系统的人了，没事乱改什么接口，
+觉得头发多吗？
+
+sai1 这个是音频的硬件接口。标准音频接口是 i2s ，但是在不同的设备上有叫不同的名字的。比如 stm32的就是 sai 。在其他设备上就是 i2s。
+看厂家的说法是这个接口可以兼容多种输出，反正没有想象中那么好用。
+
+针对音频总线 i2s 。我个人的感觉，i2s 不属于纯粹的总线，它更多的是用来传递数字音频信息的。没有总线一说。
+其实针对这个i2s比较烦的，高速的 i2c 完全可以当音频线用了，干嘛非要开发i2s,占用的线多，又没有特别的优势。
+
+``` c
+// SPDX-License-Identifier: GPL-2.0-or-later
+/*
+ * Based on generic Bluetooth SCO link
+ */
+
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/platform_device.h>
+
+#include <sound/soc.h>
+
+static const struct snd_soc_dapm_widget OutToPins_widgets[] = {
+	SND_SOC_DAPM_INPUT("RX"),
+	SND_SOC_DAPM_OUTPUT("TX"),
+};
+
+static const struct snd_soc_dapm_route OutToPins_routes[] = {
+	{ "Capture", NULL, "RX" },
+	{ "TX", NULL, "Playback" },
+};
+
+static struct snd_soc_dai_driver OutToPins_dai[] = {
+	{
+		.name = "OutToPins-pcm",
+		.playback = {
+			.stream_name = "Playback",
+			.channels_min = 1,
+			.channels_max = 4,
+ 			.rates = SNDRV_PCM_RATE_CONTINUOUS,
+ 			/* DMA does not support 24 bits transfers */
+ 			.formats =
+ 				SNDRV_PCM_FMTBIT_S16_LE |
+ 				SNDRV_PCM_FMTBIT_S32_LE,
+		},
+		.capture = {
+			 .stream_name = "Capture",
+			.channels_min = 1,
+			.channels_max = 4,
+ 			.rates = SNDRV_PCM_RATE_CONTINUOUS,
+ 			/* DMA does not support 24 bits transfers */
+ 			.formats =
+ 				SNDRV_PCM_FMTBIT_S16_LE |
+ 				SNDRV_PCM_FMTBIT_S32_LE,
+		},
+	},
+
+};
+
+static int OutToPins_of_xlate_dai_id(struct snd_soc_component *component,
+				   struct device_node *endpoint)
+{
+	/* return dai id 0, whatever the endpoint index */
+	return 0;
+}
+
+static const struct snd_soc_component_driver soc_component_dev_OutToPins = {
+	.dapm_widgets		= OutToPins_widgets,
+	.num_dapm_widgets	= ARRAY_SIZE(OutToPins_widgets),
+	.dapm_routes		= OutToPins_routes,
+	.num_dapm_routes	= ARRAY_SIZE(OutToPins_routes),
+	.of_xlate_dai_id	= OutToPins_of_xlate_dai_id,
+	.idle_bias_on		= 1,
+	.use_pmdown_time	= 1,
+	.endianness		= 1,
+	.non_legacy_dai_naming	= 1,
+};
+
+static int OutToPins_probe(struct platform_device *pdev)
+{
+	printk("fuck fuck you!----------------\r");
+	return devm_snd_soc_register_component(&pdev->dev,
+				      &soc_component_dev_OutToPins,
+				      OutToPins_dai, ARRAY_SIZE(OutToPins_dai));
+}
+
+static int OutToPins_remove(struct platform_device *pdev)
+{
+	return 0;
+}
 
 
+#if defined(CONFIG_OF)
+static const struct of_device_id OutToPins_codec_of_match[] = {
+	{ .compatible = "OutToPins_codec", },
+	{},
+};
+MODULE_DEVICE_TABLE(of, OutToPins_codec_of_match);
+#endif
 
+static struct platform_driver OutToPins_driver = {
+	.driver = {
+		.name = "OutToPins_codec",
+		.of_match_table = of_match_ptr(OutToPins_codec_of_match),
+	},
+	.probe = OutToPins_probe,
+	.remove = OutToPins_remove,
+};
 
+module_platform_driver(OutToPins_driver);
 
+MODULE_AUTHOR("martin.lesniak@st.com");
+MODULE_DESCRIPTION("ASoC generic output driver");
+MODULE_LICENSE("GPL");
 
+```
 
 
 

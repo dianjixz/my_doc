@@ -1,0 +1,20 @@
+
+# Enable the pr_debug() as well (rm the comment from the line below)
+#EXTRA_CFLAGS += -DDEBUG
+#CFLAGS_printk_loglvl.o := -DDEBUG
+
+
+
+obj-m += xxx.o
+
+
+KERN_DIR = /home/gqb/development/linux-kernel-3.4
+
+all:
+	make -C $(KERN_DIR) M=$(shell pwd) modules   
+
+clean:                                  
+	make -C $(KERN_DIR) M=$(shell pwd) modules clean
+	rm -rf modules.order
+
+
