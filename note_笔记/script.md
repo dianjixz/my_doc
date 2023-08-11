@@ -30,3 +30,8 @@ script -t -f -q 2>$USER.time -a $USER.his #记录用户的操作
 ————————————————
 版权声明：本文为CSDN博主「怀揣梦想的大鸡腿」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/dajitui2024/article/details/79396526
+
+
+终端记录
+script -f log.exe
+停止:ctrl+D

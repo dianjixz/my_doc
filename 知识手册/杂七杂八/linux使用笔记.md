@@ -129,8 +129,14 @@ reboot
 ```
 
 
+coredump 开启核心转储： 默认情况下，大多数Linux系统会关闭核心转储，你需要通过以下方式开启核心转储。
+
+    临时开启：在终端中运行以下命令，将核心转储限制设置为无限制，允许任何用户生成核心转储文件。
+
+    bash
+
+ulimit -c unlimited
 
 
-
-
-
+指定核心转储文件位置：
+echo "/path/to/core_dumps/" > /proc/sys/kernel/core_pattern
