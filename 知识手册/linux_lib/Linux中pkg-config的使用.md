@@ -396,3 +396,14 @@ export CPLUS_INCLUDE_PATH=XXX:$CPLUS_INCLUDE_PATH
 ————————————————
 版权声明：本文为CSDN博主「几米夜空」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/chen_jianjian/article/details/123890413
+
+
+
+configure 使用pkg-config
+export CFLAGS=`pkg-config --cflags freetype2`
+export CXXFLAGS=`pkg-config --cflags freetype2`
+
+export LDFLAGS=`pkg-config --libs freetype2`
+
+
+
