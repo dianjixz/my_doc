@@ -132,3 +132,31 @@ git 添加远程仓库示例
 
 
 
+Git建立本地裸仓库
+建立本地裸仓库
+# 创建.git文件夹 , 一般裸仓库是隐藏文件且以.git结尾
+# Linux下的隐藏文件是 . 开头
+mkdir -p ~/.test_pro.git
+
+# 进入文件夹
+cd ~/.test_pro.git
+
+# 初始化仓库, 如果使用裸仓库需要添加 --bare 参数
+git init --bare
+
+二. 拉取仓库
+
+
+# 新建目录
+mkdir -p test
+
+# 拷贝内容, git clone允许指定仓库存放路径, 并且不会创建test_pro目录
+# 如果不添加路径, 会自动创建test_pro目录
+git clone ckk@192.168.10.10:~/.test_pro.git test
+
+# 提示会输入用户名密码
+(ckk@192.168.10.10) Password:
+warning: You appear to have cloned an empty repository.
+
+# 检查远程仓库
+git remote -v
