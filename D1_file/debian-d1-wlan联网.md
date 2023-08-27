@@ -114,6 +114,9 @@ wpa_cli -i wlan0 save_config
 #请求自动分配IP地址,-b:后台(back) –i:指定接口 –q:获得续约后退出,如果想尽在前台运行,则去掉-b,加上-f
 #不用不加,会自动分配
 udhcpc -b -i wlan0 -q 
+# 重新链接
+wpa_cli -i wlan0 reconnect
+
 ```
 ————————————————
 版权声明：本文为CSDN博主「Ruler.」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。

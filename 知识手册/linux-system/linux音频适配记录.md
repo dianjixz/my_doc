@@ -409,8 +409,50 @@ MODULE_LICENSE("GPL");
 
 
 
+# 记 CM4Stack 的声卡调试
+遇到的问题，cm4stack 的声卡使用的是数字音频设备 aw88298 。这款芯片是属于数字音频芯片，厂家提供了相关的驱动。装到 linux 上也如期的工作了。但是的用法却比较分裂,由于这个声卡只支持特定的音频输入。所以目前的播放都是通过 ffmpeg转换到特定格式进行播放的。
+
+ffmpeg -i /usr/local/m5stack/diamond-sparkle.wav -af "volume=0.1" -acodec pcm_s32le -f alsa hw:2,0
+可是这样带来了一个缺陷就是默认的音乐播放都没办法很好播放音乐。因此决定想办法解决这个问题。
+最开始的想法是从驱动层面解决这个问题，但是失败了。由于驱动比较复杂，不太想这这个上面浪费太多的时间.
+后面从 ALSA 框架中的到一信息就是可以在 ALSA 框架中利用插件将音频转换到需要的格式然后播放.
+经过不断的探索,终于解决的转换的问题.但是过程比较曲折的.
+
+首先需要安装插件
+
+其次在 /etc/asound.conf文件中填写下面的内容.
+
+```
+pcm_slave.sl3 {
+	pcm "hw:2,0"
+	format S32_LE
+	channels 2
+	rate 44100
+}
+
+pcm.!default {
+	type plug
+	slave sl3
+}
+
+pcm.aw88298 {
+	type plug
+	slave sl3
+}
+```
+ 
+第一部定义一个转换部分,转换输出是固定的 S32_LE 格式
+第二部分定义默认的声卡输出是第一个插件
+第三部分定义的是一个虚拟的声卡,输出也是第一个插件
+
+然后播放器播放任意的pcm格式都会被转换成 S32_LE 并送给声卡了.
 
 
 
 
 
+
+
+
+
+https://www.alsa-project.org/main/index.php/Asoundrc

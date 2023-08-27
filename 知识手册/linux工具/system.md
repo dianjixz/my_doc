@@ -884,3 +884,51 @@ systemd path的这个『bug』也有好处，因为可以让瞬间产生的多�
 链接: https://www.junmajinlong.com/linux/systemd/systemd_path/
 来源: 骏马金龙
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
+# 另一个开机启动的设置方式
+设置自启动Service
+
+1、创建启动脚本
+使用任何文本编辑器，在/etc/init.d目录下创建一个新的启动脚本，假设命名为your_script_name，以下是示例脚本的参考内容：
+```bash
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          your_service_name
+# Required-Start:    $all
+# Required-Stop:     
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start your_service_name at boot time
+# Description:       Enable service provided by your_service_name
+### END INIT INFO
+
+/path/to/your/program &
+
+exit 0
+```
+
+2、设置启动脚本具有可执行权限
+```bash
+sudo chmod +x /etc/init.d/your_script_name
+```
+3、使用update-rc.d命令将脚本添加到系统的启动项中
+```bash
+sudo update-rc.d your_script_name defaults
+
+```
+4、使用systemctl命令启用自启动
+```bash
+sudo systemctl enable your_script_name
+```
+5、重启开发板验证自启动服务程序是否运行正常
+```bash
+root@ubuntu:~# systemctl status your_script_name.service 
+● your_script_name.service - LSB: Start your_service_name at boot time
+    Loaded: loaded (/etc/init.d/your_script_name; generated)
+    Active: active (exited) since Wed 2023-04-19 15:01:12 CST; 57s ago
+    Docs: man:systemd-sysv-generator(8)
+    Process: 2768 ExecStart=/etc/init.d/your_script_name start (code=exited, status=0/SUCCESS)
+```
