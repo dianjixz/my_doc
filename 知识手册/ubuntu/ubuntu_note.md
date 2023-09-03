@@ -1,6 +1,11 @@
 ubuntu 双系统和 windows 系统时间保持同步的命令。
 ``` bash
 timedatectl set-local-rtc 1 --adjust-system-clock
+
+# 网络时间同步
+sudo apt-get install ntpdate
+
+sudo ntpdate cn.pool.ntp.org
 ```
 
 
@@ -27,4 +32,13 @@ Ubuntu 离线安装gcc,g++,make依赖包
 安装依赖包
 ``` bash
 sudo dpkg -i   *.deb
+```
+
+
+ubuntu双系统设置启动顺序
+```bash
+vim /etc/default/grub
+
+update-grub
+
 ```
