@@ -32,9 +32,12 @@ apt-mark hold 5.4.0-88-generic
 ## 3.禁止apt自动更新
 ``` bash
 vim /etc/apt/apt.conf.d/10periodic
-APT::Periodic::Update-Package-Lists "0";   #这里的1改成0
-APT::Periodic::Download-Upgradeable-Packages "0";
-APT::Periodic::AutocleanInterval "0";
+# APT::Periodic::Update-Package-Lists "0";   #这里的1改成0
+# APT::Periodic::Download-Upgradeable-Packages "0";
+# APT::Periodic::AutocleanInterval "0";
+# APT::Periodic::Unattended-Upgrade "0"; # 每天的自动更新
+# 重新加载配置
+sudo systemctl restart apt-daily.timer apt-daily-upgrade.timer
 ```
 ————————————————
 版权声明：本文为CSDN博主「technetfly」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
