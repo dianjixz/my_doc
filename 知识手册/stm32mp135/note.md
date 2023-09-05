@@ -11,7 +11,35 @@ sudo sgdisk --resize-table=128 -a 1 -n 1:34:545 -c 1:fsbl1 -n 2:546:1057 -c 2:fs
 
 ```
 
+```bash
+sudo sgdisk --resize-table=128 -a 1 \
+-n 1:34:545             -c 1:fsbl1 \
+-n 2:546:1057           -c 2:fsbl2 \
+-n 3:1058:1569          -c 3:fsbl3 \
+-n 4:1570:2081          -c 4:fsbl4 \
+-n 5:2082:10273         -c 5:fsbl5 \
+-n 6:10274:18465        -c 6:fsbl6 \
+-n 7:18466:19489        -c 7:fsbl7 \
+-n 8:19490:150561       -c 8:boot \
+-n 9:150562:183329      -c 9:vendorfs \
+-n 10:183330:1690657    -c 10:rootfs \
+-g -P /dev/sdb
 
+
+
+
+
+-n 1:34:545 -c 1:fsbl1 
+-n 2:546:1057 -c 2:fsbl2 
+-n 3:1058:1569 -c 3:ssb3 
+-n 4:1570:2081 -c 4:bootfs 
+-n 5:136226 -c 5:rootfs 
+-A 4:set:2 -p /dev/sdb -g
+
+
+
+
+```
 sgdisk：
 
 保存分区表：
@@ -21,12 +49,22 @@ sudo sgdisk --backup=partition_table_backup.bin /dev/sda
 sudo sgdisk --load-backup=partition_table_backup.bin /dev/sda
 
 
-fdisk：
+sfdisk：
 保存分区表：
-sudo fdisk -l /dev/sda > partition_table_backup.txt
+sudo sfdisk -d /dev/sdX > partition_table_backup.txt
+or
+sudo parted /dev/sdX print > partition_table_backup.txt
+
+
+
+
+
 
 恢复的分区表：
-sudo fdisk /dev/sda < partition_table_backup.txt
+sudo sfdisk /dev/sdX < partition_table_backup.txt
+or
+sudo parted /dev/sdX --script < partition_table_backup.txt
+
 
 
 
@@ -50,6 +88,20 @@ I/O 大小(最小/最佳)：512 字节 / 512 字节
 /dev/sdb9   150562  183329   32768    16M Linux 文件系统         vendorfs
 /dev/sdb10  183330 1690657 1507328   736M Linux 文件系统         rootfs
 /dev/sdb11 1690658 3145694 1455037 710.5M Linux 文件系统         userfs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -870,3 +870,20 @@ mtest命令能用于进行内存读写测试，例如可以用来测试目标板
 测试结果如下：
 
 测试的时候，如果想退出测试的话，可以使用键盘上的"Ctrl+C"组合键。
+
+
+
+解决 Warning - bad CRC, using default environment警告
+
+```bash
+=> env default -a
+## Resetting to default environment
+
+=> saveenv 
+Saving Environment to MMC...
+Writing to MMC(0)... done
+
+
+
+```
+

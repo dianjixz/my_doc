@@ -793,7 +793,9 @@ export PS1="\e[0;36m[\u@\h \W]\\$ \e[m"
 
 网络测速软件 iperf3
 服务端：iperf3 -s -p 8888
-客户端：iperf3 -c serverIP -p 8888
+客户端：iperf3 -c serverIP -p 8888	上行
+客户端：iperf3 -c serverIP -p 8888 -R 下行
+客户端：iperf3 -c serverIP -p 8888 --bidir 双向
 
 
 41.bash shell 命令行选项的用法

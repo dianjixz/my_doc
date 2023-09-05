@@ -94,3 +94,34 @@ nmtui 是一个基于curses的图形化前端，包括在networkmanager中。
 
 禁用开机启动：chkconfig NetworkManager off
 
+
+
+
+
+
+netplan, NetworkManager, systemd-networkd简介
+
+1、systemd-networkd简介
+
+systemd-networkd是systemd 的一部分 ，负责 systemd 生态中的网络配置部分(systemd-networkd.service, systemd-resolved.service)。使用 systemd-networkd，你可以为网络设备配置基础的 DHCP/静态IP网络等，还可以配置虚拟网络功能，例如网桥、隧道和 VLAN等等。systemd-networkd 与wpa_supplicant 服务配合可以支持配置WIFI无线适配器。具体见Linux网络管理工具systemd-networkd简介
+2、NetworkManager简介
+
+NetworkManager是一项后端服务(networkmanager.service)，是一个用于控制Ubuntu操作系统上的网络接口图形化界面的工具。NetworkManager和systemd-networked可以理解为相互替代关系，一个是基于图形化界面的工具，另外一个是基于命令行界面的工具。因此，用户可以根据自己的需求，决定使用networkmanager还是systemd-netword。 因此，如果要禁用NetworkManager，则应启用systemd-networkd，而在systemd-networkd运行时最好禁用networkmanager。
+3、Netplan简介
+
+Netplan是Canonical(Ubuntu)开发的做为某些 Linux 发行版（主力为ubuntu Linux发行版）上默认的网络配置命令行工具。Netplan 使用 YAML 描述文件来配置网络，然后，通过这些描述为任何给定的底层呈现工具(主要就是systemd-networkd和networkmanager二种工具)生成必要的配置选项。
+
+
+
+
+wpa_supplicant -Dnl80211 -iwlx02e04c3ce83b -c/etc/wpa_supplicant.conf -B
+
+使用systemd-networkd配置网络
+https://code84.com/99756.html
+
+
+
+
+
+
+
