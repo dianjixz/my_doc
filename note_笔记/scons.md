@@ -235,3 +235,304 @@ opt.Program(o)
 d = dbg.Object('foo-dbg','foo.c') //生成foo-dbg
 .o
 dbg.Program(d)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1. 介绍
+
+Scons是一个开放源码、以Python语言编码的自动化构建工具，类似于makefile，但是他没有像makefile那样晦涩难懂的语法，更加友好。此外scons支持跨平台使用，编写好scons脚本，可以在windows和linux下随意切换使用！
+2. 安装scons
+
+先安装python3，之后使用python的pip安装工具安装scons，安装过程中的问题大家可以网上查查或者看错误提示，基本都能解决，以下是linux下安装关键指令
+
+sudo apt install python
+pip install scons
+
+3. Scons初步使用
+
+  首先记住，scons是以python语言编码的，所以支持python语法！当然没学过python也没关系，会几个指令也能玩
+3.1 编译程序
+
+源代码hello.c
+
+int main()
+{
+printf("Hello, world!\n");
+}
+
+同级目录下创建名字为Sconstruct 的文件，内容如下
+
+Program('hello.c')
+
+然后在当前目录命令窗口输入scons即可编译工程
+
+% scons
+scons: Reading SConscript files ...
+scons: done reading SConscript files.
+scons: Building targets ...
+cc -o hello.o -c hello.c
+cc -o hello hello.o
+scons: done building targets.
+
+在不同的系统下，scons会自动识别系统环境，采用对应系统下的指令进行编译，生成对应系统下可执行的文件，如windows下就会生成.exe文件
+3.2 生成Object文件
+
+修改Sconstruct 文件如下
+
+Object('hello.c')
+
+之后在当前目录命令窗口输入scons重新编译工程即可
+3.3 清除工程
+
+命令：scons -c
+4. Sconstruct文件
+
+    Sconstruct文件是一个python脚本，支持python语法，使用#注释
+    使用print 打印
+    屏蔽非必要的scons输出 scons -Q
+
+5. 简单的编译工程示例
+5.1 指定生成目标文件名字
+
+修改Sconstruct文件为：
+
+Program ('new_hello', 'hello.c')
+
+重新编译工程
+
+% scons -Q
+cc -o hello.o -c hello.c
+cc -o new_hello hello.o
+
+5.2 编译多个源文件
+
+    在工程中往往有多个源文件一起组合生成一个目标文件，scons这样实现，修改Sconstruct文件如下：
+
+Program(['prog.c', 'file1.c', 'file2.c'])
+
+编译工程
+
+% scons -Q
+cc -o file1.o -c file1.c
+cc -o file2.o -c file2.c
+cc -o prog.o -c prog.c
+cc -o prog prog.o file1.o file2.o
+
+    加上指定生成文件名，修改Sconstruct文件如下：
+
+Program('program', ['prog.c', 'file1.c', 'file2.c'])
+
+编译工程
+
+% scons -Q
+cc -o file1.o -c file1.c
+cc -o file2.o -c file2.c
+cc -o prog.o -c prog.c
+cc -o program prog.o file1.o file2.o
+
+    如果文件比较多，可以采用Glob函数查找符合条件的文件制作一个文件列表，同时还支持使用shell模式匹配字符* ? [abc] 或 [!abc] ，修改Sconstruct如下：
+
+Program('program', Glob('*.c'))
+
+5.3 指定单个文件和指定多个文件
+
+    指定单个文件
+    a) 采用字串方式：Program('hello', 'hello.c')
+    b) 采用列表方式Program('hello', ['hello.c'])
+    指定多个文件Program('hello', ['file1.c', 'file2.c'])
+    尽管python支持采用字符串或者列表指定文件，但是注意不支持混合使用
+
+common_sources = ['file1.c', 'file2.c']# 以下操作错误，因为采用了 字符串+列表 方式
+Program('program1', common_sources + 'program1.c')# 以下操作正确，因为采用的是 列表+列表 方式
+Program('program2', common_sources + ['program2.c'])
+
+5.4 采用变量让文件列表方便阅读
+
+对源文件使用python列表的一个缺点是，每个文件必须使用引号括起来，当文件名列表非常长的时候，这可能难以阅读，scons和python提供了许多方法使得Sconstruct易于阅读，scons提供了spilt函数，该函数受引用括号括起来的文件名列表，名称用空格或其他空白分隔符分隔，并将其转化为一个单独的文件名列表
+
+Program('program', Split('main.c file1.c file2.c'))
+
+加上变量
+
+src_files = Split('main.c file1.c file2.c')
+Program('program', src_files)
+
+加上换行，方便编写
+
+src_files = Split("""	main.cfile1.cfile2.c""")
+Program('program', src_files)
+
+注意这里可以使用"""或者 ""或者 " 都可以
+5.5 采用关键字
+
+scons允许你对于源文件和输出文件使用pyhton关键字target和source定义，采用关键字之后传入参数的位置顺序可以随便放置
+
+src_files = Split('main.c file1.c file2.c')
+Program(target='program', source=src_files)
+
+src_files = Split('main.c file1.c file2.c')
+Program(source=src_files, target='program')
+
+5.6 同时编译多个程序
+
+Program('foo.c')
+Program('bar', ['bar1.c', 'bar2.c'])
+
+输出
+
+% scons -Q
+cc -o bar1.o -c bar1.c
+cc -o bar2.o -c bar2.c
+cc -o bar bar1.o bar2.o
+cc -o foo.o -c foo.c
+cc -o foo foo.o
+
+5.7 编译多个程序时的共享文件
+
+如果不处理时会是这样
+
+Program(Split('foo.c common1.c common2.c'))
+Program('bar', Split('bar1.c bar2.c common1.c common2.c'))
+
+这样有一个缺点，当需要增加公共文件时，会维护困难，容易遗漏，可以使用下面此方式
+
+common = ['common1.c', 'common2.c']
+foo_files = ['foo.c'] + common
+bar_files = ['bar1.c', 'bar2.c'] + common
+Program('foo', foo_files)
+Program('bar', bar_files)
+
+6. 建立和链接库文件
+6.1 生成库文件
+
+Library('foo', ['f1.c', 'f2.c', 'f3.c'])
+
+输出
+
+% scons -Q
+cc -o f1.o -c f1.c
+cc -o f2.o -c f2.c
+cc -o f3.o -c f3.c
+ar rc libfoo.a f1.o f2.o f3.o
+ranlib libfoo.a
+
+默认生成静态库文件，同时scons会根据不同的系统生成对应的库文件，此外scons还会自动给库文件增加前缀和后缀
+6.1.1 使用源文件+Object文件生成库文件
+
+Library('foo', ['f1.c', 'f2.o', 'f3.c', 'f4.o'])
+
+输出
+
+% scons -Q
+cc -o f1.o -c f1.c
+cc -o f3.o -c f3.c
+ar rc libfoo.a f1.o f2.o f3.o f4.o
+ranlib libfoo.a
+
+6.1.2 指定生成静态库文件StaticLibrary
+
+StaticLibrary('foo', ['f1.c', 'f2.c', 'f3.c'])
+
+6.1.3 指定生成动态库文件SharedLibrary
+
+SharedLibrary('foo', ['f1.c', 'f2.c', 'f3.c'])
+
+6.2 链接库文件
+
+使用$LIBS指定库文件，使用$LIBPATH指定库文件路径
+
+Library('foo', ['f1.c', 'f2.c', 'f3.c'])
+Program('prog.c', LIBS=['foo', 'bar'], LIBPATH='.')
+
+注意，在使用库文件的时候，不用为其添加前缀和后缀，如lib .a .so，scons会根据当前的系统自动添加前缀和后缀
+6.3 查找库文件：使用$LIBPATH构造变量
+
+链接器默认只会从系统定义的目录中去查找库，scons知道如何在使用$LIBPAH构造变量指定的目录中查找库，$LIBPATH包含一个目录名列表，如下所示：
+
+Program('prog.c', LIBS = 'm',LIBPATH = ['/usr/lib', '/usr/local/lib'])
+
+使用python列表是首选，因为它可以跨系统移植，或者你可以把目录名放在一个字符串中，用系统特定的分隔符分隔，注意分隔符，linux里面使用:，windows里面使用;
+linux:LIBPATH = '/usr/lib:/usr/local/lib'
+windows:LIBPATH = 'C:\\lib;D:\\lib'
+上述Sconstruct执行如下：
+
+% scons -Q
+cc -o prog.o -c prog.c
+cc -o prog prog.o -L/usr/lib -L/usr/local/lib -lm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Scons环境搭建和编译原理概述及嵌入式开发常用模板
+https://blog.csdn.net/wenbo13579/article/details/126881034
+
+
+document
+https://scons.org/docversions.html
+
+
+
+
+scons解析
+https://blog.csdn.net/andyelvis/category_948141.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
