@@ -94,8 +94,8 @@ bash -c "echo 0 > /sys/class/rfkill/rfkill0/state ; sleep 1 ; echo 1 > /sys/clas
 
 
 
-
-
+SUBSYSTEMS=="net", KERNELS=="*?*", ATTR{ifindex}=="6", NAME="wlan0"
+SUBSYSTEMS=="net", KERNELS=="*?*", ATTR{ifindex}=="7", NAME="wlan1"
 
 
 
