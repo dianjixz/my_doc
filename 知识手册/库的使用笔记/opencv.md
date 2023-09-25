@@ -724,3 +724,17 @@ https://blog.csdn.net/laoyezha/article/details/106445437
 opencv如何在图片上写汉字
 
 netdisk.tongxinmao.com/%E9%80%9A%E4%BF%A1%E7%8C%ABMQTT%E8%B0%83%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF.zip?e=1651729741&token=e2H295TKnR7Y_pBeAh3HqrpDDBFO7-7le0sbxF1a:gZzO7D7WOK75VT1T3Il13jyt0k0=
+
+
+
+利用OpenCV DNN模块进行深度学习：一个最好使用指导书
+https://blog.csdn.net/zhuoqingjoking97298/article/details/122763074
+
+
+
+
+
+
+
+
+

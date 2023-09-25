@@ -582,3 +582,39 @@ hello, world
 复制代码
 
 
+``` python
+
+import os
+import pty
+import tty
+import subprocess
+
+# 打开 /dev/pts/ptmx 来创建伪终端
+master_fd, slave_fd = pty.openpty()
+
+# 获取伪终端的名称（路径）
+pts_name = os.ttyname(slave_fd)
+
+# 为了进行演示，让子进程运行一个 shell
+proc = subprocess.Popen(["/bin/bash"], stdin=slave_fd, stdout=slave_fd, stderr=slave_fd)
+
+# 将伪终端的输入和输出设置为原始模式，以使其能够进行交互
+tty.setraw(master_fd)
+tty.setraw(slave_fd)
+
+# 主循环，可以在此进行交互
+try:
+    while True:
+        user_input = os.read(master_fd, 1024)
+        if not user_input:
+            break
+        print(f"Received from pty: {user_input.decode()}", end="")
+except KeyboardInterrupt:
+    pass
+finally:
+    # 清理工作
+    os.close(master_fd)
+    os.close(slave_fd)
+    proc.terminate()
+
+```

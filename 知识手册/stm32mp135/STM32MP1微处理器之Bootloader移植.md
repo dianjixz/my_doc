@@ -2,6 +2,8 @@
 
 https://www.douban.com/group/topic/246695003/?type=collect&_i=4834319NTDA2a6
 
+linux 别人的教程/
+https://wiki.t-firefly.com/Core-3588J/started.html
 
 1.实验原理
 1.1 概念
@@ -1542,3 +1544,262 @@ linux@ubuntu:$ cd ../ build-trusted
 linux@ubuntu:$ ls
 
 u-boot-stm32mp157a-fsmp1a-trusted.stm32即为我们后续会使用的镜像文件。
+
+
+
+
+
+
+
+otg的主机和设备模式的切换
+
+https://blog.csdn.net/u011505004/article/details/128626156
+
+
+切换为主机模式
+echo "host" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
+切换为设备模式
+echo "device" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
+
+
+
+
+devpts on /dev/pts type devpts (rw,relatime,gid=5,mode=620,ptmxmode=000)
+debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
+
+
+
+
+devtmpfs on /dev type devtmpfs (rw,relatime,size=405572k,nr_inodes=101393,mode=755)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+
+tmpfs on /run type tmpfs (rw,nosuid,nodev,size=194468k,nr_inodes=819200,mode=755)
+tmpfs on /sys/fs/cgroup type tmpfs (ro,nosuid,nodev,noexec,size=4096k,nr_inodes=1024,mode=755)
+cgroup2 on /sys/fs/cgroup/unified type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate)
+cgroup on /sys/fs/cgroup/systemd type cgroup (rw,nosuid,nodev,noexec,relatime,xattr,name=systemd)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+cgroup on /sys/fs/cgroup/memory type cgroup (rw,nosuid,nodev,noexec,relatime,memory)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+
+tracefs on /sys/kernel/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev,size=486164k,nr_inodes=1048576)
+configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
+
+
+
+
+rtl8188fu             925696  0
+sha256_generic         16384  0
+libsha256              16384  1 sha256_generic
+sha256_arm             24576  0
+cfg80211              630784  1 rtl8188fu
+stm32_adc              32768  0
+stm32_lptimer_trigger    16384  1 stm32_adc
+snd_soc_stm32_sai_sub    28672  0
+stm32_timer_trigger    20480  1 stm32_adc
+pwm_stm32              20480  0
+usb_f_rndis            24576  2
+u_ether                20480  1 usb_f_rndis
+snd_soc_audio_graph_card    16384  0
+snd_soc_simple_card_utils    20480  1 snd_soc_audio_graph_card
+libcomposite           49152  10 usb_f_rndis
+stm32_crc32            16384  0
+stm32_adc_core         20480  0
+out_to_pins            16384  0
+snd_soc_core          172032  4 snd_soc_audio_graph_card,snd_soc_simple_card_utils,out_to_pins,snd_soc_stm32_sai_sub
+snd_soc_stm32_sai      16384  0
+snd_pcm_dmaengine      16384  1 snd_soc_core
+stm32_timers           16384  1 pwm_stm32
+snd_pcm                94208  3 snd_pcm_dmaengine,snd_soc_core,snd_soc_stm32_sai_sub
+snd_timer              28672  1 snd_pcm
+snd                    53248  4 snd_timer,snd_soc_core,snd_pcm,snd_soc_stm32_sai_sub
+soundcore              16384  1 snd
+
+
+
+
+modprobe stm32_adc_core
+modprobe stm32_adc
+modprobe pwm_stm32
+modprobe stm32_timers
+modprobe stm32_crc32
+modprobe stm32_timer_trigger
+
+
+
+
+5.调试方法
+
+    使用sysfs接口对PWM驱动进行功能调试，主要调试命令示例如下。
+
+（1）查看PWM控制器节点
+
+ls /sys/class/pwm/pwmchip0
+
+（2）打开指定PWM通道信号
+
+echo n > /sys/class/pwm/pwmchip0/export 
+
+ //n为通道编号
+
+（3）设置PWM信号周期
+
+echo pvalue > /sys/class/pwm/pwmchip0/pwm0/period   
+
+ //pvalue为周期值
+
+（4）设置PWM信号占空比
+
+echo dvalue > /sys/class/pwm/pwmchip0/pwm0/duty_cycle  
+
+//dvalue为有效电平宽度值
+
+（5）使能某个PWM通道信号
+
+echo 1 > /sys/class/pwm/pwmchip0/pwm0/enable
+
+（6）禁止某个PWM通道信号
+
+echo 0 > /sys/class/pwm/pwmchip0/pwm0/enable
+
+
+
+
+在Linux中，ADC（Analog-to-Digital Converter，模数转换器）设备通常在 `/sys` 目录下的 `class/hwmon` 或 `class/iio` 子目录中提供接口，以便用户空间程序可以读取模拟输入信号的数字化值。以下是 `/sys` 目录下ADC设备接口的一般说明：
+
+1. **`/sys/class/hwmon` 接口：**
+
+    在 `/sys/class/hwmon` 目录下，一些系统将ADC设备作为硬件监视器（hwmon）来表示，提供接口用于读取传感器的值，包括ADC。
+
+    - `/sys/class/hwmon/hwmonX/`：每个硬件监视器设备都在这个目录下有一个子目录，通常以`hwmon`后跟一个数字（例如，`hwmon0`、`hwmon1`等）命名。
+    - `/sys/class/hwmon/hwmonX/device/`：ADC设备通常在此子目录中提供接口。
+    - `/sys/class/hwmon/hwmonX/device/inX_input`：ADC输入信号的值通常存储在名为`inX_input`的文件中，其中`X` 是输入通道号（例如，`in0_input`、`in1_input`等）。
+
+2. **`/sys/class/iio` 接口：**
+
+    在 `/sys/class/iio` 目录下，系统通常将ADC设备表示为"Industry I/O"设备，并提供接口以访问ADC通道。
+
+    - `/sys/class/iio/iio:deviceX/`：每个IIO设备都在这个目录下有一个子目录，通常以`iio:device`后跟一个数字（例如，`iio:device0`、`iio:device1`等）命名。
+    - `/sys/class/iio/iio:deviceX/in_voltageY_raw`：ADC输入通道的原始数据通常存储在名为`in_voltageY_raw`的文件中，其中`X` 是IIO设备号，`Y` 是通道号（例如，`in_voltage0_raw`、`in_voltage1_raw`等）。
+
+请注意，以上只是一般情况，实际的目录和文件名可能因系统和硬件而异。你可以在 `/sys/class/hwmon` 和 `/sys/class/iio` 目录中浏览，查看可用的设备和通道，以找到你的ADC设备。一旦找到设备和通道，你可以读取相应的文件以获取ADC输入信号的值。
+
+要注意的是，ADC设备和接口的具体细节会因硬件和内核版本而有所不同。因此，你可能需要查阅相关文档或使用 `cat` 命令查看文件以获取准确的信息。
+
+
+https://blog.csdn.net/qq_32348883/article/details/123307693
+
+
+
+
+
+modprobe rtl8188fu             		925696  0
+modprobe sha256_generic         		16384  0
+modprobe libsha256              		16384  1 sha256_generic
+modprobe sha256_arm             		24576  0
+modprobe cfg80211              		630784  1 rtl8188fu
+modprobe stm32_adc              		32768  0
+modprobe stm32_lptimer_trigger    	16384  1 stm32_adc
+modprobe snd_soc_stm32_sai_sub    	28672  6
+modprobe stm32_timer_trigger    		20480  1 stm32_adc
+modprobe pwm_stm32              		20480  0
+modprobe snd_soc_audio_graph_card    	16384  1
+modprobe snd_soc_simple_card_utils    	20480  1 snd_soc_audio_graph_card
+modprobe stm32_crc32            		16384  0
+modprobe out_to_pins            		16384  1
+modprobe stm32_adc_core         		20480  0
+modprobe snd_soc_core          		172032  4 snd_soc_audio_graph_card,snd_soc_simple_card_utils,out_to_pins,snd_soc_stm32_sai_sub
+modprobe snd_soc_stm32_sai      		16384  0
+modprobe stm32_timers           		16384  1 pwm_stm32
+modprobe snd_pcm_dmaengine      		16384  1 snd_soc_core
+modprobe snd_pcm                		94208  3 snd_pcm_dmaengine,snd_soc_core,snd_soc_stm32_sai_sub
+modprobe snd_timer              		28672  1 snd_pcm
+modprobe snd                    		53248  6 snd_timer,snd_soc_core,snd_pcm,snd_soc_stm32_sai_sub
+modprobe soundcore              		16384  1 snd
+
+
+
+
+
+
+
+
+
+
+modprobe rtl8188fu             		
+modprobe sha256_generic         	
+modprobe libsha256              	
+modprobe sha256_arm             	
+modprobe cfg80211              		
+modprobe stm32_adc              	
+modprobe stm32_lptimer_trigger    	
+modprobe snd_soc_stm32_sai_sub    	
+modprobe stm32_timer_trigger    	
+modprobe pwm_stm32              	
+modprobe snd_soc_audio_graph_card   
+modprobe snd_soc_simple_card_utils  
+modprobe stm32_crc32            	
+modprobe out_to_pins            	
+modprobe stm32_adc_core         	
+modprobe snd_soc_core          		
+modprobe snd_soc_stm32_sai      	
+modprobe stm32_timers           	
+modprobe snd_pcm_dmaengine      	
+modprobe snd_pcm                	
+modprobe snd_timer              	
+modprobe snd                    	
+modprobe soundcore              	
+
+
+
+RTC 使用
+
+Linux 提供了三种用户空间调用接口。在 ITX-3588J 开发板中对应的路径为：
+
+    SYSFS接口：/sys/class/rtc/rtc0/
+
+    PROCFS接口： /proc/driver/rtc
+
+    IOCTL接口： /dev/rtc0
+
+YSFS接口
+
+可以直接使用 cat 和 echo 操作 /sys/class/rtc/rtc0/ 下面的接口。
+
+比如查看当前 RTC 的日期和时间：
+
+# cat /sys/class/rtc/rtc0/date 
+2022-06-21
+# cat /sys/class/rtc/rtc0/time 
+06:52:08
+
+设置开机时间，如设置 120 秒后开机：
+
+#120秒后定时开机
+echo +120 >  /sys/class/rtc/rtc0/wakealarm
+# 查看开机时间
+cat /sys/class/rtc/rtc0/wakealarm
+#关机
+reboot -p
+
+打印 RTC 相关的信息：
+
+# cat /proc/driver/rtc
+rtc_time        : 06:53:50
+rtc_date        : 2022-06-21
+alrm_time       : 06:55:05
+alrm_date       : 2022-06-21
+alarm_IRQ       : yes
+alrm_pending    : no
+update IRQ enabled      : no
+periodic IRQ enabled    : no
+periodic IRQ frequency  : 1
+max user IRQ frequency  : 64
+24hr            : yes
+
+可以使用 ioctl 控制 /dev/rtc0。
+
+详细使用说明请参考文档 kernel-5.10/Documentation/admin-guide/rtc.rst 。

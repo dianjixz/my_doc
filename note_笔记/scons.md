@@ -508,31 +508,17 @@ https://blog.csdn.net/andyelvis/category_948141.html
 
 
 
+# # CFLAGS      # c 的编译定义
+# # CCFLAGS     # CC 的编译选项
+# # CPPDEFINES  # -D
+# # CPPPATH     # -I
+# # ASFLAGS     # 汇编的编译定义
+# # LINKFLAGS   # 连接选项
+# # LIBPATH     # -L
+# # LIBS        # -l
 
 
 
+参考：
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+[如何在Scons中使用交叉编译器？](https://www.codenong.com/23898584/)
