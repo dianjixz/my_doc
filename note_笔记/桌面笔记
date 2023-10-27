@@ -372,3 +372,54 @@ export DISPLAY=:0.0   将gui显示到本地界面上
 
 
 
+简介：这个小工具将 Linux 终端变成好莱坞风格的实时黑客场景。
+hollywood
+
+
+
+Ubuntu 下使用 sshfs 挂载远程目录到本地
+sshfs
+
+一、Ubuntu 上安装sshfs
+```bash
+sudo apt-get install sshfs 
+
+```
+
+二、挂载远程文件系统/目录
+
+挂载的一般格式为：
+```bash
+sudo sshfs {{user id}}@{{server hostname}}:{{desiredremote share}} {{desired local mount point}} -o idmap=user -o allow_other -ouid={{local user id}} -o gid={{local group id}}  
+```
+其中比较重要的选项有：
+
+```bash
+-o transform_symlinks 表示转换绝对链接符号为相对链接符号
+
+-o follow_symlinks 沿用服务器上的链接符号
+
+-C 压缩，或者-o compression=yes
+
+-o reconnect 自动重连
+
+-o cache=yes
+
+-o allow_other
+```
+挂载格式看起来比较繁琐，这里给出一个常用的更加简洁的格式：
+``` bash
+sshfs -o transform_symlinks -ofollow_symlinks  user@hostname:[dir] mountpoint  
+```
+
+一个使用的实例如下(前一个user是远程主机的user，后一个是本地主机的user)：
+
+```bash
+sshfs –o cache=yes,allow_other user@192.168.1.200:/home/user/code home/user/code  
+```
+三、卸载
+
+```bash
+fusermount –u /home/user/code
+```
+

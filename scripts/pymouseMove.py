@@ -50,7 +50,29 @@ while True:
 # k.press_key(k.enter_key)
 
 
+'''
 
+import time
+from pymouse import PyMouse			# 模拟鼠标
+from pykeyboard import PyKeyboard	# 模拟键盘
+    
+# 定义实例
+k = PyKeyboard()
+m = PyMouse()
+
+while True:
+    k.press_key(k.enter_key)
+    time.sleep(0.1)
+
+
+
+
+
+
+
+
+
+'''
 
 
 

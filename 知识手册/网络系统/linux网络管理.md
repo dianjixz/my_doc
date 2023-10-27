@@ -234,6 +234,14 @@ $ wpa_cli scan && wpa_cli scan_results
 
 # NetworkManager  进行自动管理
 
+安装
+```
+sudo apt-get install network-manager
+sudo apt-get install network-manager-tui
+
+```
+
+
 RHEL6新增加的网络管理工具，可用检测网络、自动连接网络的程序。无论是无线还是有线连接，它都可以令您轻松管理。对于无线网络,网络管理器可以自动切换到最可靠的无线网络。利用网络管理器的程序可以自由切换在线和离线模式。网络管理器可以优先选择有线网络，支持 VPN。网络管理器最初由 Redhat 公司开发，现在由 GNOME 管理。
 
 NetworkManager 新版本增强设备以及协议的支持，NetworkManager 最新版有一个全新的漂亮的客户端界面nmtui。”nmtui” 是 networkmanager 的一个图形化前端。在没有X Window 的情况下可以用它来方便地配置及管理网络。启动nmtui：

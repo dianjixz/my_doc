@@ -22,7 +22,8 @@ ifconfig wlan0 up
 
 ~~~ bash
 root@MaixLinux:~# cat /etc/wpa_supplicant.conf 
-ctrl_interface=/var/run/wpa_supplicant GROUP=wheel
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
 
 network={
     ssid="****"

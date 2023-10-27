@@ -1556,10 +1556,8 @@ otg的主机和设备模式的切换
 https://blog.csdn.net/u011505004/article/details/128626156
 
 开启otg电源
-echo 130 > /sys/class/gpio/export
-echo 'out' > /sys/class/gpio/gpio130/direction
-echo 1 >  /sys/class/gpio/gpio130/val
-
+echo 130 > /sys/class/gpio/export && echo out > /sys/class/gpio/gpio130/direction && echo 1 > /sys/class/gpio/gpio130/value 
+echo "host" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
 切换为主机模式
 echo "host" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
 切换为设备模式

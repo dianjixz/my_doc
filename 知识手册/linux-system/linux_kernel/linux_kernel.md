@@ -49,3 +49,23 @@ linux将驱动和设备分离，为了达到这个效果，最终演变成了平
 
 
 Linux platform平台总线、平台设备、平台驱动
+
+
+
+BUILD自己的KERNEL HEADER
+
+1、主要思路参考ubuntu系统中自带的kernel header
+
+2、大致操作步骤如下：
+
+    a、下载kernel代码
+
+    b、配置OK后编译
+
+    c、find . -name *.o | xargs rm -f 删除所有的.o和vmlinux*
+
+    d、删除除script目录外所有的.c文件
+
+    e、删除除arch/和include下的.h文件，script目录除外
+
+    f、至此，基本的kernel header完成。可用于build内核ko模块。
