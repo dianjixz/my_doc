@@ -10,9 +10,12 @@ m = PyMouse()
 while True:
     pos = m.position()
     print(pos)
-    m.move(pos[0] + 1, pos[1] + 1)
+    m.move(pos[0] + 10, pos[1] + 10)
     time.sleep(10)
-
+    pos = m.position()
+    print(pos)
+    m.move(pos[0] - 10, pos[1] - 10)
+    time.sleep(10)
 
 # pip install pyuserinput  -i https://pypi.mirrors.ustc.edu.cn/simple/
 # pip install pypiwin32  -i https://pypi.mirrors.ustc.edu.cn/simple/
