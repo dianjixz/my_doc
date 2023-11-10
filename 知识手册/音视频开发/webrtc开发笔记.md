@@ -332,3 +332,6 @@ webMCU（support WebRTC）：
 ————————————————
 版权声明：本文为CSDN博主「foruok」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/foruok/article/details/53005728
+
+
+《WebRTC系列》实战 Web 端支持 h265 硬解 https://juejin.cn/post/7215608036394614844
