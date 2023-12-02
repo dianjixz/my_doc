@@ -1,3 +1,4 @@
+#!/bin/sh
 input_string=$(cat /proc/ax_proc/uid)
 sha224_hash=$(echo -n "$input_string" | sha256sum | cut -d' ' -f1)
 oui_bytes1="${sha224_hash:0:12}"
