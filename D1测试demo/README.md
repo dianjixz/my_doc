@@ -71,6 +71,10 @@ exit 0
 
 ## lcd显示屏测试
 第一步：确认屏幕连接好  
+
+设定要显示的屏幕设备：
+export FRAMEBUFFER=/dev/fb1
+
 第二步：运行如下命令，查看屏幕是否输出随机亮点。
 
 > test_lcd  

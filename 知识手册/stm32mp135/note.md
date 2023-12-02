@@ -242,3 +242,54 @@ ${root_dir}/../../FIP_artifacts/fip/fip-stm32mp135f-dk-optee.bin
 
 
 stm32mp135的rtc功能会影响到 GPIO PI1 引脚上，会导致改引脚有异常的 32khz 的时钟信号
+
+
+
+
+
+
+
+stm32mp135 的 UID 地址 0x5C005234 - 0x5C00523F
+0x5C005234 + 12
+
+
+
+
+
+
+监控网口热插拔：ifplugd，
+
+
+
+systemd-networkd
+
+https://blog.csdn.net/xuesong10210/article/details/113858728
+
+
+
+
+
+
+监控磁盘设备添加和删除
+inotifywait
+
+inotify-tools
+
+```bash
+#!/bin/bash
+
+while true; do
+    inotifywait -e create,delete -r /dev
+    # 在这里执行处理磁盘事件的操作
+    # 你可以使用 $REPLY 变量来获取触发事件的文件
+    DEVNAME=$(basename $REPLY)
+    if [ -e "/dev/$DEVNAME" ]; then
+        echo "Disk $DEVNAME inserted."
+        # 在这里执行插入磁盘时的操作
+    else
+        echo "Disk $DEVNAME removed."
+        # 在这里执行拔出磁盘时的操作
+    fi
+done
+
+```
