@@ -42,3 +42,13 @@ vim /etc/default/grub
 update-grub
 
 ```
+
+
+
+ubuntu 文件管理器
+nautilus
+
+
+
+通过使用默认文件管理器，以下内容适用于所有桌面环境：
+xdg-open file
