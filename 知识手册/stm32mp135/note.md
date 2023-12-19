@@ -293,3 +293,57 @@ while true; do
 done
 
 ```
+
+
+
+
+
+
+
+
+5g RM500U 调试记录
+RM500U 是移远公司开发的 5G 应用模块，底板选用的是墨子号的开发底板。
+调试的主要主要问题在网卡模式和AT指令上。
+第一部分：AT指令
+
+- AT+QNETDEVSTATUS=1 : 查寻网络链接状态
+- AT+QNETDEVCTL=1,3,1 ： 设置开机自动链接网络，这个是非常重要的，
+- AT+QCFG="usbnet",1 ： 设置网卡模式为 cdc eth
+- AT+QCFG="usbnet",3 ： 设置网卡模式为 rndis，可能是驱动的原因，在135上并不怎么兼容。
+
+关于usb自带的5个串口，这个每个都试了，发现并没有什么反应。手册中也没有查到关于这几个串口是否支持AT指令
+
+https://www.cnblogs.com/zhijun1996/p/16484126.html
+
+
+
+
+5g FM650-CN 调试记录
+FM650-CN 模块是采用国产展锐平台的 5G 模组。
+这个平台网上几乎没有资料，微雪官网也只有一个 AT 英文指令手册。
+在使用 AT 指令过程中，非常不稳定，不过一般配置完成后，几乎不会再动AT指令模块了，所以这个问题还好。如果每次都要配置的话，他们的AT指令配置显然是非常糟心的。
+注意，发送AT指令的时候一定要注意间隔和回复时间，该模块的AT指令响应非常令人糟心，而且AT口经常会挂掉。
+主要用的AT指令：
+- AT AT指令测试，测试模块是否准备完成
+- AT+GTUSBMODE 设置5G模块 usb 网卡的模式，可选的 cdc 网卡，rndis 网卡等
+- AT+GTAUTOCONNECT 设置自动链接网络，这个是配置连网的。
+- AT+GTRNDIS 查寻网络ip，可用来判断是否连网
+- AT+CGPADDR 查看接口的ip地址
+- AT+CGCONTRDP 网上的说法是开启设备dhcp分配，这个设计有点糟心。
+
+
+链接流程
+AT
+AT+GTAUTOCONNECT=1
+AT+CGPADDR
+AT+CGCONTRDP
+AT+CGPADDR
+
+注意，5g 模块工作是耗电比较大，135 的单个 usb 口都不足以支撑设备的运行功率。
+
+OpenWrt实现4G/5G网络共享+公网IPv6地址透传分配
+https://zhuanlan.zhihu.com/p/624187071?utm_id=0
+
+
+2c7c:0316
+echo "2c7c 0316" > /sys/bus/usb-serial/drivers/option1/new_id
