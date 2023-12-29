@@ -1557,12 +1557,41 @@ https://blog.csdn.net/u011505004/article/details/128626156
 
 开启otg电源
 echo 130 > /sys/class/gpio/export && echo out > /sys/class/gpio/gpio130/direction && echo 1 > /sys/class/gpio/gpio130/value 
+echo 130 > /sys/class/gpio/export && echo out > /sys/class/gpio/gpio130/direction && echo 0 > /sys/class/gpio/gpio130/value 
 echo "host" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
 切换为主机模式
 echo "host" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
 切换为设备模式
 echo "device" >/sys/class/usb_role/49000000.usb-otg-role-switch/role
 
+
+
+
+# 挂载成u盘
+```bash
+modprobe libcomposite
+modprobe usb_f_mass_storage.ko
+modprobe g_mass_storage.ko file=/root/testu.bin removable=1
+
+file：指定Mass Storage设备的映像文件路径。映像文件通常包含模拟设备的数据。这是一个必需的参数。
+stor：指定Mass Storage设备的存储名称，可用于标识设备。默认值为 "Linux"。
+removable：指定设备是否被视为可移动设备。默认值为 1（可移动），可以将其设置为 0（不可移动）。
+cdrom：指定Mass Storage设备是否模拟为CD-ROM。默认值为 0（不模拟CD-ROM），可以将其设置为 1（模拟CD-ROM）。
+ro：指定Mass Storage设备是否为只读（Read-Only）。默认值为 0（可读写），可以将其设置为 1（只读）。
+lun：指定Mass Storage设备的LUN（逻辑单元号），默认为 0。
+```
+
+# 挂载成声卡
+```bash
+
+modprobe libcomposite.ko
+modprobe usb_f_uac1_legacy.ko
+modprobe g_audio.ko
+
+```
+
+STM32MP157驱动开发——USB设备驱动
+https://blog.csdn.net/weixin_45682654/article/details/128512903
 
 
 

@@ -436,3 +436,32 @@ https://zhuanlan.zhihu.com/p/532678277
 
 xxd 可以将文件转换成16进制的 c 头文件
 xxd -i filename > header_file.h
+
+
+
+ARM各內核系列整型運算能力對比---DMIPS / MHz
+https://zhuanlan.zhihu.com/p/660155292
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
