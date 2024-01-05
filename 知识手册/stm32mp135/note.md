@@ -347,3 +347,15 @@ https://zhuanlan.zhihu.com/p/624187071?utm_id=0
 
 2c7c:0316
 echo "2c7c 0316" > /sys/bus/usb-serial/drivers/option1/new_id
+
+
+
+
+
+
+echo -n 'file qmi_wwan_q.c +p' > /sys/kernel/debug/dynamic_debug/control
+
+
+
+
+

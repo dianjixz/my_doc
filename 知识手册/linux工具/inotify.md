@@ -1,5 +1,8 @@
 ## [inotify-tools命令使用讲解](https://www.cnblogs.com/wajika/p/6396748.html)
 
+关键字：监控文件 文件监控 监控目录 目录监控
+
+
 inotify-tools 是为linux下inotify文件监控工具提供的一套c的开发接口库函数，同时还提供了一系列的命令行工具，这些工具可以用来监控文件系统的事件。 inotify-tools是用c编写的，除了要求内核支持inotify外，不依赖于其他。inotify-tools提供两种工具，一是 inotifywait，它是用来监控文件或目录的变化，二是inotifywatch，它是用来统计文件系统访问的次数。现在介绍一下它的使用方法。
 
 安装方法：
