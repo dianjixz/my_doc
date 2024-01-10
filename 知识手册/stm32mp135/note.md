@@ -22,12 +22,67 @@ sudo sgdisk --resize-table=128 -a 1 \
 -n 7:18466:19489        -c 7:fsbl7 \
 -n 8:19490:150561       -c 8:boot \
 -n 9:150562:183329      -c 9:vendorfs \
--n 10:183330:1690657    -c 10:rootfs \
--g -P /dev/sdb
+-n 10:183330:9253821    -c 10:rootfs \
+-g  /dev/sdb
 
 
 
 
+
+
+sudo sgdisk -og -a 1 \
+-a 1 -n 1:34:545 -c 1:fsbl1 -t 1:8301 \
+-a 1 -n 2:546:1057 -c 2:fsbl2 -t 2:8301 \
+-a 1 -n 3:1058:1569 -c 3:metadata1 -t 3:8301 \
+-a 1 -n 4:1570:2081 -c 4:metadata2 -t 4:8301 \
+-a 1 -n 5:2082:10273 -c 5:fip-a -t 5:19d5df83-11b0-457b-be2c-7559c13142a5  -u 5:4fd84c93-54ef-463f-a7ef-ae25ff887087 \
+-a 1 -n 6:10274:18465 -c 6:fip-b -t 6:19d5df83-11b0-457b-be2c-7559c13142a5  -u 6:09c54952-d5bf-45af-acee-335303766fb3 \
+-a 1 -n 7:18466:19489 -c 7:u-boot-env -t 7:8301 \
+-a 1 -n 8:19490:150561 -c 8:bootfs -t 8:8300  -A 8:set:2 \
+-a 1 -n 9:150562:183329 -c 9:vendorfs -t 9:8300 \
+-a 1 -n 10:183330:  -c 10:rootfs -t 10:8300  -u 10:e91c4e10-16e6-4c0e-bd0e-77becf4a3582 \
+/dev/sda
+sudo mkfs.ext4 /dev/sda10
+sudo mkfs.ext4 /dev/sda8
+
+
+
+
+
+# test
+dd if=/dev/zero of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw bs=1024 count=0 seek=1536K
+sgdisk -og -a 1 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 1:34:545 -c 1:fsbl1 -t 1:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 2:546:1057 -c 2:fsbl2 -t 2:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 3:1058:1569 -c 3:metadata1 -t 3:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 4:1570:2081 -c 4:metadata2 -t 4:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 5:2082:10273 -c 5:fip-a -t 5:19d5df83-11b0-457b-be2c-7559c13142a5  -u 5:4fd84c93-54ef-463f-a7ef-ae25ff887087 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 6:10274:18465 -c 6:fip-b -t 6:19d5df83-11b0-457b-be2c-7559c13142a5  -u 6:09c54952-d5bf-45af-acee-335303766fb3 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 7:18466:19489 -c 7:u-boot-env -t 7:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 8:19490:150561 -c 8:bootfs -t 8:8300  -A 8:set:2 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 9:150562:183329 -c 9:vendorfs -t 9:8300  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 10:183330:  -c 10:rootfs -t 10:8300  -u 10:e91c4e10-16e6-4c0e-bd0e-77becf4a3582 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -p FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk FlashLayout_sdcard_stm32mp135f-dk-extensible.raw -i 5
+sgdisk FlashLayout_sdcard_stm32mp135f-dk-extensible.raw -i 6
+sgdisk FlashLayout_sdcard_stm32mp135f-dk-extensible.raw -i 10
+dd if=arm-trusted-firmware/tf-a-stm32mp135f-dk-sdcard.stm32 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=17408
+dd if=arm-trusted-firmware/tf-a-stm32mp135f-dk-sdcard.stm32 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=279552
+dd if=arm-trusted-firmware/metadata.bin of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=541696
+dd if=arm-trusted-firmware/metadata.bin of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=803840
+dd if=fip/fip-stm32mp135f-dk-optee.bin of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=1065984
+dd if=st-image-bootfs-openstlinux-weston-stm32mp1.ext4 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=9978880
+dd if=st-image-vendorfs-openstlinux-weston-stm32mp1.ext4 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=77087744
+dd if=st-image-weston-openstlinux-weston-stm32mp1.ext4 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=93864960
+
+
+sudo e2label  /dev/sda10 rootfs
+sudo dosfslabel /dev/sda8 boot
+
+
+
+
+sudo sgdisk -P /dev/sdb --resize-table=128 -a 1
 
 -n 1:34:545 -c 1:fsbl1 
 -n 2:546:1057 -c 2:fsbl2 
