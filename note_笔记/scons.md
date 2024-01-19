@@ -517,8 +517,97 @@ https://blog.csdn.net/andyelvis/category_948141.html
 # # LIBPATH     # -L
 # # LIBS        # -l
 
+```python
+# 创建使用 GNU 工具链的环境
+env = Environment(tools=['gcc', 'g++', 'link', 'ar', 'gas', 'as'])
+
+# 用于 S 文件的编译命令
+env['ASCOM'] = '$AS $ASFLAGS -o $TARGET $SOURCES'
+
+# 用于 C 文件的编译命令
+env['CCCOM'] = '$CC -o $TARGET -c $CFLAGS $CCFLAGS $_CCCOMCOM $SOURCES'
+
+# 用于 C++ 文件的编译命令
+env['CXXCOM'] = '$CXX -o $TARGET -c $CXXFLAGS $CCFLAGS $_CCCOMCOM $SOURCES'
+
+# 用于创建静态库的命令
+env['ARCOM'] = '$AR $ARFLAGS $TARGET $SOURCES'
+
+# 用于创建共享库的链接命令
+env['SHLINKCOM'] = '$SHLINK -o $TARGET $SHLINKFLAGS $__SHLIBVERSIONFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS $_LIBFLAGS'
+
+
+# 用于生成链接程序命令
+env['LINKCOM'] = '$LINK -o $TARGET $SOURCES $LINKFLAGS $__RPATH  $_LIBDIRFLAGS '
+
+env['LINKCOM'] = '$LINK -o $TARGET $LINKFLAGS $__RPATH $SOURCES $_LIBDIRFLAGS $_LIBFLAGS',
+
+
+
+
+
+```
+
+'''
+# 创建和配置环境
+env = Environment()
+
+# 设置编译器和链接器标志
+env.Append(CCFLAGS=['-O2', '-g'])
+env.Append(CXXFLAGS=['-std=c++11'])
+env.Append(LINKFLAGS=['-pthread'])
+
+# 定义宏
+env.Append(CPPDEFINES=['DEBUG'])
+
+# 指定包含目录和库目录
+env.Append(CPPPATH=['/path/to/include'])
+env.Append(LIBPATH=['/path/to/lib'])
+
+#  链接库
+env.Append(LIBS=['mylib', 'm'])
+
+# 创建使用 GNU 工具链的环境
+env = Environment(tools=['gcc', 'g++', 'gnulink', 'ar', 'gas', 'as'])
+
+
+# CCFLAGS: 用于 C 编译器的标志。
+# CXXFLAGS: 用于 C++ 编译器的标志。
+# CPPFLAGS: 用于预处理器的标志。
+# CPPDEFINES: 用于定义预处理器宏。
+# CPPPATH: 包含目录的路径。
+
+# 自定义工具
+env = Environment(tools=['my_custom_tool'], toolpath=['/path/to/my/tools'])
+# 当你指定了 tools 参数时, SCons 不会自动加载任何默认工具。因此，确保你包含了所有需要的工具。
+
+# CCCOM: 用于 C 文件的编译命令。
+# CXXCOM: 用于 C++ 文件的编译命令。
+# ARCOM: 用于创建静态库的命令。
+# RCCOM: 用于资源文件的命令。
+# SHLINKCOM: 用于创建共享库的链接命令
+# LINKCOM: 用于生成链接程序命令
+
+
+'''
+
+
+
 
 
 参考：
 
 [如何在Scons中使用交叉编译器？](https://www.codenong.com/23898584/)
+
+
+
+
+
+
+
+
+
+
+
+
+

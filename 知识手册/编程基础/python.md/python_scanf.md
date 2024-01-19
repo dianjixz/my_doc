@@ -146,7 +146,7 @@ def scanf(format, s=None):
 
 
 
-
+python 格式化输入
 # 使用 parse 类
 ```python
 >>> profile = parse("I am {}, {} years old, {}", "I am Jack, 27 years old, male")
@@ -160,7 +160,16 @@ def scanf(format, s=None):
 'male'
 ```
 
+```python
+from parse import compile
+pattern = compile("I am {}, {} years old, {}")
+pattern.parse("I am Jack, 27 years old, male")
 
+
+pattern = compile("I am {}, {years:d} years old, {}")
+pattern.parse("I am Jack, 27 years old, male")
+
+```
 
 
 

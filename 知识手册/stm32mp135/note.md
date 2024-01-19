@@ -151,8 +151,11 @@ I/O 大小(最小/最佳)：512 字节 / 512 字节
 
 
 
-
-
+debian 系开机自动扩容：
+起用 resize-helper.service 开机服务，该服务会检测磁盘是否完全使用了磁盘，如果没有就扩展根文件系统到整个磁盘。
+```bash
+systemctl enable resize-helper
+```
 
 
 
