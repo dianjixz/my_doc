@@ -410,10 +410,91 @@ echo "2c7c 0316" > /sys/bus/usb-serial/drivers/option1/new_id
 
 
 
-
+开启内核特定模块的 log 打印。
 echo -n 'file qmi_wwan_q.c +p' > /sys/kernel/debug/dynamic_debug/control
 
+alias arm-ostl-linux-gnueabi-gcc="arm-ostl-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi"
 
+alias arm-ostl-linux-gnueabi-g++="arm-ostl-linux-gnueabi-g++  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi"      
+alias arm-ostl-linux-gnueabi-gcc="arm-ostl-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi"
+
+
+
+make CROSS_COMPILE=arm-ostl-linux-gnueabi- clean install CONFIG_PREFIX=`pwd`/install
+
+
+
+
+
+
+CPP=arm-ostl-linux-gnueabi-gcc -E  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+
+CXX=arm-ostl-linux-gnueabi-g++  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+
+
+OE_CMAKE_TOOLCHAIN_FILE=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/share/cmake/OEToolchainConfig.cmake
+M4=m4
+OECORE_TUNE_CCARGS= -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7
+
+OECORE_SDK_VERSION=4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15
+
+PKG_CONFIG_PATH=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr/lib/pkgconfig:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr/share/pkgconfig
+
+HOSTNAME=027c22b8f6f1
+GDB=arm-ostl-linux-gnueabi-gdb
+SDKTARGETSYSROOT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+OECORE_BASELIB=lib
+
+TARGET_PREFIX=arm-ostl-linux-gnueabi-
+OE_CMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX=
+PWD=/home/nihao/workspace
+LOGNAME=nihao
+OECORE_TARGET_OS=linux-gnueabi
+
+CXXFLAGS= -O2 -pipe -g -feliminate-unused-debug-types 
+TEEC_EXPORT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr
+OECORE_NATIVE_SYSROOT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux
+
+LDFLAGS=-Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed 
+
+HOME=/home/nihao
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+OPENSSL_CONF=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/lib/ssl-3/openssl.cnf
+KCFLAGS=--sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+OECORE_TARGET_SYSROOT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+CPPFLAGS=
+OPENSSL_MODULES=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/lib/ossl-modules/
+LD=arm-ostl-linux-gnueabi-ld  --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+READELF=arm-ostl-linux-gnueabi-readelf
+TA_DEV_KIT_DIR=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr/include/optee/export-user_ta
+CORSS_COMPILE=arm-linux-gnueabihf-
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LIBGCC_LOCATE_CFLAGS=--sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+TERM=xterm
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=nihao
+AR=arm-ostl-linux-gnueabi-ar
+AS=arm-ostl-linux-gnueabi-as 
+ARCH=arm
+SHLVL=2
+NM=arm-ostl-linux-gnueabi-nm
+OECORE_TARGET_ARCH=arm
+OECORE_DISTRO_VERSION=4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15
+PKG_CONFIG_SYSROOT_DIR=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+OECORE_ACLOCAL_OPTS=-I /opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/share/aclocal
+OBJCOPY=arm-ostl-linux-gnueabi-objcopy
+STRIP=arm-ostl-linux-gnueabi-strip
+OBJDUMP=arm-ostl-linux-gnueabi-objdump
+CONFIG_SITE=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/site-config-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+PATH=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/sbin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/bin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/sbin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin/../x86_64-ostl_sdk-linux/bin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin/arm-ostl-linux-gnueabi:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin/arm-ostl-linux-musl:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nihao/workspace/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin
+CC=arm-ostl-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+CFLAGS= -O2 -pipe -g -feliminate-unused-debug-types 
+CROSS_COMPILE=arm-ostl-linux-gnueabi-
+MAIL=/var/mail/nihao
+CONFIGURE_FLAGS=--target=arm-ostl-linux-gnueabi --host=arm-ostl-linux-gnueabi --build=x86_64-linux --with-libtool-sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+RANLIB=arm-ostl-linux-gnueabi-ranlib
+OLDPWD=/home/nihao/workspace/busybox-1.36.0
+_=/usr/bin/env
 
 
 
