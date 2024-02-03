@@ -497,4 +497,31 @@ OLDPWD=/home/nihao/workspace/busybox-1.36.0
 _=/usr/bin/env
 
 
+stm32mp1 时钟树
+https://pic2.zhimg.com/v2-572f2c5cb10c29efa22325f51efaa515_r.jpg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
