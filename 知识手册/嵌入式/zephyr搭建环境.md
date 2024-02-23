@@ -64,6 +64,8 @@ source ~/.bashrc
 west init ~/zephyrproject -m https://gitee.com/AnswerInTheWind/zephyr/ 
 cd ~/zephyrproject
 west update
+# 下载摸块
+west blobs fetch
 ```
 
 这里 `west init` 使用了参数 `-m https://gitee.com/AnswerInTheWind/zephyr/`， 表明从 gitee 上下载源代码，速度更快，而且该仓库已经修改了 `west.yml` 文件，将依赖的模块文件也全部从 github 导向了 gitee，这样在国内安装速度也会很快。

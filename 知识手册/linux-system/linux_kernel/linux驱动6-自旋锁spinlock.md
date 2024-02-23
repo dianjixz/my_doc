@@ -243,7 +243,7 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
 - OS   ：Ubuntu 14
 - 配置  ：将虚拟机的处理个数设置为1，否则不会死锁
 
-![微信图片_20210607162645](D:\work\git\my_doc\image\微信图片_20210607162645.png)
+![微信图片_20210607162645](../../../image\微信图片_20210607162645.png)
 
 ## 原理
 
@@ -251,7 +251,7 @@ static inline void arch_spin_unlock(arch_spinlock_t *lock)
 
 ## 步骤：
 
-![微信图片_20210607162716](D:\work\git\my_doc\image\微信图片_20210607162716.jpg)
+![微信图片_20210607162716](../../../image\微信图片_20210607162716.jpg)
 
 1. 进程A在open（）字符设备后，对应的内核函数会申请自旋锁，此时自旋锁空闲，申请到自旋锁，进程A随即进入执行sleep（）函数进入休眠；
 2. 在进程A 处于sleep期间，自旋锁一直属于进程A所有；
