@@ -146,7 +146,7 @@ def scanf(format, s=None):
 
 
 
-python 格式化输入
+python 格式化输入 字符解析
 # 使用 parse 类
 ```python
 >>> profile = parse("I am {}, {} years old, {}", "I am Jack, 27 years old, male")

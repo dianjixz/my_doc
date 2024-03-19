@@ -502,6 +502,8 @@ https://pic2.zhimg.com/v2-572f2c5cb10c29efa22325f51efaa515_r.jpg
 
 
 
+core135对rndis支持有点缺陷，暂时不知道是什么缺陷，但是可以使用cdc_ether进行支持
+也就是将rm500u模块的网卡设置为cdc_ether模式。
 
 
 
@@ -509,9 +511,32 @@ https://pic2.zhimg.com/v2-572f2c5cb10c29efa22325f51efaa515_r.jpg
 
 
 
+loral：
 
 
+https://www.waveshare.net/wiki/SX1302_LoRaWAN_Gateway_HAT
 
+
+mkdir lora
+cd lora
+proxychains git clone https://github.com/Lora-net/lora_gateway.git
+# LoRa Gateway drivers
+proxychains git clone https://github.com/Lora-net/packet_forwarder.git
+# packet forwarding software
+proxychains git clone https://github.com/HelTecAutomation/lorasdk.git
+# This package will create a "lrgateway" service in Raspberry Pi
+cd /home/pi/lora/lora_gateway
+make clean all -j
+cd /home/pi/lora/packet_forwarder
+make clean all -j
+cd /home/pi/lora/lorasdk
+chmod +x install.sh 
+./install.sh
+#Run the script. After the script is run, it will create a service named "lrgateway". The purpose is to make the lora driver and data forwarding program run automatically at startup.
+sudo cp -f /home/pi/lora/lorasdk/global_conf_EU868.json /home/pi/lora/packet_forwarder/lora_pkt_fwd/global_conf.json
+#the "global_conf_EU868.json" may need change to your need.
+
+https://www.waveshare.net/wiki/SX1302_LoRaWAN_Gateway_HAT
 
 
 
