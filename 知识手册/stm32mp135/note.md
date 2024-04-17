@@ -409,7 +409,7 @@ echo "2c7c 0316" > /sys/bus/usb-serial/drivers/option1/new_id
 
 
 
-
+echo -n 'file spi-stm32.c +p' > /sys/kernel/debug/dynamic_debug/control
 开启内核特定模块的 log 打印。
 echo -n 'file qmi_wwan_q.c +p' > /sys/kernel/debug/dynamic_debug/control
 
@@ -539,6 +539,45 @@ sudo cp -f /home/pi/lora/lorasdk/global_conf_EU868.json /home/pi/lora/packet_for
 https://www.waveshare.net/wiki/SX1302_LoRaWAN_Gateway_HAT
 
 
+
+
+
+
+
+
+
+
+
+
+
+sudo sgdisk -og -a 1 Core135_sd.raw
+sudo sgdisk -a 1 -n 1:34:545 -c 1:fsbl1 -t 1:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 2:546:1057 -c 2:fsbl2 -t 2:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 3:1058:1569 -c 3:metadata1 -t 3:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 4:1570:2081 -c 4:metadata2 -t 4:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 5:2082:10273 -c 5:fip-a -t 5:19d5df83-11b0-457b-be2c-7559c13142a5  -u 5:4fd84c93-54ef-463f-a7ef-ae25ff887087 Core135_sd.raw
+sudo sgdisk -a 1 -n 6:10274:18465 -c 6:fip-b -t 6:19d5df83-11b0-457b-be2c-7559c13142a5  -u 6:09c54952-d5bf-45af-acee-335303766fb3 Core135_sd.raw
+sudo sgdisk -a 1 -n 7:18466:19489 -c 7:u-boot-env -t 7:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 8:19490:150561 -c 8:bootfs -t 8:8300  -A 8:set:2 Core135_sd.raw
+sudo sgdisk -a 1 -n 9:150562:183329 -c 9:vendorfs -t 9:8300  Core135_sd.raw
+sudo sgdisk -a 1 -n 10:183330:  -c 10:rootfs -t 10:8300  -u 10:e91c4e10-16e6-4c0e-bd0e-77becf4a3582 Core135_sd.raw
+
+# 打印出分区表
+sudo sgdisk -p Core135_sd.raw
+
+
+
+
+dd_down /dev/sda1 /dev/loop100p1
+dd_down /dev/sda2 /dev/loop100p2
+dd_down /dev/sda3 /dev/loop100p3
+dd_down /dev/sda4 /dev/loop100p4
+dd_down /dev/sda5 /dev/loop100p5
+dd_down /dev/sda6 /dev/loop100p6
+dd_down /dev/sda7 /dev/loop100p7
+dd_down /dev/sda8 /dev/loop100p8
+dd_down /dev/sda9 /dev/loop100p9
+dd_down /dev/sda10 /dev/loop100p10
 
 
 

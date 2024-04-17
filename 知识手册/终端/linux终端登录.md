@@ -186,8 +186,8 @@ getty -L ttyS3 115200 console
 
 sudo bash -c "while true ; do getty -L ttyS3 115200 console >> /dev/null 2>&1 ; done" &
 
-
-
+在屏幕终端中开启一个终端
+/sbin/agetty  --noclear tty1 linux
 
 
 
