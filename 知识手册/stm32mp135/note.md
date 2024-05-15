@@ -82,6 +82,44 @@ sudo dosfslabel /dev/sda8 boot
 
 
 
+sudo sgdisk --delete=5 /dev/sda
+sudo sgdisk -d 5 /dev/sda
+sudo sgdisk -a 1 -n 5:7684:  -c 5:rootfs -t 5:8300  -u 5:549C80E0-A7FA-42CB-87B7-810481D4D26F /dev/sda
+sudo sgdisk /dev/sda -A 5:set:2
+
+sudo resize2fs /dev/sda5
+
+sudo sgdisk /dev/sda -i 5
+sudo sgdisk /dev/sda -p
+
+
+Partition GUID code: 0FC63DAF-8483-4772-8E79-3D69D8477DE4 (Linux filesystem)
+Partition unique GUID: 549C80E0-A7FA-42CB-87B7-810481D4D26F
+First sector: 7684 (at 3.8 MiB)
+Last sector: 253443 (at 123.8 MiB)
+Partition size: 245760 sectors (120.0 MiB)
+Attribute flags: 0000000000000004
+Partition name: 'rootfs'
+
+
+
+
+
+
+sgdisk -d 5 /dev/mmcblk0
+sgdisk -a 1 -n 5:7684:  -c 5:rootfs -t 5:8300  -u 5:549C80E0-A7FA-42CB-87B7-810481D4D26F /dev/mmcblk0
+sgdisk /dev/mmcblk0 -A 5:set:2
+
+resize2fs /dev/mmcblk0p5
+
+sgdisk /dev/mmcblk0 -i 5
+sgdisk /dev/mmcblk0 -p
+
+
+
+
+
+
 sudo sgdisk -P /dev/sdb --resize-table=128 -a 1
 
 -n 1:34:545 -c 1:fsbl1 
@@ -156,6 +194,23 @@ debian 系开机自动扩容：
 ```bash
 systemctl enable resize-helper
 ```
+
+
+```
+[Unit]
+Description=Resize root filesystem to fit available disk space
+Wants=systemd-udevd.service systemd-udev-trigger.service
+After=systemd-remount-fs.service systemd-udevd.service
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/resize2fs /dev/mmcblk0p5
+ExecStartPost=/bin/systemctl disable resizefs.service
+
+[Install]
+WantedBy=basic.target
+```
+
 
 
 

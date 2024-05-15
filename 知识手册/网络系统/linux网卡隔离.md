@@ -154,3 +154,32 @@ sudo ip netns exec netns1 ip link set veth1 up
 sudo ip netns exec netns2 ip addr add 192.168.1.2/24 dev veth2
 sudo ip netns exec netns2 ip link set veth2 up
 ```
+
+
+
+
+
+
+
+若 linux 下有两个以上的网口，可搭建网桥实现交换机功能
+
+方法一
+brctl addbr br0               #创建一个网桥br0实例
+brctl addif br0 eth0           #把eth0 加入网桥br0中
+brctl addif br0 eth1           #把eth1 加入网桥br0中
+ifconfig eth0 0.0.0.0          #物理网卡处于混杂模式，不用配置IP
+ifconfig eth1 0.0.0.0
+ifconfig br0 10.1.1.2          #只需要给网桥配置一个IP即可
+方法二
+ip link add name br0 type bridge
+ip link set eth0 master br0
+ip link set eth1 master br0
+ip link set br0 up
+ifconfig eth0 0.0.0.0
+ifconfig eth1 0.0.0.0
+ip addr add dev br0 192.168.1.100/24
+————————————————
+
+                            版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+                        
+原文链接：https://blog.csdn.net/weixin_38915451/article/details/134015412

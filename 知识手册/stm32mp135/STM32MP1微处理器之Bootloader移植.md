@@ -1589,6 +1589,13 @@ modprobe usb_f_uac1_legacy.ko
 modprobe g_audio.ko
 
 ```
+# 挂载成串口
+```bash
+modprobe libcomposite
+modprobe g_serial
+```
+
+
 
 STM32MP157驱动开发——USB设备驱动
 https://blog.csdn.net/weixin_45682654/article/details/128512903
@@ -1834,3 +1841,63 @@ max user IRQ frequency  : 64
 可以使用 ioctl 控制 /dev/rtc0。
 
 详细使用说明请参考文档 kernel-5.10/Documentation/admin-guide/rtc.rst 。
+
+
+
+
+
+
+
+
+stm32mp135 otp的调试
+otp 是 stm32mp135 中的一个一次性编程的寄存器表。它只有一次的将 0 变更为 1 的机会。主用用于主机标识，兼设备微调的功能。
+在 Core135 flash 启动的验证工作中，由于官方默认的引脚和我们板子的 flash 引脚不同，所以要更改开机映射。rom 代码是不公开的，但是可以使用 otp 来进行引脚的重影射。
+但在这个过程中遇到了两个坑。
+第一个坑是 otp 的一次性写入。第二个坑是是引导的优先级。otp 设定的引脚优先级是高于 boot 引脚的，所以一但设定了 otp 引导，除非 boot 引脚在 usb 启动项上，否则以 otp 中的引脚为准。
+我在测试的过程中设定了第二启动项，由于 otp 的优先级高于 boot 所以事实上上电为第二启动项。又因为 otp 设定的启动项启动失败后，设备不会再去检测 boot 启动项，所以导致如果没有第二启动项
+的启动引导，设备是不可能启动的。
+
+还有一个坑是，写入 otp dfu 是在 uboot 环境下的。uboot 在写入 otp 时依赖 optee 的功能。所以想要成功的写入 dfu ，需要在 optee-os 编译时开启 CFG_BSEC_PTA=y CFG_STM32_BSEC_WRITE=y CFG_TA_STM32MP_NVMEM=y
+```
+BR2_TARGET_OPTEE_OS_ADDITIONAL_VARIABLES="CFG_BSEC_PTA=y CFG_STM32_BSEC_WRITE=y CFG_TA_STM32MP_NVMEM=y CFG_EMBED_DTB_SOURCE_FILE=stm32mp135f-core135.dts CFG_STM32MP13=y CFG_WITH_TUI=n CFG_DRAM_SIZE=0x20000000"
+```
+
+
+用到的命令：
+```bash
+# stm32mp135 启动 dfu 引导：
+uboot $ stm32prog usb 0
+
+
+# 列出 dfu 设备
+sudo dfu-util -l
+
+# 获取 dfu 数据
+sudo dfu-util -a 2 -U otp.bin
+
+# 烧写 dfu 
+sudo dfu-util -a 2 -D otp.bin
+
+
+
+# 使用 ch341a 烧写flash
+flashrom -p ch341a_spi -w flash.bin -c W25Q256JV_Q
+
+# 使用 linux spi 烧写flash
+flashrom -p linux_spi:dev=/dev/spidev0.0,spispeed=1000000 -w flash.bin -c W25Q256JV_Q
+# 关于 -c 可加可不加，看情况。
+
+
+```
+
+
+https://wiki.st.com/stm32mpu/wiki/STM32CubeProgrammer_OTP_management
+https://wiki.st.com/stm32mpu/wiki/OP-TEE_OTP_overview
+https://wiki.st.com/stm32mpu/wiki/QUADSPI_device_tree_configuration
+
+
+查看 cpu 频率 
+查看 cpu 运行频率
+```bash
+cat /sys/devices/system/cpu/cpu*/cpufreq/cpuinfo_cur_freq
+```

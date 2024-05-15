@@ -273,6 +273,10 @@ nmcli dev
 
 nmcli r wifi off
   #关闭WiFi
+
+
+nmtui
+  # 终端界面配置
 ```
 
 NetworkManager守护进程启动后，会自动连接到已经配置的系统连接。用户连接或未配置的连接需要通过nmcli或桌面工具进行配置和连接。

@@ -173,3 +173,14 @@ Then route default traffic to TUN interface.
 ```bash
 netsh interface ipv4 add route 0.0.0.0/0 "wintun" 192.168.123.1 metric=1
 ```
+
+
+
+```bash
+  394  echo 1 > /proc/sys/net/ipv4/ip_forward
+  395  iptables -F
+  404  iptables -t nat -A POSTROUTING -o veth2 -j RETURN
+  405  iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+  411  nohup ./tun2socks-linux-arm64 -device tun0 -proxy socks5://192.168.28.21:7890 -interface veth2 &> /dev/null &
+```
+

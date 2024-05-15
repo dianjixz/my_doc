@@ -190,3 +190,242 @@ LoRaWAN 帧计数问题，当 LoRa 重发消息时，LoRa 服务器会拒绝 LoR
 ## NOTE
 RAK2287 usb版
 https://docs.rakwireless.com.cn/Product-Categories/WisLink/RAK2287/Quickstart/#rak2287-usb-spi-raspberry-pi
+
+
+
+
+
+
+1、找到并打开Mosquitto服务器的配置文件 /etc/mosquitto/mosquitto.conf
+
+2、将其中的配置选项allow_anonymous改为 false，禁止匿名登录
+
+allow_anonymous false
+
+3、将密码配置选项配置如下：
+
+password_file /etc/mosquitto/pwfile
+
+4、如果该目录下没有该文件，则进入该目录，并拷贝一份，命令如下：  
+
+cp pwfile.example pwfile
+
+5、添加用户信息。在终端执行以下代码，应用mosquitto_passwd命令创建用户名
+
+mosquitto_passwd -c /etc/mosquitto/pwfile username
+
+  执行以后会提示输入密码，重复2次输入之后，用户名密码配置完成。
+
+6、重新启动mosquitto服务之后，用户名密码生效
+
+mosquitto -c /etc/mosquitto/mosquitto.conf
+————————————————
+
+                            版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
+                        
+原文链接：https://blog.csdn.net/tuzirou/article/details/135480278
+
+
+
+
+
+
+/etc/chirpstack-gateway-bridge/chirpstack-gateway-bridge.toml
+``` txt
+# This configuration provides a Semtech UDP packet-forwarder backend and
+# integrates with a MQTT broker. Many options and defaults have been omitted
+# for simplicity.
+#
+# See https://www.chirpstack.io/gateway-bridge/install/config/ for a full
+# configuration example and documentation.
+
+
+# Gateway backend configuration.
+[backend]
+# Backend type.
+type="semtech_udp"
+
+  # Semtech UDP packet-forwarder backend.
+  [backend.semtech_udp]
+
+  # ip:port to bind the UDP listener to
+  #
+  # Example: 0.0.0.0:1700 to listen on port 1700 for all network interfaces.
+  # This is the listener to which the packet-forwarder forwards its data
+  # so make sure the 'serv_port_up' and 'serv_port_down' from your
+  # packet-forwarder matches this port.
+  udp_bind = "0.0.0.0:1700"
+
+
+# Integration configuration.
+[integration]
+# Payload marshaler.
+#
+# This defines how the MQTT payloads are encoded. Valid options are:
+# * protobuf:  Protobuf encoding
+# * json:      JSON encoding (easier for debugging, but less compact than 'protobuf')
+marshaler="protobuf"
+
+  # MQTT integration configuration.
+  [integration.mqtt]
+  # Event topic template.
+  event_topic_template="eu868/gateway/{{ .GatewayID }}/event/{{ .EventType }}"
+
+  # Command topic template.
+  command_topic_template="eu868/gateway/{{ .GatewayID }}/command/#"
+
+  # MQTT authentication.
+  [integration.mqtt.auth]
+  # Type defines the MQTT authentication type to use.
+  #
+  # Set this to the name of one of the sections below.
+  type="generic"
+
+    # Generic MQTT authentication.
+    [integration.mqtt.auth.generic]
+    # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
+    server="tcp://127.0.0.1:1883"
+
+    # Connect with the given username (optional)
+    username="chirp"
+
+    # Connect with the given password (optional)
+    password="chirp"
+
+
+```
+
+/etc/chirpstack/chirpstack.toml
+```txt
+# Logging.
+[logging]
+
+  # Log level.
+  #
+  # Options are: trace, debug, info, warn error.
+  level="info"
+
+
+# PostgreSQL configuration.
+[postgresql]
+
+  # PostgreSQL DSN.
+  #
+  # Format example: postgres://<USERNAME>:<PASSWORD>@<HOSTNAME>/<DATABASE>?sslmode=<SSLMODE>.
+  #
+  # SSL mode options:
+  #  * disable - no SSL
+  #  * require - Always SSL (skip verification)
+  #  * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
+  #  * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
+  dsn="postgres://chirpstack:chirpstack@localhost/chirpstack?sslmode=disable"
+
+  # Max open connections.
+  #
+  # This sets the max. number of open connections that are allowed in the
+  # PostgreSQL connection pool.
+  max_open_connections=10
+
+  # Min idle connections.
+  #
+  # This sets the min. number of idle connections in the PostgreSQL connection
+  # pool (0 = equal to max_open_connections).
+  min_idle_connections=0
+
+
+# Redis configuration.
+[redis]
+
+  # Server address or addresses.
+  #
+  # Set multiple addresses when connecting to a cluster.
+  servers=[
+    "redis://localhost/",
+  ]
+
+  # Redis Cluster.
+  #
+  # Set this to true when the provided URLs are pointing to a Redis Cluster
+  # instance.
+  cluster=false
+
+
+# Network related configuration.
+[network]
+
+  # Network identifier (NetID, 3 bytes) encoded as HEX (e.g. 010203).
+  net_id="000000"
+
+  # Enabled regions.
+  #
+  # Multiple regions can be enabled simultaneously. Each region must match
+  # the 'name' parameter of the region configuration in '[[regions]]'.
+  enabled_regions=["eu868"]
+#  enabled_regions=[
+#    "as923",
+#    "as923_2",
+#    "as923_3",
+#    "as923_4",
+#    "au915_0",
+#    "cn470_10",
+#    "cn779",
+#    "eu433",
+#    "eu868",
+#    "in865",
+#    "ism2400",
+#    "kr920",
+#    "ru864",
+#    "us915_0",
+#    "us915_1",
+#  ]
+
+
+# API interface configuration.
+[api]
+
+  # interface:port to bind the API interface to.
+  bind="0.0.0.0:8080"
+
+  # Secret.
+  #
+  # This secret is used for generating login and API tokens, make sure this
+  # is never exposed. Changing this secret will invalidate all login and API
+  # tokens. The following command can be used to generate a random secret:
+  #   openssl rand -base64 32
+  # secret="you-must-replace-this"
+  secret="A+IQny8oHpsuFXpuocQISSkQKB+rI23TUxmpVx/65AE="
+
+
+[integration]
+  enabled=["mqtt"]
+
+  [integration.mqtt]
+    server="tcp://127.0.0.1:1883"
+    json=true
+    # Connect with the given username (optional)
+    username="chirp"
+
+    # Connect with the given password (optional)
+    password="chirp"
+
+```
+
+
+/etc/mosquitto/mosquitto.conf
+```txt
+# Place your local configuration in /etc/mosquitto/conf.d/
+#
+# A full description of the configuration file is at
+# /usr/share/doc/mosquitto/examples/mosquitto.conf.example
+
+pid_file /run/mosquitto/mosquitto.pid
+
+persistence true
+persistence_location /var/lib/mosquitto/
+
+log_dest file /var/log/mosquitto/mosquitto.log
+
+include_dir /etc/mosquitto/conf.d
+bind_address 0.0.0.0
+password_file /etc/mosquitto/pwfile
+```

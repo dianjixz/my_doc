@@ -84,7 +84,7 @@ wpa_cli -i wlan0 ping          //pings wpa_supplicant
 
 
 #启动脚本
-wpa_supplicant -iwlan0 -Dnl80211 -c/etc/ambaipcam/IPC_Q313/config/wlan/wpa_supplicant.conf -B
+wpa_supplicant -iwlan0 -Dnl80211 -c/etc/wpa_supplicant.conf -B
 #查询网卡状态
 wpa_cli -p/var/run/wpa_supplicant -iwlan0 status
 #搜索附近网络功能  no/ok
