@@ -63,6 +63,25 @@ AllowUsers *                                                    设定允许的�
 ## 第四个文件/etc/motd 是的登陆logo
 
 
+ssh 可以在 config 中设置默认链接配置，比如 ssh 心跳，用于保持和远程tcp端口的链接。由于远程tcp链路存在nat网关，所以tcp端口会被释放，这会导致ssh自动挂掉。加入心跳可以维持这个tcp链路。
+全局配置文件：
+```
+/etc/ssh/ssh_config
+```
+用户配置文件：
+```
+~/.ssh/config
+```
+心跳配置
+```
+Host *
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+```
+
+
+
 
 ssh令牌
 ssh免密

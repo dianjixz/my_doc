@@ -328,7 +328,8 @@ nmcli device set xxx managed no
 在 /etc/NetworkManager/NetworkManager.conf 配置文件的[main] 层级下启用插件 keyfile。
 ```bash
 
-[main]plugins=keyfile
+[main]
+plugins=keyfile
 ```
 创建 /etc/NetworkManager/conf.d/99-unmanaged-devices.conf 配置文件，包含以下内容：
 ```bash

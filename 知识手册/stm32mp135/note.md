@@ -636,7 +636,7 @@ dd_down /dev/sda10 /dev/loop100p10
 
 
 
-
+Linux 下 cat /sys/kernel/debug/clk/clk_summary 可以查看当前 Soc 的时钟树.linux时钟树
 
 
 
