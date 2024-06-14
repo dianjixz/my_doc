@@ -214,3 +214,14 @@ xxx   20264 20141  0 17:13 pts/1    00:00:00 grep --color=auto gunicorn
                             版权声明：本文为博主原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接和本声明。
                         
 原文链接：https://blog.csdn.net/u012856866/article/details/119384985
+
+
+
+
+参考资料：[Python - WSGI 和 ASGI 服务器](https://link.zhihu.com/?target=https%3A//www.cnblogs.com/poloyy/p/15291403.html)
+
+    WSGI 是为同步应用程序提供标准，不支持 WebSocket
+    ASGI 是为异步、同步应用程序提供标准，支持 WSGI 不支持当前 web 开发中的一些新的协议标准
+    ASGI 是对 WSGI 的扩展
+
+参考资料：[鬼子口音：Gunicorn和Uvicorn](https://zhuanlan.zhihu.com/p/605971741)

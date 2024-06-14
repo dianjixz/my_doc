@@ -26,6 +26,7 @@ sudo apt-get install apt-mirror
 # set var_path     $base_path/var
 # set cleanscript $var_path/clean.sh
 # set defaultarch  　# 默认架构与镜像主机的架构一致,这里是amd64
+# set defaultarch  amd64
 # set postmirror_script $var_path/postmirror.sh
 # set run_postmirror 0
 set nthreads     20
