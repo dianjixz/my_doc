@@ -176,15 +176,8 @@ https://wiki.archlinux.org/title/getty
 给其他串口进行终端登录的方法:
 
 getty -L ttyS3 115200 vt100
-
+agetty -L ttyUSB0 115200 vt100 -n -l /bin/bash
 sudo bash -c "while [ 1 ] ; do getty -L ttyAMA1 115200 vt100 >> /dev/null 2>&1 ; done" &
-
-
-
-
-getty -L ttyS3 115200 console
-
-sudo bash -c "while true ; do getty -L ttyS3 115200 console >> /dev/null 2>&1 ; done" &
 
 在屏幕终端中开启一个终端
 /sbin/agetty  --noclear tty1 linux
