@@ -456,3 +456,100 @@ pcm.aw88298 {
 
 
 https://www.alsa-project.org/main/index.php/Asoundrc
+
+
+
+
+
+
+
+# linux 的虚拟声音编码器
+在调试 stm32mp135 的时候，音频摸块添加了一个单独的驱动，这是一个非常简单的驱动，但是总是觉得 linux 内核中应该会有这个通用的驱动。
+在一个一个查找了 linux 的驱动后，觉得有一个驱动非常符合这个需求：
+播放
+```
+linux,spdif-dit
+```
+该驱动只有一个 Playback ，非常符此时的设定。
+
+录音
+```
+linux,spdif-dir
+```
+
+
+
+```dts
+
+spdif_out: spdif-out {
+	#sound-dai-cells = <0>;
+	compatible = "linux,spdif-dit";
+	status = "okay";
+
+	spdif_out_port: port {
+		spdif_out_endpoint: endpoint {
+			remote-endpoint = <&sai4a_endpoint>;
+		};
+	};
+};
+
+spdif_in: spdif-in {
+	#sound-dai-cells = <0>;
+	compatible = "linux,spdif-dir";
+	status = "okay";
+
+	spdif_in_port: port {
+		spdif_in_endpoint: endpoint {
+			remote-endpoint = <&spdifrx_endpoint>;
+		};
+	};
+};
+
+
+
+
+
+sound: sound {
+	compatible = "audio-graph-card";
+	label = "STM32MP15-EV";
+	routing =
+		"AIF1CLK" , "MCLK1",
+		"AIF2CLK" , "MCLK1",
+		"IN1LN" , "MICBIAS2",
+		"DMIC2DAT" , "MICBIAS1",
+		"DMIC1DAT" , "MICBIAS1";
+	dais = <&sai2a_port &sai2b_port &sai4a_port &spdifrx_port
+		&dfsdm0_port &dfsdm1_port &dfsdm2_port &dfsdm3_port>;
+	status = "okay";
+};
+
+
+
+&sai4 {
+	clocks = <&rcc SAI4>, <&rcc PLL3_Q>, <&rcc PLL3_R>;
+	clock-names = "pclk", "x8k", "x11k";
+	status = "okay";
+
+	sai4a: audio-controller@50027004 {
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&sai4a_pins_a>;
+		pinctrl-1 = <&sai4a_sleep_pins_a>;
+		dma-names = "tx";
+		st,iec60958;
+		status = "okay";
+
+		sai4a_port: port {
+			sai4a_endpoint: endpoint {
+				remote-endpoint = <&spdif_out_endpoint>;
+			};
+		};
+	};
+};
+
+
+
+
+
+
+```
+

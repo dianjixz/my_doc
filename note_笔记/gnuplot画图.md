@@ -540,3 +540,17 @@ quit
 在运行该脚本时，gnuplot将会直接将图形输出为PNG图片，并将其保存为指定的文件名（此处为`output.png`）。
 
 请确保你的系统中已经安装了相应的gnuplot绘图软件包，并且你的脚本中的命令语法正确无误。
+
+
+# 设置分隔符为逗号
+set datafile separator ','
+
+# 设置绘图样式
+set style data linespoints
+
+# 设置 x 轴和 y 轴的标签
+set xlabel "Year"
+set ylabel "Revenue"
+
+# 绘制数据
+plot "data.csv" using 1:2 title "Revenue" with linespoints

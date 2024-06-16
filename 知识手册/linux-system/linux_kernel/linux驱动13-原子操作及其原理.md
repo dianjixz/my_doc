@@ -197,9 +197,9 @@ try
 
 ldrex与strex指令的结合确实强大，对于一些古老的多核处理器，需要锁总线来保证数据原子操作(如x86)，这样会导致访问效率降低。而ldrex和strex没有进行锁总线操作，并且在两条指令之间可以对变量进行复杂的操作，不仅仅是加1减1操作。但是也需要注意ldrex与strex指令要想正常工作，也是有前提的，笔者在开发ti 66AH2H（4核cortex-A15）平台BSP时，就遇到了这个问题，先看下ARM手册对于ldrex指令的相关说明：
 
-![微信图片_20210607223649](D:\work\git\my_doc\image\微信图片_20210607223649.jpg)
+![微信图片_20210607223649](../../../image\微信图片_20210607223649.jpg)
 
-![微信图片_20210607223701](D:\work\git\my_doc\image\微信图片_20210607223701.jpg)
+![微信图片_20210607223701](../../../image\微信图片_20210607223701.jpg)
 
 上述内容来源于ARM官方文档（DDI0438I_cortex_a15_r4p0_trm.pdf），主要表达意思就是对于ldrex和strex指令的支持需要global monitor，而global monitor的实现由两种，一种是内部实现，需要开启cache。另一种是外部实现（和芯片有关系，有的芯片没有实现），通过总线监听的方式。当内部和外部都实现时，优先使用内部global monitor。笔者在开发ti 66AH2H（4核cortex-A15）平台BSP时，就在没有开启cache时使用了ldrex指令，系统工作异常，这也说明了66AH2H没有实现外部global monitor。同样是ti cortex-A15(AM5728)，就实现了外部global monitor，zynq 7000双核cortex-A9(Armv7-A)也可以在不开启cache时使用ldrex指令，外部global monitor是否实现与芯片有关系，为安全起见，尽量不在开启cache前使用ldrex和strex指令。
 

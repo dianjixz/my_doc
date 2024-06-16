@@ -1,6 +1,6 @@
  
 
-#                  [     Docker: 如何修改 Docker 的镜像存储位置         ](https://www.cnblogs.com/csharpsharper/p/5685263.html)             
+# [Docker: 如何修改 Docker 的镜像存储位置](https://www.cnblogs.com/csharpsharper/p/5685263.html)             
 
 我用的阿里云的服务器, 但是系统盘只有20G, 默认 Docker 的镜像文件是安装在/var/lib 目录下的, 这样的话我根本装不了太多的镜像... 这个必须得改改...
  搜了下, 解决方案如下:
@@ -37,3 +37,28 @@
 
 
 https://www.cnblogs.com/csharpsharper/p/5685263.html
+
+# Docker 导出离线镜像
+## 方法一
+使用 save 和 load 命令
+```bash
+docker save -o coredns.tar k8s.gcr.io/coredns:1.3.1
+```
+```bash
+docker load < coredns.tar
+```
+## 方法二
+使用 export 和 import 命令
+```bash
+docker export eb516548c180 > coredns.tar
+```
+```bash
+docker import /usr/local/coredns.tar
+# or
+# cat coredns.tar | docker import - k8s.gcr.io/coredns:1.3.1(镜像名自己定义)
+```
+
+## 查看镜像是否导入成功
+```bash
+docker images
+```

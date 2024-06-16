@@ -127,3 +127,60 @@ route add default gw 192.168.1.1 #如果网桥不需要访问其他机器的话�
 
 另外，无线局域网共享wifi，需要hostapd搭建无线局域网，可以参考creat_ap.
 https://www.bbsmax.com/A/6pdDLp7Xdw/
+
+
+
+通过 socks5 进行全局共享上网
+tun2socks 是一个将虚拟网卡的流量转换成 socks 的工具，也就是 socks vpn 好处是可以进行全局代理上网，任何程序都可以值接使用这个工具进行代理上网。
+https://github.com/xjasonlyu/tun2socks.git
+
+
+linux：
+Create TUN interface tun0 and assign an IP address for it.
+```bash
+ip tuntap add mode tun dev tun0
+ip addr add 198.18.0.1/15 dev tun0
+ip link set dev tun0 up
+```
+Configure the default route table with different metrics. Let's say the primary interface is eth0 and gateway is 172.17.0.1.
+```bash
+ip route del default
+ip route add default via 198.18.0.1 dev tun0 metric 1
+ip route add default via 172.17.0.1 dev eth0 metric 10
+```
+tart tun2socks and bind it to the primary interface.
+```bash
+tun2socks -device tun0 -proxy socks5://host:port -interface eth0
+```
+socks 服务器尽量不要在本地 127.0.0.1, 不然会造成流量回环，从而不能使用。
+
+windows:
+To use it in windows, download wintun to the tun2socks folder or the system PATH and start the program.
+
+    In this example, "WIFI" is the default primary network interface.
+```bash
+tun2socks -device wintun -proxy socks5://host:port -interface "WIFI"
+```
+Same as macOS version, but we don't need to bring up the interface by hand, the only thing we need is to assign an IP address to it.
+```bash
+netsh interface ipv4 set address name="wintun" source=static addr=192.168.123.1 mask=255.255.255.0
+```
+In Windows, we usually need to manually set up the DNS address for our interface.
+```bash
+netsh interface ipv4 set dnsservers name="wintun" static address=8.8.8.8 register=none validate=no
+```
+Then route default traffic to TUN interface.
+```bash
+netsh interface ipv4 add route 0.0.0.0/0 "wintun" 192.168.123.1 metric=1
+```
+
+
+
+```bash
+  394  echo 1 > /proc/sys/net/ipv4/ip_forward
+  395  iptables -F
+  404  iptables -t nat -A POSTROUTING -o veth2 -j RETURN
+  405  iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+  411  nohup ./tun2socks-linux-arm64 -device tun0 -proxy socks5://192.168.28.21:7890 -interface veth2 &> /dev/null &
+```
+

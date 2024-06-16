@@ -273,6 +273,10 @@ nmcli dev
 
 nmcli r wifi off
   #关闭WiFi
+
+
+nmtui
+  # 终端界面配置
 ```
 
 NetworkManager守护进程启动后，会自动连接到已经配置的系统连接。用户连接或未配置的连接需要通过nmcli或桌面工具进行配置和连接。
@@ -324,7 +328,8 @@ nmcli device set xxx managed no
 在 /etc/NetworkManager/NetworkManager.conf 配置文件的[main] 层级下启用插件 keyfile。
 ```bash
 
-[main]plugins=keyfile
+[main]
+plugins=keyfile
 ```
 创建 /etc/NetworkManager/conf.d/99-unmanaged-devices.conf 配置文件，包含以下内容：
 ```bash

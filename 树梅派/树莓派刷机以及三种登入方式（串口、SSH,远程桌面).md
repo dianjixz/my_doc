@@ -98,10 +98,19 @@ win+r打开命令窗口输入mstsc 开启远程桌面服务
 原文链接：https://blog.csdn.net/zouchengzhi1021/article/details/113782096
 
 
+# 树梅派 USB Devidce 模式使用
 
+要起用 USB 功能时需要在 /boot/config.txt 文件中添加一行：
+``` bash
+dtoverlay=dwc2-otg,dr_mode=host
+```
 
+同时需要确保下面这行处于注释的状态
+``` bash
+#otg_mode=1
+```
 
-
-
-
-
+linux下usb gadget 模拟键盘:http://blog.chinaunix.net/uid-27661165-id-3330346.html
+基于树莓派的多功能USB实现--U盘模式和网卡模式:https://cloud.tencent.com/developer/article/1581569
+HowToOTG.md:https://gist.github.com/gbaman/50b6cca61dd1c3f88f41
+DM816X 实现 USB HID Gadget 鼠标键盘功能【转】：https://blog.51cto.com/u_15050720/4592330

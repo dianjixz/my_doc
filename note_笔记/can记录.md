@@ -63,6 +63,17 @@ https://zhuanlan.zhihu.com/p/470681140?utm_id=0
     canconfig can0 stop
     canconfig can1 stop
 
+
+ip link set can0 down
+ip link set can1 down
+sleep 1
+ip link set can0 up type can bitrate 400000
+ip link set can1 up type can bitrate 400000
+
+
+
+
+
 http://t.zoukankan.com/chenfulin5-p-7816220.html
 
 

@@ -22,12 +22,105 @@ sudo sgdisk --resize-table=128 -a 1 \
 -n 7:18466:19489        -c 7:fsbl7 \
 -n 8:19490:150561       -c 8:boot \
 -n 9:150562:183329      -c 9:vendorfs \
--n 10:183330:1690657    -c 10:rootfs \
--g -P /dev/sdb
+-n 10:183330:9253821    -c 10:rootfs \
+-g  /dev/sdb
 
 
 
 
+
+
+sudo sgdisk -og -a 1 \
+-a 1 -n 1:34:545 -c 1:fsbl1 -t 1:8301 \
+-a 1 -n 2:546:1057 -c 2:fsbl2 -t 2:8301 \
+-a 1 -n 3:1058:1569 -c 3:metadata1 -t 3:8301 \
+-a 1 -n 4:1570:2081 -c 4:metadata2 -t 4:8301 \
+-a 1 -n 5:2082:10273 -c 5:fip-a -t 5:19d5df83-11b0-457b-be2c-7559c13142a5  -u 5:4fd84c93-54ef-463f-a7ef-ae25ff887087 \
+-a 1 -n 6:10274:18465 -c 6:fip-b -t 6:19d5df83-11b0-457b-be2c-7559c13142a5  -u 6:09c54952-d5bf-45af-acee-335303766fb3 \
+-a 1 -n 7:18466:19489 -c 7:u-boot-env -t 7:8301 \
+-a 1 -n 8:19490:150561 -c 8:bootfs -t 8:8300  -A 8:set:2 \
+-a 1 -n 9:150562:183329 -c 9:vendorfs -t 9:8300 \
+-a 1 -n 10:183330:  -c 10:rootfs -t 10:8300  -u 10:e91c4e10-16e6-4c0e-bd0e-77becf4a3582 \
+/dev/sda
+sudo mkfs.ext4 /dev/sda10
+sudo mkfs.ext4 /dev/sda8
+
+
+
+
+
+# test
+dd if=/dev/zero of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw bs=1024 count=0 seek=1536K
+sgdisk -og -a 1 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 1:34:545 -c 1:fsbl1 -t 1:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 2:546:1057 -c 2:fsbl2 -t 2:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 3:1058:1569 -c 3:metadata1 -t 3:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 4:1570:2081 -c 4:metadata2 -t 4:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 5:2082:10273 -c 5:fip-a -t 5:19d5df83-11b0-457b-be2c-7559c13142a5  -u 5:4fd84c93-54ef-463f-a7ef-ae25ff887087 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 6:10274:18465 -c 6:fip-b -t 6:19d5df83-11b0-457b-be2c-7559c13142a5  -u 6:09c54952-d5bf-45af-acee-335303766fb3 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 7:18466:19489 -c 7:u-boot-env -t 7:8301  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 8:19490:150561 -c 8:bootfs -t 8:8300  -A 8:set:2 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 9:150562:183329 -c 9:vendorfs -t 9:8300  FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -a 1 -n 10:183330:  -c 10:rootfs -t 10:8300  -u 10:e91c4e10-16e6-4c0e-bd0e-77becf4a3582 FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk -p FlashLayout_sdcard_stm32mp135f-dk-extensible.raw
+sgdisk FlashLayout_sdcard_stm32mp135f-dk-extensible.raw -i 5
+sgdisk FlashLayout_sdcard_stm32mp135f-dk-extensible.raw -i 6
+sgdisk FlashLayout_sdcard_stm32mp135f-dk-extensible.raw -i 10
+dd if=arm-trusted-firmware/tf-a-stm32mp135f-dk-sdcard.stm32 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=17408
+dd if=arm-trusted-firmware/tf-a-stm32mp135f-dk-sdcard.stm32 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=279552
+dd if=arm-trusted-firmware/metadata.bin of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=541696
+dd if=arm-trusted-firmware/metadata.bin of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=803840
+dd if=fip/fip-stm32mp135f-dk-optee.bin of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=1065984
+dd if=st-image-bootfs-openstlinux-weston-stm32mp1.ext4 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=9978880
+dd if=st-image-vendorfs-openstlinux-weston-stm32mp1.ext4 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=77087744
+dd if=st-image-weston-openstlinux-weston-stm32mp1.ext4 of=FlashLayout_sdcard_stm32mp135f-dk-extensible.raw conv=fdatasync,notrunc seek=1 bs=93864960
+
+
+sudo e2label  /dev/sda10 rootfs
+sudo dosfslabel /dev/sda8 boot
+
+
+
+
+sudo sgdisk --delete=5 /dev/sda
+sudo sgdisk -d 5 /dev/sda
+sudo sgdisk -a 1 -n 5:7684:  -c 5:rootfs -t 5:8300  -u 5:549C80E0-A7FA-42CB-87B7-810481D4D26F /dev/sda
+sudo sgdisk /dev/sda -A 5:set:2
+
+sudo resize2fs /dev/sda5
+
+sudo sgdisk /dev/sda -i 5
+sudo sgdisk /dev/sda -p
+
+
+Partition GUID code: 0FC63DAF-8483-4772-8E79-3D69D8477DE4 (Linux filesystem)
+Partition unique GUID: 549C80E0-A7FA-42CB-87B7-810481D4D26F
+First sector: 7684 (at 3.8 MiB)
+Last sector: 253443 (at 123.8 MiB)
+Partition size: 245760 sectors (120.0 MiB)
+Attribute flags: 0000000000000004
+Partition name: 'rootfs'
+
+
+
+
+
+
+sgdisk -d 5 /dev/mmcblk0
+sgdisk -a 1 -n 5:7684:  -c 5:rootfs -t 5:8300  -u 5:549C80E0-A7FA-42CB-87B7-810481D4D26F /dev/mmcblk0
+sgdisk /dev/mmcblk0 -A 5:set:2
+
+resize2fs /dev/mmcblk0p5
+
+sgdisk /dev/mmcblk0 -i 5
+sgdisk /dev/mmcblk0 -p
+
+
+
+
+
+
+sudo sgdisk -P /dev/sdb --resize-table=128 -a 1
 
 -n 1:34:545 -c 1:fsbl1 
 -n 2:546:1057 -c 2:fsbl2 
@@ -96,7 +189,27 @@ I/O 大小(最小/最佳)：512 字节 / 512 字节
 
 
 
+debian 系开机自动扩容：
+起用 resize-helper.service 开机服务，该服务会检测磁盘是否完全使用了磁盘，如果没有就扩展根文件系统到整个磁盘。
+```bash
+systemctl enable resize-helper
+```
 
+
+```
+[Unit]
+Description=Resize root filesystem to fit available disk space
+Wants=systemd-udevd.service systemd-udev-trigger.service
+After=systemd-remount-fs.service systemd-udevd.service
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/resize2fs /dev/mmcblk0p5
+ExecStartPost=/bin/systemctl disable resizefs.service
+
+[Install]
+WantedBy=basic.target
+```
 
 
 
@@ -293,3 +406,241 @@ while true; do
 done
 
 ```
+
+
+
+
+
+
+
+
+5g RM500U 调试记录
+RM500U 是移远公司开发的 5G 应用模块，底板选用的是墨子号的开发底板。
+调试的主要主要问题在网卡模式和AT指令上。
+第一部分：AT指令
+
+- AT+QNETDEVSTATUS=1 : 查寻网络链接状态
+- AT+QNETDEVCTL=1,3,1 ： 设置开机自动链接网络，这个是非常重要的，
+- AT+QCFG="usbnet",1 ： 设置网卡模式为 cdc eth
+- AT+QCFG="usbnet",3 ： 设置网卡模式为 rndis，可能是驱动的原因，在135上并不怎么兼容。
+
+关于usb自带的5个串口，这个每个都试了，发现并没有什么反应。手册中也没有查到关于这几个串口是否支持AT指令
+
+https://www.cnblogs.com/zhijun1996/p/16484126.html
+
+
+
+
+5g FM650-CN 调试记录
+FM650-CN 模块是采用国产展锐平台的 5G 模组。
+这个平台网上几乎没有资料，微雪官网也只有一个 AT 英文指令手册。
+在使用 AT 指令过程中，非常不稳定，不过一般配置完成后，几乎不会再动AT指令模块了，所以这个问题还好。如果每次都要配置的话，他们的AT指令配置显然是非常糟心的。
+注意，发送AT指令的时候一定要注意间隔和回复时间，该模块的AT指令响应非常令人糟心，而且AT口经常会挂掉。
+主要用的AT指令：
+- AT AT指令测试，测试模块是否准备完成
+- AT+GTUSBMODE 设置5G模块 usb 网卡的模式，可选的 cdc 网卡，rndis 网卡等
+- AT+GTAUTOCONNECT 设置自动链接网络，这个是配置连网的。
+- AT+GTRNDIS 查寻网络ip，可用来判断是否连网
+- AT+CGPADDR 查看接口的ip地址
+- AT+CGCONTRDP 网上的说法是开启设备dhcp分配，这个设计有点糟心。
+
+
+链接流程
+AT
+AT+GTAUTOCONNECT=1
+AT+CGPADDR
+AT+CGCONTRDP
+AT+CGPADDR
+
+注意，5g 模块工作是耗电比较大，135 的单个 usb 口都不足以支撑设备的运行功率。
+
+OpenWrt实现4G/5G网络共享+公网IPv6地址透传分配
+https://zhuanlan.zhihu.com/p/624187071?utm_id=0
+
+
+2c7c:0316
+echo "2c7c 0316" > /sys/bus/usb-serial/drivers/option1/new_id
+
+
+
+
+echo -n 'file spi-stm32.c +p' > /sys/kernel/debug/dynamic_debug/control
+开启内核特定模块的 log 打印。
+echo -n 'file qmi_wwan_q.c +p' > /sys/kernel/debug/dynamic_debug/control
+
+alias arm-ostl-linux-gnueabi-gcc="arm-ostl-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi"
+
+alias arm-ostl-linux-gnueabi-g++="arm-ostl-linux-gnueabi-g++  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi"      
+alias arm-ostl-linux-gnueabi-gcc="arm-ostl-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi"
+
+
+
+make CROSS_COMPILE=arm-ostl-linux-gnueabi- clean install CONFIG_PREFIX=`pwd`/install
+
+
+
+
+
+
+CPP=arm-ostl-linux-gnueabi-gcc -E  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+
+CXX=arm-ostl-linux-gnueabi-g++  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+
+
+OE_CMAKE_TOOLCHAIN_FILE=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/share/cmake/OEToolchainConfig.cmake
+M4=m4
+OECORE_TUNE_CCARGS= -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7
+
+OECORE_SDK_VERSION=4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15
+
+PKG_CONFIG_PATH=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr/lib/pkgconfig:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr/share/pkgconfig
+
+HOSTNAME=027c22b8f6f1
+GDB=arm-ostl-linux-gnueabi-gdb
+SDKTARGETSYSROOT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+OECORE_BASELIB=lib
+
+TARGET_PREFIX=arm-ostl-linux-gnueabi-
+OE_CMAKE_FIND_LIBRARY_CUSTOM_LIB_SUFFIX=
+PWD=/home/nihao/workspace
+LOGNAME=nihao
+OECORE_TARGET_OS=linux-gnueabi
+
+CXXFLAGS= -O2 -pipe -g -feliminate-unused-debug-types 
+TEEC_EXPORT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr
+OECORE_NATIVE_SYSROOT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux
+
+LDFLAGS=-Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed 
+
+HOME=/home/nihao
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+OPENSSL_CONF=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/lib/ssl-3/openssl.cnf
+KCFLAGS=--sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+OECORE_TARGET_SYSROOT=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+CPPFLAGS=
+OPENSSL_MODULES=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/lib/ossl-modules/
+LD=arm-ostl-linux-gnueabi-ld  --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+READELF=arm-ostl-linux-gnueabi-readelf
+TA_DEV_KIT_DIR=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi/usr/include/optee/export-user_ta
+CORSS_COMPILE=arm-linux-gnueabihf-
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LIBGCC_LOCATE_CFLAGS=--sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+TERM=xterm
+LESSOPEN=| /usr/bin/lesspipe %s
+USER=nihao
+AR=arm-ostl-linux-gnueabi-ar
+AS=arm-ostl-linux-gnueabi-as 
+ARCH=arm
+SHLVL=2
+NM=arm-ostl-linux-gnueabi-nm
+OECORE_TARGET_ARCH=arm
+OECORE_DISTRO_VERSION=4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15
+PKG_CONFIG_SYSROOT_DIR=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+OECORE_ACLOCAL_OPTS=-I /opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/share/aclocal
+OBJCOPY=arm-ostl-linux-gnueabi-objcopy
+STRIP=arm-ostl-linux-gnueabi-strip
+OBJDUMP=arm-ostl-linux-gnueabi-objdump
+CONFIG_SITE=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/site-config-cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+PATH=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/sbin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/bin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/sbin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin/../x86_64-ostl_sdk-linux/bin:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin/arm-ostl-linux-gnueabi:/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/x86_64-ostl_sdk-linux/usr/bin/arm-ostl-linux-musl:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/nihao/workspace/gcc-linaro-7.5.0-2019.12-x86_64_arm-linux-gnueabihf/bin
+CC=arm-ostl-linux-gnueabi-gcc  -mthumb -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 --sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+CFLAGS= -O2 -pipe -g -feliminate-unused-debug-types 
+CROSS_COMPILE=arm-ostl-linux-gnueabi-
+MAIL=/var/mail/nihao
+CONFIGURE_FLAGS=--target=arm-ostl-linux-gnueabi --host=arm-ostl-linux-gnueabi --build=x86_64-linux --with-libtool-sysroot=/opt/st/stm32mp1/4.0.1-openstlinux-5.15-yocto-kirkstone-mp1-v22.06.15/sysroots/cortexa7t2hf-neon-vfpv4-ostl-linux-gnueabi
+RANLIB=arm-ostl-linux-gnueabi-ranlib
+OLDPWD=/home/nihao/workspace/busybox-1.36.0
+_=/usr/bin/env
+
+
+stm32mp1 时钟树
+https://pic2.zhimg.com/v2-572f2c5cb10c29efa22325f51efaa515_r.jpg
+
+
+
+core135对rndis支持有点缺陷，暂时不知道是什么缺陷，但是可以使用cdc_ether进行支持
+也就是将rm500u模块的网卡设置为cdc_ether模式。
+
+
+
+
+
+
+
+loral：
+
+
+https://www.waveshare.net/wiki/SX1302_LoRaWAN_Gateway_HAT
+
+
+mkdir lora
+cd lora
+proxychains git clone https://github.com/Lora-net/lora_gateway.git
+# LoRa Gateway drivers
+proxychains git clone https://github.com/Lora-net/packet_forwarder.git
+# packet forwarding software
+proxychains git clone https://github.com/HelTecAutomation/lorasdk.git
+# This package will create a "lrgateway" service in Raspberry Pi
+cd /home/pi/lora/lora_gateway
+make clean all -j
+cd /home/pi/lora/packet_forwarder
+make clean all -j
+cd /home/pi/lora/lorasdk
+chmod +x install.sh 
+./install.sh
+#Run the script. After the script is run, it will create a service named "lrgateway". The purpose is to make the lora driver and data forwarding program run automatically at startup.
+sudo cp -f /home/pi/lora/lorasdk/global_conf_EU868.json /home/pi/lora/packet_forwarder/lora_pkt_fwd/global_conf.json
+#the "global_conf_EU868.json" may need change to your need.
+
+https://www.waveshare.net/wiki/SX1302_LoRaWAN_Gateway_HAT
+
+
+
+
+
+
+
+
+
+
+
+
+
+sudo sgdisk -og -a 1 Core135_sd.raw
+sudo sgdisk -a 1 -n 1:34:545 -c 1:fsbl1 -t 1:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 2:546:1057 -c 2:fsbl2 -t 2:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 3:1058:1569 -c 3:metadata1 -t 3:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 4:1570:2081 -c 4:metadata2 -t 4:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 5:2082:10273 -c 5:fip-a -t 5:19d5df83-11b0-457b-be2c-7559c13142a5  -u 5:4fd84c93-54ef-463f-a7ef-ae25ff887087 Core135_sd.raw
+sudo sgdisk -a 1 -n 6:10274:18465 -c 6:fip-b -t 6:19d5df83-11b0-457b-be2c-7559c13142a5  -u 6:09c54952-d5bf-45af-acee-335303766fb3 Core135_sd.raw
+sudo sgdisk -a 1 -n 7:18466:19489 -c 7:u-boot-env -t 7:8301  Core135_sd.raw
+sudo sgdisk -a 1 -n 8:19490:150561 -c 8:bootfs -t 8:8300  -A 8:set:2 Core135_sd.raw
+sudo sgdisk -a 1 -n 9:150562:183329 -c 9:vendorfs -t 9:8300  Core135_sd.raw
+sudo sgdisk -a 1 -n 10:183330:  -c 10:rootfs -t 10:8300  -u 10:e91c4e10-16e6-4c0e-bd0e-77becf4a3582 Core135_sd.raw
+
+# 打印出分区表
+sudo sgdisk -p Core135_sd.raw
+
+
+
+
+dd_down /dev/sda1 /dev/loop100p1
+dd_down /dev/sda2 /dev/loop100p2
+dd_down /dev/sda3 /dev/loop100p3
+dd_down /dev/sda4 /dev/loop100p4
+dd_down /dev/sda5 /dev/loop100p5
+dd_down /dev/sda6 /dev/loop100p6
+dd_down /dev/sda7 /dev/loop100p7
+dd_down /dev/sda8 /dev/loop100p8
+dd_down /dev/sda9 /dev/loop100p9
+dd_down /dev/sda10 /dev/loop100p10
+
+
+
+Linux 下 cat /sys/kernel/debug/clk/clk_summary 可以查看当前 Soc 的时钟树.linux时钟树
+
+
+
+
+
+
+

@@ -294,6 +294,10 @@ iptables -A FORWARD -o eth0
 
 iptables -t nat -A POSTROUTING -s 192.168.188.0/24 -j SNAT --to-source 210.14.67.127
 
+删除规则
+
+iptables -t nat -D POSTROUTING -s 192.168.188.0/24 -j SNAT --to-source 210.14.67.127
+
 端口映射
 
 本机的 2222 端口映射到内网 虚拟机的22 端口
@@ -422,6 +426,8 @@ iptables -t nat -A POSTROUTING -s 20.0.0.0/8 -j SNAT --to-source 10.0.0.32
 
 echo 'net.ipv4.ip_forward = 1' >> /etc/sysctl.conf  # 配置内核转发
 sysctl -p # 刷新生效
+
+
 
 iptables -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT  #放行80 443
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT   # 放行22号端口
@@ -726,3 +732,42 @@ iptables -A INPUT -p icmp --icmp-type 8 -j DROP
 
 # 只要不是10.0.0.7就不允许ping
 iptables -I INPUT -p icmp --icmp-type 8 ! -s 10.0.0.7 -j DROP
+
+
+
+
+
+
+
+要配置树莓派使其WiFi接口共享网络连接到以太网接口，您可以使用 iptables 和网络接口配置。以下是一个简化的步骤指南：
+
+    配置树莓派的WiFi连接：
+        确保您的树莓派连接到WiFi网络。
+
+    设置IP转发：
+        打开 /etc/sysctl.conf 文件。
+        找到或添加这行：net.ipv4.ip_forward=1。
+        保存文件并执行 sudo sysctl -p 以应用更改。
+
+    配置NAT（网络地址转换）：
+        使用 iptables 设置NAT规则。这允许从以太网接口的设备通过WiFi接口上网。
+        执行命令 sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE，其中 wlan0 是WiFi接口，eth0 是以太网接口。
+
+    保存 iptables 规则：
+        Debian/Ubuntu系统可以使用 iptables-persistent 包来保存规则。
+        安装 iptables-persistent 并在安装过程中选择保存当前规则。
+
+    配置DHCP服务器（可选）：
+        如果您希望树莓派为通过以太网连接的设备提供IP地址，需要安装并配置DHCP服务器，如 dnsmasq。
+        安装 dnsmasq 并配置 /etc/dnsmasq.conf，指定IP地址范围和租约时间。
+
+    重启树莓派：
+        重启树莓派以应用更改。
+
+请注意，这些步骤可能需要根据您的具体环境和树莓派的版本进行调整。确保您了解每个步骤的作用，特别是当涉及到网络配置和安全性时。
+
+
+
+
+
+

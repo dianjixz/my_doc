@@ -932,3 +932,20 @@ root@ubuntu:~# systemctl status your_script_name.service
     Docs: man:systemd-sysv-generator(8)
     Process: 2768 ExecStart=/etc/init.d/your_script_name start (code=exited, status=0/SUCCESS)
 ```
+
+
+
+```txt
+[Unit]
+Description=My Application
+
+[Service]
+ExecStart=/path/to/your/application
+Restart=always
+RestartSec=30
+User=your_username
+
+[Install]
+WantedBy=multi-user.target
+
+```

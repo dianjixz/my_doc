@@ -163,7 +163,7 @@ int down_interruptible(struct semaphore *sem)
 
 解决并发控制的最常用方法是自旋锁与信号量（绝大多数时候作为互斥锁使用）。
 
-![微信图片_20210607223002](D:\work\git\my_doc\image\微信图片_20210607223002.png)
+![微信图片_20210607223002](../../../image\微信图片_20210607223002.png)
 
 场景2
 
@@ -171,7 +171,7 @@ int down_interruptible(struct semaphore *sem)
 
 信号处理示意图
 
-![微信图片_20210607223022](D:\work\git\my_doc\image\微信图片_20210607223022.png)
+![微信图片_20210607223022](../../../image\微信图片_20210607223022.png)
 
 如上图：
 
