@@ -314,5 +314,15 @@ ssh -L 7890:localhost:7890 master@174.139.9.66 # 将来自本机的7890端口访
 ssh -R 7890:localhost:7890 master@174.139.9.66 # 将来自远程的7890端口的访问转发到本机7890端口中
 ```
 
+22端口内网穿透命令
+```bash
+autossh -M 0 -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -NR 2222:localhost:22 user@target-ip
+```
+后台运行
+```bash
+autossh -M 0 -o "ServerAliveInterval 10" -o "ServerAliveCountMax 3" -fNR 2222:localhost:22 user@target-ip
+```
+
+
 
 
