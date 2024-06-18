@@ -105,30 +105,8 @@ PasswordAuthentication no 禁止使用密码验证登录（自己添加）
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### 信息来源
 https://blog.csdn.net/angou6476/article/details/101996928?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&dist_request_id=1619538237256_54371&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
-
-
-
-
 
 
 
@@ -319,16 +297,22 @@ ssh -C -f -N -g -D listen_port user@Tunnel_Host
 
 应用举例
 
-1.将发往本机的80端口访问转发到174.139.9.66的8080端口
+1.将发往本机的8080端口访问转发到174.139.9.66的80端口
 
- ssh -C -f -N -g -L 80:174.139.9.66:8080 master@174.139.9.66
+ ssh -C -f -N -g -L 8080:localhost:80 master@174.139.9.66
 
 2.讲发往174.139.9.66的8080访问转发到本机的80端口
 
- ssh -C -f -N -g -R 80:174.139.9.66:8080 master@174.139.9.66
+ ssh -C -f -N -g -R 8080:localhost:80 master@174.139.9.66
+
+3.将远程的 7899 端口代理到本机的22端口中，相当于一个22端口的内网穿透
+ssh -C -f -N -g -R 7899:localhost:22 master@174.139.9.66
+
 
 ```bash
-ssh -L 7890:localhost:7890 master@174.139.9.66
-ssh -R 7890:localhost:7890 master@174.139.9.66
+ssh -L 7890:localhost:7890 master@174.139.9.66 # 将来自本机的7890端口访问转发到远程主机的7890中
+ssh -R 7890:localhost:7890 master@174.139.9.66 # 将来自远程的7890端口的访问转发到本机7890端口中
 ```
+
+
 
