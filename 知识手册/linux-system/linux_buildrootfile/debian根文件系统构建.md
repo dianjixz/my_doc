@@ -240,3 +240,8 @@ depmod -a && modprobe awusb
 sudo nmcli dev wifi connect XXX password XXX wep-key-type key ifname wlan0
 ```
 
+
+debian和ubuntu的基本底包下载链接：
+https://rcn-ee.com/rootfs/eewiki/minfs/
+
+直接下载底包，免于重新从头构建。
