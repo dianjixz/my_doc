@@ -530,11 +530,36 @@ iface eth0 inet manual
 
 
 
+NetworkManager如何禁用网卡随机mac地址
+要禁用NetworkManager中的网卡随机MAC地址，可以通过修改配置文件来实现。以下是具体步骤：
 
+1. 打开或创建NetworkManager配置文件：
+   ```bash
+   sudo nano /etc/NetworkManager/NetworkManager.conf
+   ```
 
+2. 在文件中添加或修改以下内容：
+   ```ini
+   [device]
+   ethernet.cloned-mac-address=permanent
+   
+   ```
 
+   这两部分分别禁用了Wi-Fi扫描时的随机MAC地址以及连接时的随机MAC地址。
+   这里的关键行是 ethernet.cloned-mac-address=permanent，它指示NetworkManager使用设备的永久MAC地址。
 
+3. 保存并关闭文件。
 
+4. 重启NetworkManager以使更改生效：
+   ```bash
+   sudo systemctl restart NetworkManager
+   ```
 
+完成上述步骤后，NetworkManager将不会再使用随机MAC地址。
 
+systemctl enable NetworkManager
 
+32:8e:80:0e:45:d5
+
+aa:f7:08:59:ba:f2
+46:44:4d:ef:80:0d
