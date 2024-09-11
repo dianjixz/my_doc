@@ -28,15 +28,42 @@ cd ..
 
 
 
+# toolChain_json.cmake
+# set(CMAKE_SYSTEM_NAME Linux)
+# SET(TOOLCHAIN_DIR "/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu")
+# set(CMAKE_C_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-gcc)
+# set(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-g++)
+# set(CMAKE_FIND_ROOT_PATH "/home/nihao/workdir/ubus/json-c")
+# set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
 
+# toolChain_libubox.cmake
+# set(CMAKE_SYSTEM_NAME Linux)
+# SET(TOOLCHAIN_DIR "/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu")
+# set(CMAKE_C_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-gcc)
+# set(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-g++)
+# set(INSTALL_PATH "/home/nihao/workdir/ubus/dist")
+# include_directories(${INSTALL_PATH}/include)
+# include_directories(${INSTALL_PATH}/include/json-c)
+# set(CMAKE_FIND_ROOT_PATH "/home/nihao/workdir/ubus/dist")
+# set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+# set(json "/home/nihao/workdir/ubus/dist/lib/libjson-c.so")
 
-
-
-
-
-
-
-
+# toolChain_ubus.cmake
+# set(CMAKE_SYSTEM_NAME Linux)
+# SET(TOOLCHAIN_DIR "/opt/gcc-linaro-7.5.0-2019.12-x86_64_aarch64-linux-gnu")
+# set(CMAKE_C_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-gcc)
+# set(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/bin/aarch64-linux-gnu-g++)
+# set(INSTALL_PATH "/home/nihao/workdir/ubus/dist")
+# include_directories(${INSTALL_PATH}/include)
+# set(CMAKE_FIND_ROOT_PATH "/home/nihao/workdir/ubus/dist" $(INSTALL_PATH))
+# set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+# set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+# set(blob_library ${INSTALL_PATH}/lib/libblobmsg_json.so)
+# set(json ${INSTALL_PATH}/lib/libjson-c.so)
+# set(ubox_include_dir ${INSTALL_PATH}/include/libubox)
+# set(ubox_library ${INSTALL_PATH}/lib/libubox.so)
 
 
 
