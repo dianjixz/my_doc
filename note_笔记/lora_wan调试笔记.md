@@ -126,6 +126,7 @@ sudo apt install \
 
 # 配置 postgres，数据库表
 sudo -u postgres psql
+```bash
 -- create role for authentication
 create role chirpstack with login password 'chirpstack';
 
@@ -140,6 +141,7 @@ create extension pg_trgm;
 
 -- exit psql
 \q
+```
 # 安装 chirpstack 网关
 sudo apt install apt-transport-https dirmngr
 
@@ -429,3 +431,150 @@ include_dir /etc/mosquitto/conf.d
 bind_address 0.0.0.0
 password_file /etc/mosquitto/pwfile
 ```
+
+
+
+
+# chirpstack 的 mqtt 接口进行数据发送与接收
+2024年 06月 19日 星期三 17:43:43 CST  
+
+应用从 chirpstack 中收发 lora 消息的主要方式是通过 MQTT 的方式，根据当前互联网中的教程，是很容易从 chirpstack 的收发主题中订阅到设备的上行消息，但是当前所有的下行教程，包括官网的下行 mqtt 消息都是有错误的。这导致几乎无法正常通过 mqtt 的方式向 loraWAN 设备发送消息，这是一个很大的坑，在之前为了解决这个问题，是通过使用 chirpstack 原生的 grpc 方式进行下发消息调用的， grpc 可以通过 python c++ 等方式进行编程，在交插编译 grpc 是一个很大工作量，同样的 python 在设备中运行也是一个不小的开销。为了在交插编译 grpc 并在设备上跑 grpc C++ 程序，我花了很大的功夫。在解决完交叉编译 grpc 的问题后，我决定看看为什么 mqtt 无法向 chirpstack 中发送消息的问题。  
+先是在互联网中搜索相关的教程，但是都无法使用，甚至 chirpstack 官网的教程都无法使用，我有点怀疑 chirpstack 到底实现了这个功能了没有，所以只能去查看 chirpstack 的源码。
+检查完源码后，发现 mqtt 的 enquene 消息体和官方描述的不一致：  
+官方的 enquene 消息体：
+```json
+// https://www.chirpstack.io/application-server/integrations/mqtt/
+{
+    "confirmed": true,                        // whether the payload must be sent as confirmed data down or not
+    "fPort": 10,                              // FPort to use (must be > 0)
+    "data": "...."                            // base64 encoded data (plaintext, will be encrypted by ChirpStack Network Server)
+    "object": {                               // decoded object (when application coded has been configured)
+        "temperatureSensor": {"1": 25},       // when providing the 'object', you can omit 'data'
+        "humiditySensor": {"1": 32}
+    }
+}
+```
+源码中的 enquene 消息体：  
+```
+{
+    "id": "",                                 // UUID
+    "dev_eui": "",                            // Device EUI (EUI64).
+    "confirmed": true,                        // whether the payload must be sent as confirmed data down or not
+    "fPort": 10,                              // FPort to use (must be > 0)
+    "data": "...."                            // base64 encoded data (plaintext, will be encrypted by ChirpStack Network Server)
+    "object": {                               // decoded object (when application coded has been configured)
+        "temperatureSensor": {"1": 25},       // when providing the 'object', you can omit 'data'
+        "humiditySensor": {"1": 32}
+    }
+}
+```
+对，明显就看出来源码中接受的消息体多了 id、dev_eui 两项数据。其实只是少了两项，如果代码中忽略这两项的话，也是能正常使用的。测试时我发送的消息中就没有 id、object 两项，它也能够正常解析且不报错的，但是新的 rust 代码中加了 dev_eui 判断，判断消息体中的 dev_eui 和主题中的 dev_eui 值是否一致，如果不一致就认为消息错误，不给 enquene 了。排除这样做的目的，修改后没有在文档中说明，导致这个接口根本无法使用，这就让超级恶心到使用者了。  
+```rust
+async fn message_callback(
+    application_id: String,
+    dev_eui: String,
+    command: String,
+    json: bool,
+    p: Publish,
+) {
+    let topic = String::from_utf8_lossy(&p.topic);
+
+    info!(topic = %topic, qos = ?p.qos, "Command received for device");
+
+    let err = || -> Result<()> {
+        match command.as_ref() {
+            "down" => {
+                let cmd: integration::DownlinkCommand = match json {
+                    true => serde_json::from_slice(&p.payload)?,
+                    false => integration::DownlinkCommand::decode(&mut Cursor::new(&p.payload))?,
+                };
+                if dev_eui != cmd.dev_eui {
+                    return Err(anyhow!(
+                        "Payload dev_eui {} does not match topic dev_eui {}",
+                        cmd.dev_eui,
+                        dev_eui
+                    ));
+                }
+                tokio::spawn(super::handle_down_command(application_id, cmd));
+            }
+            _ => {
+                return Err(anyhow!("Unknown command type"));
+            }
+        }
+
+        Ok(())
+    }()
+    .err();
+
+    if err.is_some() {
+        warn!(
+            topic = %topic,
+            qos = ?p.qos,
+            "Processing command error: {}",
+            err.as_ref().unwrap()
+        );
+    }
+}
+```
+作为完全不懂 rust 的我，意识到 dev_eui != cmd.dev_eui 这个问题时是几分钟后的事情了。当意识到是这里导致 mqtt 的消息下发失效后，我有些想爆粗口。太坑人了～～～～～   
+在 mqtt 消息中添加了 dev_eui 条目后，我终于在 enquene 中看到了 mqtt 发送的消息了，顿时泪流满面，果然开源的世界中是无法完全信任别人的。
+新的 mqtt 消息体：
+```json
+{
+    "dev_eui": "4bee530d29435bef",
+    "confirmed": false,
+    "fPort": 10,
+    "data": "qrvM"
+}
+```
+
+chirpstack 源码在两年前使用 rust 语言重写了，所以 mqtt 之前的实现不得而知，但是关于 mqtt command_cmd 部分在第二次的 mqtt.rs 提交中就存在了。也就是说，chirpstack 在使用 rust 重写后，这个消息体就被改变了，但互联网中几乎没有看到关于这一点的描述，真的是坑人～～～
+
+至此，chirpstack mqtt 的基本通信问题被解决，再也不用十分别扭的方式从 chirpstack 向 lora 设备发送消息了。
+
+
+## mqtt 通信接口
+
+1、 订阅应用中所有消息（注意全部小写）  
+topic：  
+```
+application/{application id}/#
+
+如 : application/1/#
+```
+  
+2、订阅指定上行消息（注意全部小写）  
+topic：  
+```
+application/[ApplicationID]/device/[DevEUI]/event/[EventType]
+
+如 : application/1/device/70b3d57ed0056427/event/up
+```
+3、给 LoRa 节点发消息（注意全部小写）  
+topic :   
+```
+application/[ApplicationID]/device/[DevEUI]/command/down
+如 : application/94d9ff1f-6e2e-4e70-bdf0-2cadbdbb4ef0/device/4bee530d29435bef/command/down
+```
+消息体：  
+```json
+{
+    "id": "",
+    "dev_eui": "",
+    "confirmed": false,  
+    "fPort": 10,  
+    "data": "qrvM" 
+}
+
+
+```
+如：  
+```json
+{
+    "dev_eui": "4bee530d29435bef",
+    "confirmed": false,  
+    "fPort": 10,  
+    "data": "qrvM" 
+}
+```
+注意：dev_eui 一定要和主题中的 [DevEUI] 一致，data 是二进制的 base64 编码字符串。  

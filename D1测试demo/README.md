@@ -85,7 +85,15 @@ export FRAMEBUFFER=/dev/fb1
 
 
 fbviewer 源码：https://github.com/godspeed1989/fbv.git
+```bash
 gcc -o fbviewer main.o jpeg.o png.o bmp.o fb_display.o transforms.o /usr/lib/aarch64-linux-gnu/libjpeg.so /usr/lib/aarch64-linux-gnu/libpng.so
+
+mkfifo fbvpipe
+fbv /usr/local/m5stack/logo.jpg < fbvpipe 2>&1 > /dev/null &
+fbvpid="$!"
+while true ; do printf "\r\n" > fbvpipe; sleep 1; kill -0 $fbvpid 2>/dev/null || { rm fbvpipe; break; } ;done &
+```
+
 
 使用 ffmpeg 将 MP4 视频转换为 PPM 图像序列,然后使用fbv播放。
 ``` bash

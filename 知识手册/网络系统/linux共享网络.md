@@ -177,10 +177,180 @@ netsh interface ipv4 add route 0.0.0.0/0 "wintun" 192.168.123.1 metric=1
 
 
 ```bash
-  394  echo 1 > /proc/sys/net/ipv4/ip_forward
-  395  iptables -F
-  404  iptables -t nat -A POSTROUTING -o veth2 -j RETURN
-  405  iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
-  411  nohup ./tun2socks-linux-arm64 -device tun0 -proxy socks5://192.168.28.21:7890 -interface veth2 &> /dev/null &
+echo 1 > /proc/sys/net/ipv4/ip_forward
+iptables -F
+iptables -t nat -A POSTROUTING -o veth2 -j RETURN
+iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+nohup ./tun2socks-linux-arm64 -device tun0 -proxy socks5://192.168.28.21:7890 -interface veth2 &> /dev/null &
 ```
+
+网络操作
+```bash
+# 1. 创建网络命名空间
+sudo ip netns add mynamespace
+
+# 2. 创建网络对
+sudo ip link add veth0 type veth peer name veth1
+
+# 3. 将网络对的一端放入网络命名空间
+sudo ip link set veth1 netns mynamespace
+
+# 4. 在网络命名空间中配置网络接口
+sudo ip netns exec mynamespace ip addr add 10.0.0.2/24 dev veth1
+sudo ip netns exec mynamespace ip link set veth1 up
+
+# 5. 创建网桥
+sudo ip link add name br0 type bridge
+sudo ip link set br0 up
+
+
+# 6. 将网络对的另一端连接到网桥
+sudo ip link set veth0 master br0
+sudo ip link set veth0 up
+
+# 7. 配置网桥的IP地址
+sudo ip addr add 10.0.0.1/24 dev br0
+
+# 8. 删除网桥
+sudo ip link delete br0 type bridge
+sudo ip link delete eth0
+
+# 9. 删除网络命名空间
+sudo ip netns delete mynamespace
+
+# 10. 将网口eth0从网桥上断开
+ip link set eth0 nomaster
+
+
+
+```
+
+
+## 构建一个小旁路由网关
+
+需要：
+一个能够运行 clash 和 tun2socks 的 linux 设备，Linux 设备最好要有两个网卡,方便进行网络的转发。
+
+一个网卡为 eth0 192.168.28.21,用作主出口上网，一个网卡为 eth1 192.168.24.1 接收局域网流量。
+
+在 Linux 设备上：
+```bash
+# 创建网络命名空间
+sudo ip netns add natnamespace
+
+# 创建虚拟网络对
+sudo ip link add veth0 type veth peer name vethout
+
+# 将 eth1 和 vethout 移动到网络命名空间内
+sudo ip link set eth1 netns natnamespace
+sudo ip link set vethout netns natnamespace
+
+# 设置主空间内的 veth0 ip
+sudo ip addr add 192.168.27.1/24 dev veth0
+
+# 设计命名空间内的网口 ip 并开启 网口
+sudo ip netns exec natnamespace ip addr add 192.168.27.2/24 dev vethout
+sudo ip netns exec natnamespace ip link set vethout up
+
+sudo ip netns exec natnamespace ip addr add 192.168.24.1/24 dev eth1
+sudo ip netns exec natnamespace ip link set eth1 up
+
+# 添加 tun 接口，用作网口流量转 socket5
+sudo ip netns exec natnamespace ip tuntap add mode tun dev tun0
+sudo ip netns exec natnamespace ip addr add 198.18.0.1/15 dev tun0
+sudo ip netns exec natnamespace ip link set dev tun0 up
+sudo ip netns exec natnamespace ip route add default via 198.18.0.1 dev tun0 metric 1
+
+# 开启 ipv4转发
+sudo ip netns exec natnamespace sysctl -w net.ipv4.ip_forward=1
+
+# 设置网口 eth1 192.168.24.1 接受到的流量 nat 转发到 tun0 内
+sudo ip netns exec natnamespace iptables -t nat -A POSTROUTING -s 192.168.24.0/24 -o tun0 -j MASQUERAD
+
+# 开启 tun 转 sockets5 程序
+sudo ip netns exec natnamespace nohup ./tun2socks-linux-arm64 -device tun0 -proxy socks5://192.168.27.1:7890 -interface vethout &> /dev/null &
+
+
+
+
+
+## 关闭程序
+sudo ip netns exec natnamespace kill `ps aux | grep tun2socks | awk '{print $1}'`
+
+# 清除 nat 转发
+sudo ip netns exec natnamespace iptables -t nat -D POSTROUTING -s 192.168.24.0/24 -o tun0 -j MASQUERAD
+
+# 清除内核 ipv4 转发
+sudo ip netns exec natnamespace sysctl -w net.ipv4.ip_forward=0
+
+# 删除网口
+sudo ip netns exec natnamespace ip link delete tun0
+sudo ip netns exec natnamespace ip link delete vethout
+
+# 将 eth1 移动到默认网络空间
+sudo ip netns exec natnamespace ip link set eth1 netns 1
+
+# 删除命名空间
+sudo ip netns delete natnamespace
+
+```
+
+局域网设备使用该网关地址:
+在设备上：
+```bash
+sudo ip route flush all
+sudo ip link set eth0 down
+sudo ip addr add 192.168.24.100/24 dev eth0
+sudo ip link set eth0 up
+sudo ip route add default via 192.168.24.1
+# or
+sudo ip route flush all
+sudo ifconfig eth0 down
+sudo ifconfig eth0 192.168.24.100
+sudo ifconfig eth0 up
+sudo ip route add default via 192.168.24.1
+
+```
+
+
+
+
+
+要将所有来自 `192.168.24.1` 通过 `eth1` 网口的 TCP 流量重定向到 `192.168.27.1:7892`，你可以使用 `iptables` 的 `REDIRECT` 目标。以下是具体的命令：
+
+```bash
+iptables -t nat -A PREROUTING -p tcp -d 192.168.24.1 --dport 1:65535 -i eth1 -j DNAT --to-destination 192.168.27.1:7892
+```
+
+解释：
+- `-t nat`：指定使用 NAT 表。
+- `-A PREROUTING`：在 PREROUTING 链中添加规则。
+- `-p tcp`：指定协议为 TCP。
+- `-d 192.168.24.1`：指定目标 IP 地址为 `192.168.24.1`。
+- `--dport 1:65535`：指定目标端口范围为 1 到 65535（即所有端口）。
+- `-i eth1`：指定流入接口为 `eth1`。
+- `-j DNAT`：指定目标为 DNAT（目标网络地址转换）。
+- `--to-destination 192.168.27.1:7892`：指定重定向的目标地址和端口。
+
+这样，所有从 `192.168.24.1` 通过 `eth1` 网口的 TCP 流量都会被重定向到 `192.168.27.1:7892`。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -10,6 +10,9 @@ sudo apt install rsync subversion unzip -y
 ./scripts/feeds install -a
 ```
 
+openwrt底包下载：
+
+
 一、软件包目录及结构（package目录）
 概念：OpenWrt 有一个非常好的构建系统，这样我们就可以非常方便地管理数千个软件包和几十个硬件平台。我们也可以非常方便地移植已有的软件到OpenWrt系统中。在前面我们介绍的OpenWrt源码中，你会发现各个软件包目录下一般会有两个文件夹和一个Makefile 文件。
 目录结构
