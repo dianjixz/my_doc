@@ -257,3 +257,19 @@ DefaultLimitNPROC=65535
 [参考文章](https://link.zhihu.com/?target=http%3A//www.jinbuguo.com/systemd/systemd.index.html)
 
 [参考翻译手册](http://www.jinbuguo.com/)
+
+
+
+
+
+udev 在进行自动挂载设备时，无法直接进行mount。这是功能的权限限定。
+为了解决这一问题，需要引入 systemd-mount 进行自动挂载。
+挂载命令：
+```bash
+/usr/bin/systemd-mount --no-block --collect /dev/$DEVNAME /mnt/$DEVNAME
+```
+命令为异步挂载。
+取消挂载为：
+```bash
+/usr/bin/systemd-umount /mnt/$DEVNAME
+```
