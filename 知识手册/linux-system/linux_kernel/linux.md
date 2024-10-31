@@ -64,3 +64,27 @@ sudo apt-get update && sudo apt-get install build-essential linux-headers-$(unam
 ————————————————
 版权声明：本文为CSDN博主「miaoyanmm」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/miaoyanmm/article/details/79853297
+
+
+
+
+
+
+
+
+
+
+
+编译 linux kernel 内核时，如果是在带版本管理工具的环境中，构建代码会自动读取构建环境添加到版本字符描述中。
+这在拥有版本魔法的linux管理中是非常痛苦的。特别是默认会添加 “+”。
+为此可以通过在环境变量中添加 LOCALVERSION="" 设置默认的后缀。
+
+参考：https://zhuanlan.zhihu.com/p/358038347
+
+
+
+
+
+
+
+
