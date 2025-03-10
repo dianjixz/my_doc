@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # ENV list:
-# R_SSID
-# R_PWD
-# R_HOST_IP
-# R_MASK
-# R_CLIENT_IP_RANGE
+R_SSID="hahaha"
+R_PWD="1234567890"
+R_HOST_IP=192.168.3.3
+R_MASK=255.255.255.0
+R_CLIENT_IP_RANGE=192.168.3.100,192.168.3.200
 
 echo "##### 开始配置 树莓派共享 WiFi #####"
 

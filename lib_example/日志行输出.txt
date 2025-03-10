@@ -6,3 +6,18 @@ int Debug_s = 1;
 		printf(fmt"  [info:%s:%d] [%s]\n", ##__VA_ARGS__, __FILE__, __LINE__, __FUNCTION__);\
 	}\
 }while(0);
+
+
+#define CALC_FPS(tips)                                                                                     \
+  {                                                                                                        \
+    static int fcnt = 0;                                                                                   \
+    fcnt++;                                                                                                \
+    static struct timespec ts1, ts2;                                                                       \
+    clock_gettime(CLOCK_MONOTONIC, &ts2);                                                                  \
+    if ((ts2.tv_sec * 1000 + ts2.tv_nsec / 1000000) - (ts1.tv_sec * 1000 + ts1.tv_nsec / 1000000) >= 1000) \
+    {                                                                                                      \
+      printf("%s => H26X FPS:%d\n", tips, fcnt);                                                  \
+      ts1 = ts2;                                                                                           \
+      fcnt = 0;                                                                                            \
+    }                                                                                                      \
+  }

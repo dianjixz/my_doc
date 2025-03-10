@@ -528,3 +528,89 @@ hosts allow=192.168.31.0/24
 ————————————————
 版权声明：本文为CSDN博主「cx_baby」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/cx55887/article/details/82943760
+
+
+
+
+
+
+
+
+
+`rsync` 是一个强大的文件同步工具，可以在本地和远程之间进行增量备份。以下是如何使用 `rsync` 将本地文件增量备份到远程服务器的步骤：
+
+### 1. 安装 `rsync`
+确保本地和远程服务器上都安装了 `rsync`。大多数 Linux 发行版默认已经安装了 `rsync`，如果没有安装，可以使用以下命令安装：
+
+- **Debian/Ubuntu**:
+  ```bash
+  sudo apt-get install rsync
+  ```
+
+- **CentOS/RHEL**:
+  ```bash
+  sudo yum install rsync
+  ```
+
+### 2. 使用 `rsync` 进行增量备份
+假设你要将本地的 `/path/to/local/dir` 目录备份到远程服务器的 `/path/to/remote/dir` 目录，远程服务器的 IP 地址为 `remote_ip`，用户名为 `remote_user`。
+
+#### 基本命令：
+```bash
+rsync -avz --progress /path/to/local/dir/ remote_user@remote_ip:/path/to/remote/dir/
+```
+
+#### 参数解释：
+- `-a`：归档模式，保留文件权限、时间戳、符号链接等。
+- `-v`：详细输出，显示同步过程中的文件信息。
+- `-z`：压缩传输，减少网络传输的数据量。
+- `--progress`：显示传输进度。
+
+#### 增量备份：
+`rsync` 默认就是增量备份的，它只会传输源和目标之间有差异的文件。因此，你不需要额外的参数来实现增量备份。
+
+### 3. 使用 SSH 进行安全传输
+`rsync` 默认使用 SSH 进行远程传输，因此你需要确保 SSH 已经配置好，并且你可以通过 SSH 登录到远程服务器。
+
+如果你使用非默认的 SSH 端口，可以通过 `-e` 参数指定 SSH 端口：
+
+```bash
+rsync -avz --progress -e 'ssh -p 2222' /path/to/local/dir/ remote_user@remote_ip:/path/to/remote/dir/
+```
+
+### 4. 排除特定文件或目录
+如果你希望在备份时排除某些文件或目录，可以使用 `--exclude` 参数：
+
+```bash
+rsync -avz --progress --exclude '*.log' /path/to/local/dir/ remote_user@remote_ip:/path/to/remote/dir/
+```
+
+### 5. 定时备份
+你可以将 `rsync` 命令添加到 `cron` 任务中，实现定时备份。例如，每天凌晨 2 点执行备份：
+
+1. 打开 `crontab` 编辑器：
+   ```bash
+   crontab -e
+   ```
+
+2. 添加以下行：
+   ```bash
+   0 2 * * * rsync -avz --progress /path/to/local/dir/ remote_user@remote_ip:/path/to/remote/dir/
+   ```
+
+### 6. 其他常用选项
+- `--delete`：删除目标目录中源目录不存在的文件。
+- `--backup`：在覆盖文件之前备份目标文件。
+- `--backup-dir`：指定备份文件的存储目录。
+
+### 示例命令：
+```bash
+rsync -avz --progress --delete --backup --backup-dir=/path/to/backup/dir /path/to/local/dir/ remote_user@remote_ip:/path/to/remote/dir/
+```
+
+### 总结
+`rsync` 是一个非常灵活的工具，适用于各种备份和同步场景。通过合理使用参数，你可以轻松实现本地到远程的增量备份。
+
+
+
+

@@ -341,6 +341,13 @@ unmanaged-devices=interface-name:eth*,except:interface-name:eth0;interface-name:
 interface-name:eth*,except:interface-name:eth0; 表示：除了 eth0，其他以 eth 开头的接口全部 unmanaged；
 可以通过 mac 地址来排除接口；
 
+example:
+```bash
+[keyfile]
+unmanaged-devices=interface-name:eth0
+```
+
+
 重新加载配置
 
 systemctl reload NetworkManager

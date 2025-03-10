@@ -54,4 +54,4 @@ sendevent /dev/input/event0 0000 0000 00000000
 （1）getevent输出的是16进制，sendevent使用的是10进制，注意转换。
 （2）getevent命令的输出结果因设备不同而不同，但都是相似的。
 
- 
+ sudo evtest /dev/input/event0
