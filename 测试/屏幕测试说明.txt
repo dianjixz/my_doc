@@ -36,3 +36,6 @@ poll 2, returned 1
 [     183.872498] 0000 0000 00000000
 poll 2, returned 1
 [     183.882655] 0003 0035 000001e3
+
+# linux中可以使用 evtest 来读取输入事件。
+evtest /dev/input/event0

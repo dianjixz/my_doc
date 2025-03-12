@@ -229,7 +229,7 @@ token 非必填，为了安全强烈建议在frps配置上token。
 
 
 TCP 代理
-
+注意 "-R :80:127.0.0.1:8080" 中的:80参数没有意义，任何端口均可，只是作为标识，方便用户识别。真正的代理端口为--remote_port 参数指定的 9090。
 ```shell
 ssh -R :80:127.0.0.1:8080 v0@{frp address} -p 2200 tcp --proxy_name "test-tcp" --remote_port 9090
 ```
