@@ -242,7 +242,12 @@ ssh -R :80:127.0.0.1:8080 v0@{frp address} -p 2200 http --proxy_name "test-http"
 
 
 
-
+example:
+```toml
+bindPort = 6001
+auth.token = "123456"
+sshTunnelGateway.bindPort = 6022
+```
 
 
 
