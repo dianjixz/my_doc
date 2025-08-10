@@ -296,3 +296,26 @@ su
 LD_PRELOAD=/usr/lib/libtsocks.so apt-get update
 
 注意，LD_PRELOAD无法在sudo命令里使用。1
+
+
+在elf的搜索路经中存在以下几个方案：
+1、系统动态库配置:/etc/ld.so.conf
+2、用户动态库配置:/etc/ld.so.conf.d/*.conf
+3、当前目录
+4、编译时指定--sysroot
+5、编译时指定-Wl,-rpath-link,程序中体现为RPATH：
+6、程序运行时指定LD_LIBRARY_PATH
+7、程序运行时指定LD_PRELOAD
+8、patchelf默认的搜索路径：RUNPATH
+
+
+但是在patchelf指定的RUNPATH存在一个逻辑顺序，如果LD_LIBRARY_PATH存在时，RUNPATH不会生效，这会导致在设定好的目录下，某个动态库找不到，从而报错。指定回到指定LD_LIBRARY_PATH的方式。
+但是指定LD_LIBRARY_PATH又会很麻烦，我们可以使用patchelf强制修改elf的RPATH,让路经设置的优先级要高一些，这样便不会出现找不到动态库的问题。
+相关命令:
+```bash
+gcc -Wl,-rpath=/path/to/libs ...
+# 默认写入：RUNPATH
+patchelf --set-rpath '<路径1>:<路径2>' myprog
+# 强制指定写入：RPATH
+patchelf --force-rpath --set-rpath '<路径1>:<路径2>' myprog
+```

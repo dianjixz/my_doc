@@ -30,7 +30,9 @@ def publisher():
 
     # 创建一个发布者套接字
     socket = context.socket(zmq.PUB)
-
+    socket.setsockopt(zmq.HEARTBEAT_IVL, 2500)  # 心跳间隔2.5秒
+    socket.setsockopt(zmq.HEARTBEAT_TIMEOUT, 5000)  # 心跳超时5秒
+    socket.setsockopt(zmq.HEARTBEAT_TTL, 5000)  # 心跳TTL
     # 绑定到指定端口
     socket.bind("tcp://*:6001")
     print("Publisher is running on tcp://*:6001")
@@ -63,7 +65,9 @@ def subscriber():
 
     # 创建一个订阅者套接字
     socket = context.socket(zmq.SUB)
-
+    socket.setsockopt(zmq.HEARTBEAT_IVL, 2500)  # 心跳间隔2.5秒
+    socket.setsockopt(zmq.HEARTBEAT_TIMEOUT, 5000)  # 心跳超时5秒
+    socket.setsockopt(zmq.HEARTBEAT_TTL, 5000)  # 心跳TTL
     # 绑定到指定端口
     socket.bind("tcp://*:6002")
     print("subscriber is running on tcp://*:6002")

@@ -2,3 +2,8 @@
 
 linux 端 PLC 项目：基于Linux4.9构建OpenPLC运行环境  https://blog.csdn.net/a249093278/article/details/79654432
 
+
+
+ubuntu OpenPLC_Editor 编辑器可以编译plc梯形图
+
+https://github.com/thiagoralves/OpenPLC_Editor.git

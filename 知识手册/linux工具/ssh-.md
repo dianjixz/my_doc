@@ -102,7 +102,13 @@ PasswordAuthentication no 禁止使用密码验证登录（自己添加）
 
 
 编辑 authorized_keys 文件
-
+```bash
+sudo printf '\nRSAAuthentication yes\n' >> /etc/ssh/sshd_config
+sudo printf '\nPubkeyAuthentication yes\n' >> /etc/ssh/sshd_config
+touch ~/.ssh/authorized_keys
+mkdir -p ~/.ssh
+sudo /etc/init.d/ssh restart
+```
 
 
 ### 信息来源

@@ -53,3 +53,11 @@ sleep 1
 ./FlameGraph/stackcollapse-perf.pl out.perf > out.folded
 sleep 1
 ./FlameGraph/flamegraph.pl out.folded > test.svg
+
+
+
+
+sudo chown nihao:nihao perf.data
+perf script > out.perf
+/home/nihao/w2T/github/FlameGraph/stackcollapse-perf.pl out.perf > out.folded
+/home/nihao/w2T/github/FlameGraph/flamegraph.pl out.folded > test.svg

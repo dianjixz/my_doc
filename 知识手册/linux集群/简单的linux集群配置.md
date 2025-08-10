@@ -29,3 +29,9 @@ loophole,localtunnel,expose,bore,tabserve,staqlab,jprq,zrok,telebit,ssh-j.com,
 
 
 其实这个最简方案的本质只是一个 tcp 端口代理,将本机的端口代理到主服务器中去.
+
+zmq是一个非常迅速的消息队列,可以用于构建一个简单的消息队列,用于集群中各个节点之间的通信.
+
+
+
+使用zmq或者nng做集群通信是一个非常不错的选择。可以非常轻易的完成集群的构建。
