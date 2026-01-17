@@ -340,10 +340,31 @@ iptables -t nat -A PREROUTING -p tcp -d 192.168.24.1 --dport 1:65535 -i eth1 -j 
 
 
 
+# 快速创建一个socks转发的vpn网络
+```bash
+ip tuntap add mode tun dev tun0
+ip addr add 198.18.0.1/15 dev tun0
+ip link set dev tun0 up
+ip route del default
+ip route add default via 198.18.0.1 dev tun0 metric 1
+ip route add 192.168.28.0/24 via 192.168.122.1 dev enp1s0
+ip route list
+./tun2socks-linux-amd64 --device tun0 -proxy socks5://192.168.28.21:7890 -interface enp1s0
+   97  history 
+```
 
-
-
-
+# 快速创建一个socks转发的vpn网络
+```bash
+ip tuntap add mode tun dev tun0
+ip addr add 198.18.0.1/15 dev tun0
+ip link set dev tun0 up
+ip route del default
+ip route add default via 198.18.0.1 dev tun0 metric 1
+# ip route add 192.168.28.0/24 via 192.168.122.1 dev eth0
+ip route list
+./tun2socks-linux-arm64 --device tun0 -proxy socks5://192.168.28.21:7890 -interface eth0
+   97  history 
+```
 
 
 

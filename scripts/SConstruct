@@ -1,0 +1,137 @@
+# -*- coding: utf-8 -*-
+import os
+
+
+BUILDDIR = "build"
+SConsignFile(os.path.join(BUILDDIR, "sconsign.dblite"))
+ObjectGenerated = lambda env, srcs: [
+    env.Object(os.path.join(BUILDDIR, str(srcf) + ".o"), srcf) for srcf in srcs
+]
+
+# 交叉编译工具链配置
+CC = "arm-none-eabi-gcc"
+AS = "arm-none-eabi-as"
+LD = "arm-none-eabi-ld"
+OBJCOPY = "arm-none-eabi-objcopy"
+SIZE = "arm-none-eabi-size"
+
+
+# 生成目标名
+TARGET = "firmware.elf"
+
+# 编译选项
+CFLAGS = """
+-mcpu=cortex-m4
+-mthumb
+-mfloat-abi=hard
+-mfpu=fpv4-sp-d16
+--specs=nano.specs
+-O2
+-ffunction-sections
+-fdata-sections
+-Wall
+-std=gnu11
+-DSTM32G431xx
+-DUSE_HAL_DRIVER
+""".split()
+
+ASFLAGS = """
+-mcpu=cortex-m4
+-mthumb
+-mfloat-abi=hard
+-mfpu=fpv4-sp-d16
+""".split()
+LDFLAGS = """
+-mcpu=cortex-m4 
+-TSTM32G431CBUX_FLASH.ld 
+--specs=nosys.specs
+-Wl,--gc-sections 
+-static 
+--specs=nano.specs 
+-mfpu=fpv4-sp-d16 
+-mfloat-abi=hard 
+-mthumb 
+-Wl,--start-group -lc -lm -Wl,--end-group
+""".split()
+
+
+src_dirs = """
+Core/Src
+Core/RTT
+Drivers/STM32G4xx_HAL_Driver/Src
+Drivers/M5_Pyrmind_Drivers/Src
+Drivers/freemodbus
+Drivers/freemodbus/modbus
+Drivers/freemodbus/port
+Drivers/freemodbus/modbus/rtu
+Drivers/freemodbus/modbus/functions
+Drivers/freemodbus/modbus/ascii
+""".split()
+
+inc_dirs = """
+Core/Inc 
+Drivers/M5_Pyrmind_Drivers/Inc 
+Drivers/M5_Pyrmind_Drivers/Src 
+Drivers/freemodbus
+Drivers/freemodbus/port
+Drivers/freemodbus/modbus/ascii
+Drivers/freemodbus/modbus/functions 
+Drivers/freemodbus/modbus/include 
+Drivers/freemodbus/modbus/rtu 
+Drivers/freemodbus/modbus/tcp
+Core/RTT
+Drivers/M5_Pyrmind_Drivers/Inc 
+Drivers/M5_Pyrmind_Drivers/Src 
+Drivers/STM32G4xx_HAL_Driver/Inc 
+Drivers/STM32G4xx_HAL_Driver/Inc/Legacy 
+Drivers/CMSIS/Device/ST/STM32G4xx/Include 
+Drivers/CMSIS/Include
+""".split()
+
+# 源文件列表，你可以自动化查找
+src_files = []
+for i in src_dirs:
+    src_files += Glob(i + "/*.c")
+
+src_files += ["Core/Startup/startup_stm32g431cbux.s"]
+
+
+env = Environment(
+    CC=CC,
+    AS=AS,
+    LINK=CC,
+    OBJCOPY=OBJCOPY,
+    SIZE=SIZE,
+    CFLAGS=CFLAGS,
+    ASFLAGS=ASFLAGS,
+    LINKFLAGS=LDFLAGS,
+    CPPPATH=inc_dirs,
+)
+
+
+# 构建
+program = env.Program(
+    target=os.path.join(BUILDDIR, TARGET),
+    source=ObjectGenerated(env, src_files),
+)
+
+# 生成 hex 文件
+env.Command("firmware.hex", program, "$OBJCOPY -O ihex $SOURCE $TARGET")
+
+# 生成 bin 文件
+env.Command("firmware.bin", program, "$OBJCOPY -O binary $SOURCE $TARGET")
+
+# show size
+env.Command(
+    os.path.join(BUILDDIR, "firmware.txt"), program, "$SIZE $SOURCE | tee $TARGET"
+)
+
+Clean(program, BUILDDIR)
+
+# print(env['CCCOM'])
+# 清理中间文件可以用：scons -c
+
+# 打印配置
+# print("===== 编译器: {} =====".format(CC))
+# print("===== 编译选项: {} =====".format(' '.join(CFLAGS)))
+# print("===== 源文件: {} =====".format(src_files))

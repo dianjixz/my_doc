@@ -4,7 +4,7 @@
 
 ###### [Linux](https://www.ucloud.cn/yun/linux/)
 
-
+sudo apt install wpasupplicant
 
 **wpa_supplicant**是一个连接、配置**WIFI**的工具，它主要包含**wpa_supplicant**与**wpa_cli**两个程序。通常情况下，可以通过**wpa_cli**来进行**WIFI**的配置与连接，如果有特殊的需要，可以编写应用程序直接调用**wpa_supplicant**的接口直接开发。
 

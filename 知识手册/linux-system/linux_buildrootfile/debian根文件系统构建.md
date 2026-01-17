@@ -234,7 +234,7 @@ Load the module by running:
 
 depmod -a && modprobe awusb
 
-
+depmod -a -b pwd 5.15.84
 
 ```shell
 sudo nmcli dev wifi connect XXX password XXX wep-key-type key ifname wlan0

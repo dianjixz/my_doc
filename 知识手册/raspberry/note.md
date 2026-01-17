@@ -22,8 +22,9 @@ https://blog.csdn.net/xukai871105/article/details/38349209
 
 可以设置watch实时观看：
 
- watch -n 0.1 echo CPU: $[$(cat /sys/class/thermal/thermal_zone0/temp)/1000]°
+watch -n 0.1 echo CPU: $[$(cat /sys/class/thermal/thermal_zone0/temp)/1000]°
 
+while true ; do cat /sys/class/thermal/thermal_zone0/temp ;  sleep 1 ; done
 
 
 
@@ -101,10 +102,30 @@ sudo apt-get install webmin
 
 
 
+树梅派5板载了pcie接口，用户可以通过pcie来接各类设备。使用pcie接口时，需要先配置pcie开启。
 
 
 
+设置 Raspberry Pi 5 以使用 NVMe 驱动器
 
+创建 NVMe 驱动器后，我们现在需要告诉 Raspberry Pi 5 我们想要从 NVMe 启动，以及我们期望连接的运行速度。
+
+    打开终端并使用 nano 编辑 config.txt 文件。
+
+```bash
+sudo nano /boot/config.txt
+```
+
+2，在文尾输入以下内容：
+```bash
+#启用PCIe外部连接器
+dtparam=pciex1
+#NVMe配置
+dtparam=pciex1_gen=3
+```
+————————————————
+版权声明：本文为CSDN博主「袖手蹲」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/weixin_41589183/article/details/135257819
 
 
 

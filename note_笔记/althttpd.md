@@ -250,3 +250,19 @@ print("</html>")
 ### 关于 althttpd 权限的问题
 althttpd 有对可执行文件 cgi 的权限进行了管理，当可执行文件拥有了除拥有着之外其他用户的权限时，althttpd 将会拒绝执行这个 cgi 程序。这样做的目的似乎是为了保护什么。
 所以在部署 cgi 程序时，一定要注意好 cgi 程序的权限。
+
+
+
+### 关于 althttpd 部署github仓库
+```shell
+#!/bin/bash
+# 主目录下的cgi文件 nihao
+export GIT_PROJECT_ROOT=/home/nihao/work/my_doc/lib_example/tmp/git-repos
+export GIT_HTTP_EXPORT_ALL=1
+export SCRIPT_NAME=/usr/lib/git-core/git-http-backend
+exec /usr/lib/git-core/git-http-backend
+```
+执行服务器命令
+```shell
+althttpd
+```

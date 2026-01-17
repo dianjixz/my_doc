@@ -1,0 +1,128 @@
+# -*- coding: utf-8 -*-
+import os
+import json
+import shutil
+
+
+
+conanfile_txt = '''
+[requires]
+jsoncpp/1.9.5
+fmt/8.1.1
+
+[generators]
+SConsDeps
+
+[options]
+jsoncpp/*:shared=False
+
+[layout]
+cmake_layout
+'''
+
+
+
+BUILDDIR = "build"
+CONANDEPS = "build/Release/generators/SConscript_conandeps"
+SConsignFile(os.path.join(BUILDDIR, "sconsign.dblite"))
+ObjectGenerated = lambda env, srcs: [
+    env.Object(os.path.join(BUILDDIR, str(srcf) + ".o"), srcf) for srcf in srcs
+]
+
+AddOption(
+    "--distclean",
+    dest="distclean",
+    action="store_true",
+    help="Remove all generated files including configuration",
+)
+
+
+if GetOption("distclean"):
+    shutil.rmtree(BUILDDIR)
+    Exit(0)
+
+# 交叉编译工具链配置
+CC = "gcc"
+CXX = "g++"
+AS = "as"
+LD = "ld"
+OBJCOPY = "objcopy"
+SIZE = "size"
+
+
+# 生成目标名
+TARGET = "firmware.elf"
+
+# 编译选项
+CFLAGS = """
+""".split()
+
+ASFLAGS = """
+""".split()
+
+LDFLAGS = """
+""".split()
+
+
+src_dirs = """
+src
+""".split()
+
+inc_dirs = """
+""".split()
+
+# 源文件列表，你可以自动化查找
+src_files = []
+for i in src_dirs:
+    src_files += Glob(i + "/*.c*")
+
+
+env = Environment(
+    CC=CC,
+    CXX=CXX,
+    AS=AS,
+    LINK=CXX,
+    OBJCOPY=OBJCOPY,
+    SIZE=SIZE,
+    CFLAGS=CFLAGS,
+    ASFLAGS=ASFLAGS,
+    LINKFLAGS=LDFLAGS,
+    CPPPATH=inc_dirs,
+)
+
+
+if not os.path.exists(CONANDEPS):
+    os.system("conan install . --build=missing")
+if os.path.exists(CONANDEPS):
+    conandeps = SConscript(CONANDEPS)
+    for i in conandeps:
+        if type(conandeps[i]) == dict:
+            env.MergeFlags(conandeps[i])
+
+
+# 构建
+program = env.Program(
+    target=os.path.join(BUILDDIR, TARGET),
+    source=ObjectGenerated(env, src_files),
+)
+
+
+def distclean(target, source, env):
+    # 清理所有构建产物
+    env.Clean()
+    # 额外清理特定文件或目录（可选）
+    import os
+
+    if os.path.exists(".sconsign.dblite"):
+        os.remove(".sconsign.dblite")
+
+
+# Clean(program, BUILDDIR)
+# Distclean(program, BUILDDIR)
+# print(env['CCCOM'])
+# 清理中间文件可以用：scons -c
+
+# 打印配置
+# print("===== 编译器: {} =====".format(CC))
+# print("===== 编译选项: {} =====".format(' '.join(CFLAGS)))
+# print("===== 源文件: {} =====".format(src_files))

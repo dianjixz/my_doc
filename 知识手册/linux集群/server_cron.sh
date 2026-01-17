@@ -1,0 +1,1 @@
+sqlite3 /var/server_daemon/linux_daemon.db "CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY, v TEXT);"
