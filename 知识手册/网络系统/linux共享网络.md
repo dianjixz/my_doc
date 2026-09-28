@@ -368,9 +368,20 @@ ip route list
 
 
 
+# 快速创建一个socks转发的vpn网络
+```bash
+ip tuntap add mode tun dev tun0
+ip addr add 198.18.0.1/15 dev tun0
+ip link set dev tun0 up
+ip route del default
+ip route add default via 198.18.0.1 dev tun0 metric 1
+# ip route add 192.168.28.0/24 via 192.168.122.1 dev eth0
+ip route list
+./tun2socks-linux-amd64 --device tun0 -proxy socks5://192.168.28.21:7890 -interface enp3s0
+   97  history 
+```
 
-
-
+<!-- default via 192.168.28.1 dev enp3s0 proto dhcp metric 100 -->
 
 
 
