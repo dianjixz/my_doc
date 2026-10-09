@@ -26,6 +26,18 @@ https://www.digikey.cn/zh/forum/t/topic/6509
 
 
 
+https://www.digikey.cn/zh/forum/t/topic/6509
+https://docs.arduino.cc/arduino-cli/?
+
+https://docs.arduino.cc/resources/datasheets/ABX00162-ABX00173-datasheet.pdf
+
+
+https://shaocheng.li/posts/2025/09/07/#%E8%B0%83%E8%AF%95%E8%BF%87%E7%A8%8B
+https://blog.chinaaet.com/Shie/p/5100064804
+https://github.com/twlostow/dsi-shield
+https://github.com/zephyria-dev/goshawkcsiUNOQ.git
+
+
 
 
 
